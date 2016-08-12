@@ -22,10 +22,11 @@ ecmascript@0.5.7              # Enable ECMAScript2015+ syntax in app code
 
 accounts-password
 accounts-facebook
-accounts-ui
 twbs:bootstrap
 kadira:flow-router
 mpowaga:autoform-autocomplete
 kadira:blaze-layout
 msavin:jetsetter
 msavin:mongol
+stylus
+ian:accounts-ui-bootstrap-3
