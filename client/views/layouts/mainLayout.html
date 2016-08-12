@@ -1,11 +1,17 @@
 <template name="mainLayout">
-    <div class="container">
-        <a href="/">Mirko</a>
-        <a href="/game-settings">Slavko</a>
 
-
-        {{> headerLayout}}
-
-        {{> Template.dynamic template=main}}
+    <div class="headerWrapper">
+        <div class="container">
+            {{> headerLayout }}
+        </div>
     </div>
+
+    {{> Template.dynamic template=main }}
+
+    <div class="footerWrapper">
+        <div class="container">
+            {{> footerLayout }}
+        </div>
+    </div>
+
 </template>
