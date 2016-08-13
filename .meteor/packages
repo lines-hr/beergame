@@ -24,7 +24,6 @@ accounts-password
 accounts-facebook
 twbs:bootstrap
 kadira:flow-router
-mpowaga:autoform-autocomplete
 kadira:blaze-layout
 msavin:jetsetter
 msavin:mongol
@@ -32,3 +31,5 @@ stylus
 ian:accounts-ui-bootstrap-3
 aldeed:collection2
 cwattrus:open-sans
+aldeed:autoform
+aldeed:simple-schema

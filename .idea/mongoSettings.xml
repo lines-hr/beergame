@@ -11,6 +11,15 @@
             </list>
           </option>
         </ServerConfiguration>
+        <ServerConfiguration>
+          <option name="label" value="meteor" />
+          <option name="serverUrls">
+            <list>
+              <option value="localhost:3001" />
+            </list>
+          </option>
+          <option name="userDatabase" value="meteor" />
+        </ServerConfiguration>
       </list>
     </option>
     <option name="shellPath" value="/usr/bin/mongo" />
