@@ -15,7 +15,7 @@
                 <div class="navbar-collapse collapse" id="navbar">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="/">Home</a></li>
-                        <li><a href="/gameSettings">Game Settings</a></li>
+                        {{#if currentUser}}<li><a href="/gameSettings">Game Settings</a></li>{{/if}}
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">

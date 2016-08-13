@@ -2,7 +2,9 @@
 
     <div class="container">
         {{#autoForm collection="GameSetup" id="insertGameSettingsForm" type="insert" }}
-        
+
+            {{> afQuickField name="setupOwner" type="hidden" }}
+
         <div class="row">
             <div class="jumbotron">
                 <h1>Game Settings</h1>
@@ -16,7 +18,7 @@
         <div><h3>Game Title</h3></div>
         <div class="clearfix"></div>
         <div class="row">
-            <div class="col-xs-12">{{> afQuickField name="setup.title" type="text" value="Pls Enter Game Title..." }}</div>
+            <div class="col-xs-12">{{> afQuickField name="title" type="text" placeholder="Pls Enter Game Title..." }}</div>
         </div>
 
         <div><h3>Initial Values</h3></div>
@@ -61,9 +63,9 @@
                 <div><h3>Tracking</h3></div>
                 <div class="clearfix"></div>
                 <div class="row">
-                    <div class="col-sm-3">{{> afQuickField name="setup.visibleShippings"}}</div>
-                    <div class="col-sm-3">{{> afQuickField name="setup.visibleDemands"}}</div>
-                    <div class="col-sm-3">{{> afQuickField name="setup.allowMessaging"}}</div>
+                    <div class="col-sm-3">{{> afQuickField name="setup.visibleShippings" type="boolean-checkbox"}}</div>
+                    <div class="col-sm-3">{{> afQuickField name="setup.visibleDemands" type="boolean-checkbox"}}</div>
+                    <div class="col-sm-3">{{> afQuickField name="setup.allowMessaging" type="boolean-checkbox"}}</div>
                 </div>
             </div>
         </div>
@@ -71,9 +73,10 @@
 <!--        <div class="row">
             TODO DEMAND, razmisliti o tome kako će na mobitelima izgledati graf i kako će se moći njime koristiti (lagano ili teško)
         </div>-->
+        {{> afQuickField name="setup.initDemand" value="[ { roundNumber: 1, demand:4 }, { roundNumber: 2, demand:4 }, { roundNumber: 3, demand:4 }, { roundNumber: 4, demand:8 }, { roundNumber: 5, demand:8 }, { roundNumber: 6, demand:8 }, { roundNumber: 7, demand:8 }, { roundNumber: 8, demand:8 }, { roundNumber: 9, demand:8 }, { roundNumber: 10, demand:8 } ]"}}
 
         <div class="row">
-            <div class="col-xs-6"><button type="button" class="btn btn-primary game-settings-button">Save settings</button></div>
+            <div class="col-xs-6"><button type="submit" class="btn btn-primary game-settings-button">Save settings</button></div>
             <div class="col-xs-6"><button type="button" class="btn btn-success game-settings-button">Create Event</button></div>
         </div>
 
