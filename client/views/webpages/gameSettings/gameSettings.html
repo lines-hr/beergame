@@ -1,6 +1,9 @@
-<template name="game-settings">
+<template name="gameSettings">
 
     <div class="container spaceBottomM">
+
+        {{#autoForm collection="GameSetup" id="insertGameSettingsForm" type="insert" }}
+
         <div class="row">
             <div class="jumbotron">
                 <h1>Game Settings</h1>
@@ -8,12 +11,13 @@
         </div>
 
         <div class="row">
+
             <div class="col-md-3 col-sm-6 col-xs-12">
                 <div>Initial values</div>
 
                 <div class="game-settings-pair">
                     <div class="col-md-8 col-sm-12"><label class="game-settings-label" for="stock">Stock</label></div>
-                    <div class="col-md-4 col-sm-12"><input id="stock" class="game-settings-field" type="number" value="5" min="0"></div>
+                    <div class="col-md-4 col-sm-12">{{> afQuickField name='setup.initStock' id="stock" class="gameSettings-field" type="number" value="5" min="0" }}</div>
                 </div>
 
                 <div class="game-settings-pair">
@@ -32,19 +36,21 @@
                 </div>
             </div>
 
+            <!--
             <div class="col-md-3 col-sm-6 col-xs-12">
                 <div>Shipping delay</div>
 
-                <div class="game-settings-pair">
-                    <div class="col-md-8 col-sm-12"><label class="game-settings-label" for="rounds">Rounds</label></div>
-                    <div class="col-md-4 col-sm-12"><input id="rounds" class="game-settings-field" type="number" value="5" min="0"></div>
+                <div class="gameSettings-pair">
+                    <div class="col-md-8 col-sm-12"><label class="gameSettings-label" for="rounds">Rounds</label></div>
+                    <div class="col-md-4 col-sm-12"><input id="rounds" class="gameSettings-field" type="number" value="5" min="0"></div>
                 </div>
 
-                <div class="game-settings-pair">
-                    <div class="col-md-8 col-sm-12"><label class="game-settings-label" for="amount">Amount</label></div>
-                    <div class="col-md-4 col-sm-12"><input id="amount" class="game-settings-field" type="number" value="5" min="0"></div>
+                <div class="gameSettings-pair">
+                    <div class="col-md-8 col-sm-12"><label class="gameSettings-label" for="amount">Amount</label></div>
+                    <div class="col-md-4 col-sm-12"><input id="amount" class="gameSettings-field" type="number" value="5" min="0"></div>
                 </div>
             </div>
+            -->
 
             <div class="clearfix visible-sm-block"></div>
 
@@ -62,10 +68,11 @@
                 </div>
             </div>
 
+            <!--
             <div class="col-md-3 col-sm-6 col-xs-12">
                 <div>Supply chain levels</div>
 
-                <div class="game-settings-pair">
+                <div class="gameSettings-pair">
                     <div class="col-md-3 col-sm-12"><label for="levels">TODO</label></div>
                     <div class="col-md-9 col-sm-12">
                         <select id="levels">
@@ -75,6 +82,7 @@
                     </div>
                 </div>
             </div>
+            -->
         </div>
 
         <div class="row">
@@ -86,7 +94,8 @@
                     <div class="col-md-4 col-sm-12"><input id="max-rounds" class="game-settings-field" type="number" value="5" min="0"></div>
                 </div>
 
-                <div class="game-settings-pair">
+                <!--
+                <div class="gameSettings-pair">
                     <div class="col-md-8 col-sm-12"><label for="next-rounds">Next round</label></div>
                     <div class="col-md-4 col-sm-12">
                         <select id="next-rounds">
@@ -95,6 +104,7 @@
                         </select>
                     </div>
                 </div>
+                -->
             </div>
 
             <div class="col-md-8 col-sm-6 col-xs-12">
@@ -105,7 +115,7 @@
                     <div class="col-md-5 col-sm-12">
                         <select id="messages">
                             <option>allow</option>
-                            <option>deny</option>
+                            <option selected="selected">deny</option>
                         </select>
                     </div>
                 </div>
@@ -114,7 +124,7 @@
                     <div class="col-md-7 col-sm-12"><label for="shippings">Shippings</label></div>
                     <div class="col-md-5 col-sm-12">
                         <select id="shippings">
-                            <option>not visible</option>
+                            <option selected="selected">not visible</option>
                             <option>visible</option>
                         </select>
                     </div>
@@ -124,7 +134,7 @@
                     <div class="col-md-7 col-sm-12"><label for="demand">Customer demand</label></div>
                     <div class="col-md-5 col-sm-12">
                         <select id="demand">
-                            <option>not visible</option>
+                            <option selected="selected">not visible</option>
                             <option>visible</option>
                         </select>
                     </div>
@@ -143,6 +153,9 @@
             <div class="col-md-3 col-sm-3 col-xs-12"><button type="button" class="btn btn-primary game-settings-button">Save settings</button></div>
             <div class="col-md-3 col-sm-3 col-xs-12 col-md-offset-3 col-sm-offset-2"><button type="button" class="btn btn-success game-settings-button">Create Event</button></div>
         </div>
+
+    {{/autoForm}}
+
     </div>
 
 </template>
