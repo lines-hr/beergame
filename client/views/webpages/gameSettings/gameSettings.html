@@ -1,9 +1,8 @@
 <template name="gameSettings">
 
-    <div class="container spaceBottomM">
-
+    <div class="container">
         {{#autoForm collection="GameSetup" id="insertGameSettingsForm" type="insert" }}
-
+        
         <div class="row">
             <div class="jumbotron">
                 <h1>Game Settings</h1>
@@ -11,151 +10,79 @@
         </div>
 
         <div class="row">
+            <div class="col-xs-12"><button type="button" class="btn btn-default game-settings-button">Load settings</button></div>
+        </div>
 
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <div>Initial values</div>
+        <div><h3>Game Title</h3></div>
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-xs-12">{{> afQuickField name="setup.title" type="text" value="Pls Enter Game Title..." }}</div>
+        </div>
 
-                <div class="game-settings-pair">
-                    <div class="col-md-8 col-sm-12"><label class="game-settings-label" for="stock">Stock</label></div>
-                    <div class="col-md-4 col-sm-12">{{> afQuickField name='setup.initStock' id="stock" class="gameSettings-field" type="number" value="5" min="0" }}</div>
-                </div>
-
-                <div class="game-settings-pair">
-                    <div class="col-md-8 col-sm-12"><label class="game-settings-label" for="incoming-delivery">Incoming Delivery</label></div>
-                    <div class="col-md-4 col-sm-12"><input id="incoming-delivery" class="game-settings-field" type="number" value="5" min="0"></div>
-                </div>
-
-                <div class="game-settings-pair">
-                    <div class="col-md-8 col-sm-12"><label class="game-settings-label" for="backorder">Backorder</label></div>
-                    <div class="col-md-4 col-sm-12"><input id="backorder" class="game-settings-field" type="number" value="5" min="0"></div>
-                </div>
-
-                <div class="game-settings-pair">
-                    <div class="col-md-8 col-sm-12"><label class="game-settings-label" for="incoming-order">Incoming order</label></div>
-                    <div class="col-md-4 col-sm-12"><input id="incoming-order" class="game-settings-field" type="number" value="5" min="0"></div>
-                </div>
-            </div>
-
-            <!--
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <div>Shipping delay</div>
-
-                <div class="gameSettings-pair">
-                    <div class="col-md-8 col-sm-12"><label class="gameSettings-label" for="rounds">Rounds</label></div>
-                    <div class="col-md-4 col-sm-12"><input id="rounds" class="gameSettings-field" type="number" value="5" min="0"></div>
-                </div>
-
-                <div class="gameSettings-pair">
-                    <div class="col-md-8 col-sm-12"><label class="gameSettings-label" for="amount">Amount</label></div>
-                    <div class="col-md-4 col-sm-12"><input id="amount" class="gameSettings-field" type="number" value="5" min="0"></div>
-                </div>
-            </div>
-            -->
-
-            <div class="clearfix visible-sm-block"></div>
-
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <div>Costs</div>
-
-                <div class="game-settings-pair">
-                    <div class="col-md-8 col-sm-12"><label class="game-settings-label" for="per-unit-stock">per unit on stock</label></div>
-                    <div class="col-md-4 col-sm-12"><input id="per-unit-stock" class="game-settings-field" type="number" value="5" min="0"></div>
-                </div>
-
-                <div class="game-settings-pair">
-                    <div class="col-md-8 col-sm-12"><label class="game-settings-label" for="per-unit-backorder">per unit backorder</label></div>
-                    <div class="col-md-4 col-sm-12"><input id="amount" class="game-settings-field" type="number" value="5" min="0"></div>
-                </div>
-            </div>
-
-            <!--
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <div>Supply chain levels</div>
-
-                <div class="gameSettings-pair">
-                    <div class="col-md-3 col-sm-12"><label for="levels">TODO</label></div>
-                    <div class="col-md-9 col-sm-12">
-                        <select id="levels">
-                            <option>Level 1 - Brewery</option>
-                            <option>Level 2 - Yolo</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            -->
+        <div><h3>Initial Values</h3></div>
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-sm-3">{{> afQuickField name="setup.initStock" type="number" value="5" min="0" }}</div>
+            <div class="col-sm-3">{{> afQuickField name="setup.initIncomingDelivery" type="number" value="5" min="0" }}</div>
+            <div class="col-sm-3">{{> afQuickField name="setup.initIncomingOrder" type="number" value="5" min="0" }}</div>
+            <div class="col-sm-3">{{> afQuickField name="setup.initBackorder" type="number" value="5" min="0" }}</div>
         </div>
 
         <div class="row">
-            <div class="col-md-4 col-sm-6 col-xs-12">
-                <div>Transition to next round</div>
-
-                <div class="game-settings-pair">
-                    <div class="col-md-8 col-sm-12"><label class="game-settings-label" for="max-rounds">Max rounds</label></div>
-                    <div class="col-md-4 col-sm-12"><input id="max-rounds" class="game-settings-field" type="number" value="5" min="0"></div>
+            <div class="col-sm-6">
+                <div><h3>Shipping Delay <input type="checkbox" unchecked></h3></div>
+                <div class="clearfix"></div>
+                <div class="row">
+                    <div class="col-sm-6">{{> afQuickField name="setup.initRoundLengthShippingDelay" type="number" value="0" min="0" }}</div>
+                    <div class="col-sm-6">{{> afQuickField name="setup.initAmountShippingDelay" type="number" value="0" min="0" }}</div>
                 </div>
-
-                <!--
-                <div class="gameSettings-pair">
-                    <div class="col-md-8 col-sm-12"><label for="next-rounds">Next round</label></div>
-                    <div class="col-md-4 col-sm-12">
-                        <select id="next-rounds">
-                            <option>automatically</option>
-                            <option>yolo</option>
-                        </select>
-                    </div>
-                </div>
-                -->
             </div>
 
-            <div class="col-md-8 col-sm-6 col-xs-12">
-                <div>Tracking / Tracing</div>
-
-                <div class="game-settings-pair">
-                    <div class="col-md-7 col-sm-12"><label for="messages">Send Messages</label></div>
-                    <div class="col-md-5 col-sm-12">
-                        <select id="messages">
-                            <option>allow</option>
-                            <option selected="selected">deny</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="game-settings-pair">
-                    <div class="col-md-7 col-sm-12"><label for="shippings">Shippings</label></div>
-                    <div class="col-md-5 col-sm-12">
-                        <select id="shippings">
-                            <option selected="selected">not visible</option>
-                            <option>visible</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="game-settings-pair">
-                    <div class="col-md-7 col-sm-12"><label for="demand">Customer demand</label></div>
-                    <div class="col-md-5 col-sm-12">
-                        <select id="demand">
-                            <option selected="selected">not visible</option>
-                            <option>visible</option>
-                        </select>
-                    </div>
+            <div class="col-sm-6">
+                <div><h3>Costs</h3></div>
+                <div class="clearfix"></div>
+                <div class="row">
+                    <div class="col-sm-6">{{> afQuickField name="setup.initInventoryCost" type="number" value="0" min="0" }}</div>
+                    <div class="col-sm-6">{{> afQuickField name="setup.initBackorderCost" type="number" value="0" min="0" }}</div>
                 </div>
             </div>
         </div>
 
         <div class="row">
-            <div>Customer demand</div>
+            <div class="col-sm-3">
+                <div><h3>Game Length</h3></div>
+                <div class="clearfix"></div>
+                <div class="row">
+                    <div class="col-xs-12">{{> afQuickField name="setup.initMaxRounds" type="number" value="0" min="0" }}</div>
+                </div>
+            </div>
 
-            TODO
+            <div class="col-sm-9">
+                <div><h3>Tracking</h3></div>
+                <div class="clearfix"></div>
+                <div class="row">
+                    <div class="col-sm-3">{{> afQuickField name="setup.visibleShippings"}}</div>
+                    <div class="col-sm-3">{{> afQuickField name="setup.visibleDemands"}}</div>
+                    <div class="col-sm-3">{{> afQuickField name="setup.allowMessaging"}}</div>
+                </div>
+            </div>
         </div>
+
+<!--        <div class="row">
+            TODO DEMAND, razmisliti o tome kako će na mobitelima izgledati graf i kako će se moći njime koristiti (lagano ili teško)
+        </div>-->
 
         <div class="row">
-            <div class="col-md-3 col-sm-3 col-xs-12"><button type="button" class="btn btn-default game-settings-button">Load settings</button></div>
-            <div class="col-md-3 col-sm-3 col-xs-12"><button type="button" class="btn btn-primary game-settings-button">Save settings</button></div>
-            <div class="col-md-3 col-sm-3 col-xs-12 col-md-offset-3 col-sm-offset-2"><button type="button" class="btn btn-success game-settings-button">Create Event</button></div>
+            <div class="col-xs-6"><button type="button" class="btn btn-primary game-settings-button">Save settings</button></div>
+            <div class="col-xs-6"><button type="button" class="btn btn-success game-settings-button">Create Event</button></div>
         </div>
 
-    {{/autoForm}}
-
+        {{/autoForm}}
     </div>
 
 </template>
+
+
+
+
+
