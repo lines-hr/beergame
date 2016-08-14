@@ -57,10 +57,6 @@ Template.gameSettings.onCreated(function () {
 Template.gameSettings.onRendered(function () {
 });
 
-Template.gameSettings.onCreated(function () {
-    Meteor.subscribe("GameSetupDefault");
-});
-
 Template.gameSettings.events({
     'click #goRoomBtn': function(e) {
         e.preventDefault();
@@ -90,16 +86,28 @@ AutoForm.addHooks(null, {
     }
 });
 
-SimpleSchema.debug = true;
-
-/*Template.gameSettings.events({
-    'click #saveSettingsBtn' : function (e) {
+Template.gameSettings.events({
+    'submit #insertGameSettingsForm'(e) {
         e.preventDefault();
-        GameSetup.insert({
-            subject: $(".subject").val(),
-        });
+
+        const target = e.target;
+        const title = target.title.value;
+/*        const stock = t.setup.initStock;
+        const incomingDelivery = t.setup.initIncomingDelivery;
+        const incomingOrder =  t.setup.initIncomingOrder;
+        const backorder = t.setup.initBackorder;
+        const rounds = t.setup.initRoundLengthShippingDelay;
+        const amount = t.setup.initAmountShippingDelay;
+        const inventoryCost = t.setup.initInventoryCost;
+        const backorderCost = t.setup.initBackorderCost;
+        const maxRounds = t.setup.initMaxRounds;
+        const visibleShippings = t.setup.visibleShippings;
+        const visibleDemands = t.setup.visibleDemands;
+        const allowMessaging = t.setup.allowMessaging;
+        const demand = t.setup.initDemand;*/
+
+        alert(title);
     }
-})*/
+});
 
-
-
+SimpleSchema.debug = true;
