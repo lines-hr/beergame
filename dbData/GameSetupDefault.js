@@ -1,5 +1,7 @@
-var gameSetupDefaultData = {
-    "title": "Default BeerGame",
+//if (gameSetupDefaultData.find().count() === 0) pitati
+
+/*var gameSetupDefaultData = {
+    "title": "Default Beergame",
     "isGlobal": true,
     "setupOwner": "0v0j3n3k1h4x0r",
     "setup": {
@@ -54,4 +56,4 @@ var gameSetupDefaultData = {
             "demand": 8
         }, {"roundNumber": 40, "demand": 8}]
     }
-}
+}*/

@@ -11,10 +11,6 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-xs-12"><button type="button" class="btn btn-default game-settings-button">Load settings</button></div>
-        </div>
-
         <div><h3>Game Title</h3></div>
         <div class="clearfix"></div>
         <div class="row">
@@ -24,10 +20,10 @@
         <div><h3>Initial Values</h3></div>
         <div class="clearfix"></div>
         <div class="row">
-            <div class="col-sm-3">{{> afQuickField name="setup.initStock" type="number" value="5" min="0" }}</div>
-            <div class="col-sm-3">{{> afQuickField name="setup.initIncomingDelivery" type="number" value="5" min="0" }}</div>
-            <div class="col-sm-3">{{> afQuickField name="setup.initIncomingOrder" type="number" value="5" min="0" }}</div>
-            <div class="col-sm-3">{{> afQuickField name="setup.initBackorder" type="number" value="5" min="0" }}</div>
+            <div class="col-sm-3">{{> afQuickField name="setup.initStock" type="number" min="0" }}</div>
+            <div class="col-sm-3">{{> afQuickField name="setup.initIncomingDelivery" type="number" min="0" }}</div>
+            <div class="col-sm-3">{{> afQuickField name="setup.initIncomingOrder" type="number" min="0" }}</div>
+            <div class="col-sm-3">{{> afQuickField name="setup.initBackorder" type="number" min="0" }}</div>
         </div>
 
         <div class="row">
@@ -35,8 +31,8 @@
                 <div><h3>Shipping Delay <input type="checkbox" unchecked></h3></div>
                 <div class="clearfix"></div>
                 <div class="row">
-                    <div class="col-sm-6">{{> afQuickField name="setup.initRoundLengthShippingDelay" type="number" value="0" min="0" }}</div>
-                    <div class="col-sm-6">{{> afQuickField name="setup.initAmountShippingDelay" type="number" value="0" min="0" }}</div>
+                    <div class="col-sm-6">{{> afQuickField name="setup.initRoundLengthShippingDelay" type="number" min="0" }}</div>
+                    <div class="col-sm-6">{{> afQuickField name="setup.initAmountShippingDelay" type="number" min="0" }}</div>
                 </div>
             </div>
 
@@ -44,8 +40,8 @@
                 <div><h3>Costs</h3></div>
                 <div class="clearfix"></div>
                 <div class="row">
-                    <div class="col-sm-6">{{> afQuickField name="setup.initInventoryCost" type="number" value="0" min="0" }}</div>
-                    <div class="col-sm-6">{{> afQuickField name="setup.initBackorderCost" type="number" value="0" min="0" }}</div>
+                    <div class="col-sm-6">{{> afQuickField name="setup.initInventoryCost" type="number" min="0" }}</div>
+                    <div class="col-sm-6">{{> afQuickField name="setup.initBackorderCost" type="number" min="0" }}</div>
                 </div>
             </div>
         </div>
@@ -55,7 +51,7 @@
                 <div><h3>Game Length</h3></div>
                 <div class="clearfix"></div>
                 <div class="row">
-                    <div class="col-xs-12">{{> afQuickField name="setup.initMaxRounds" type="number" value="0" min="0" }}</div>
+                    <div class="col-xs-12">{{> afQuickField name="setup.initMaxRounds" type="number" min="0" }}</div>
                 </div>
             </div>
 
@@ -70,16 +66,13 @@
             </div>
         </div>
 
-<!--        <div class="row">
-            TODO DEMAND, razmisliti o tome kako će na mobitelima izgledati graf i kako će se moći njime koristiti (lagano ili teško)
-        </div>-->
         {{> afQuickField  name="setup.initDemand" value="[ { roundNumber: 1, demand:4 }, { roundNumber: 2, demand:4 }, { roundNumber: 3, demand:4 }, { roundNumber: 4, demand:8 }, { roundNumber: 5, demand:8 }, { roundNumber: 6, demand:8 }, { roundNumber: 7, demand:8 }, { roundNumber: 8, demand:8 }, { roundNumber: 9, demand:8 }, { roundNumber: 10, demand:8 } ]"}}
 
-            <canvas id="demandChart"></canvas>
+        <canvas id="demandChart"></canvas>
 
         <div class="row">
-            <div class="col-xs-6"><button type="submit" class="btn btn-primary game-settings-button">Save settings</button></div>
-            <div class="col-xs-6"><button type="button" class="btn btn-success game-settings-button">Create Event</button></div>
+            <div class="col-xs-6"><button type="submit" class="btn btn-primary">Save settings</button></div>
+            <div class="col-xs-6"><button type="button" class="btn btn-success">Create Event</button></div>
         </div>
 
         {{/autoForm}}

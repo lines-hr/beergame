@@ -1,3 +1,4 @@
+//meteor npm install --save chart
 var Chart = require("chart");
 
 function updateChart(d) {
@@ -57,6 +58,10 @@ Template.gameSettings.onRendered(function () {
 
 
 
+});
+
+Template.gameSettingsNewGame.onCreated(function () {
+    Meteor.subscribe("GameSetupDefault");
 });
 
 AutoForm.addHooks('insertGameSettingsForm', {

@@ -7,3 +7,7 @@ GameSetup.allow({
         return !!userId && ( ("isGlobal" in doc && !doc.isGlobal) || !("isGlobal" in doc) );
     }
 });
+
+Meteor.publish('GameSetupDefault', function() {
+    return GameSetupDefault.find();
+});
