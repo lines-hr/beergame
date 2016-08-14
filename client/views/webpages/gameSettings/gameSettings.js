@@ -89,10 +89,10 @@ AutoForm.addHooks(null, {
 Template.gameSettings.events({
     'submit #insertGameSettingsForm'(e) {
         e.preventDefault();
-
-        const target = e.target;
-        const title = target.title.value;
-/*        const stock = t.setup.initStock;
+        const t = e.target;
+        const title = t.setup;
+        /*
+        const stock = t.setup.initStock;
         const incomingDelivery = t.setup.initIncomingDelivery;
         const incomingOrder =  t.setup.initIncomingOrder;
         const backorder = t.setup.initBackorder;
@@ -104,8 +104,9 @@ Template.gameSettings.events({
         const visibleShippings = t.setup.visibleShippings;
         const visibleDemands = t.setup.visibleDemands;
         const allowMessaging = t.setup.allowMessaging;
-        const demand = t.setup.initDemand;*/
-
+        const demand = t.setup.initDemand;
+        */
+        console.log(title);
         alert(title);
     }
 });
