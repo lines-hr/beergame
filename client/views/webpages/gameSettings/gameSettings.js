@@ -55,13 +55,18 @@ Template.gameSettings.onCreated(function () {
 });
 
 Template.gameSettings.onRendered(function () {
-
-
-
 });
 
-Template.gameSettingsNewGame.onCreated(function () {
+Template.gameSettings.onCreated(function () {
     Meteor.subscribe("GameSetupDefault");
+});
+
+Template.gameSettings.events({
+    'click #goRoomBtn': function(e) {
+        e.preventDefault();
+
+        FlowRouter.go('/room');
+    }
 });
 
 AutoForm.addHooks('insertGameSettingsForm', {
@@ -76,12 +81,25 @@ AutoForm.addHooks('insertGameSettingsForm', {
         demandSetup = doc.setup.initDemand;
         if(demandSetup)
             updateChart(demandSetup);
+    }
+});
 
+AutoForm.addHooks(null, {
+    onError: function (name, error, template) {
+        console.log(name + " error:", error);
     }
 });
 
 SimpleSchema.debug = true;
 
+/*Template.gameSettings.events({
+    'click #saveSettingsBtn' : function (e) {
+        e.preventDefault();
+        GameSetup.insert({
+            subject: $(".subject").val(),
+        });
+    }
+})*/
 
 
 

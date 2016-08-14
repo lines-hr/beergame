@@ -1,9 +1,10 @@
 <template name="gameSettings">
 
     <div class="container">
-        {{#autoForm collection="GameSetup" id="insertGameSettingsForm" type="insert" validation="keyup" }}
+        {{#autoForm collection="GameSetup" id="insertGameSettingsForm" type="insert" validation="keyup"}}
 
             {{> afQuickField name="setupOwner" type="hidden" }}
+            {{> afQuickField name="isGlobal" type="hidden" }}
 
         <div class="row">
             <div class="jumbotron">
@@ -66,13 +67,16 @@
             </div>
         </div>
 
+<!--
+        {{> afQuickField  name="setup.initDemand" }}
+-->
         {{> afQuickField  name="setup.initDemand" value="[ { roundNumber: 1, demand:4 }, { roundNumber: 2, demand:4 }, { roundNumber: 3, demand:4 }, { roundNumber: 4, demand:8 }, { roundNumber: 5, demand:8 }, { roundNumber: 6, demand:8 }, { roundNumber: 7, demand:8 }, { roundNumber: 8, demand:8 }, { roundNumber: 9, demand:8 }, { roundNumber: 10, demand:8 } ]"}}
 
         <canvas id="demandChart"></canvas>
 
         <div class="row">
-            <div class="col-xs-6"><button type="submit" class="btn btn-primary">Save settings</button></div>
-            <div class="col-xs-6"><button type="button" class="btn btn-success">Create Event</button></div>
+            <div class="col-xs-6"><button id="saveSettingsBtn" type="submit" class="btn btn-primary">Save settings</button></div>
+            <div class="col-xs-6"><button id="goRoomBtn" type="button" class="btn btn-success">Create Event</button></div>
         </div>
 
         {{/autoForm}}
