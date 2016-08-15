@@ -1,5 +1,14 @@
 @import "_colors.styl"
 
+#login-dropdown-list
+  #login-email
+    margin-bottom 2px
+
+@media (max-width: 767px)
+  #login-dropdown-list
+    .dropdown-menu
+      min-width 0px
+
 /*
 body
   background-color bodyC
@@ -62,11 +71,8 @@ h4
 .casper
   opacity 0.85
 
-@media (max-width: 767px)
-  .game-settings-field
-    width 100%
-  .game-settings-button
-    width 100%
+
+
 
 @media (min-width: 768px)
   .game-settings-field

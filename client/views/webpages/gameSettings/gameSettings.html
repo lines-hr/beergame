@@ -1,7 +1,7 @@
 <template name="gameSettings">
 
     <div class="container">
-        {{#autoForm collection="GameSetup" id="insertGameSettingsForm" type="insert" validation="keyup"}}
+        {{#autoForm collection="GameSetup" id="insertGameSettingsForm" type="insert"}}
 
         {{> afQuickField name="setupOwner" type="hidden" }}
         {{> afQuickField name="isGlobal" type="hidden" }}
@@ -21,7 +21,7 @@
         <div><h3>Game Password</h3></div>
         <div class="clearfix"></div>
         <div class="row">
-            <div class="col-xs-12">{{> afQuickField name="gamePassword" type="text" placeholder="Optional..." }}</div>
+            <div class="col-xs-12">{{> afQuickField name="gamePassword" type="password" placeholder="Optional..." }}</div>
         </div>
 
         <div><h3>Initial Values</h3></div>

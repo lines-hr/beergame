@@ -67,8 +67,8 @@ Template.gameSettings.events({
 
 AutoForm.addHooks('insertGameSettingsForm', {
     onSubmit: function (insertDoc, updateDoc, currentDoc) {
-        console.log(arguments);
-        return false;
+/*        console.log(arguments);
+        return false;*/
     },
     onError: function (name, error, template) {
         console.log(name + " error:", error);
@@ -86,29 +86,17 @@ AutoForm.addHooks(null, {
     }
 });
 
+/*
 Template.gameSettings.events({
     'submit #insertGameSettingsForm'(e) {
         e.preventDefault();
         const t = e.target;
-        const title = t.setup;
-        /*
-        const stock = t.setup.initStock;
-        const incomingDelivery = t.setup.initIncomingDelivery;
-        const incomingOrder =  t.setup.initIncomingOrder;
-        const backorder = t.setup.initBackorder;
-        const rounds = t.setup.initRoundLengthShippingDelay;
-        const amount = t.setup.initAmountShippingDelay;
-        const inventoryCost = t.setup.initInventoryCost;
-        const backorderCost = t.setup.initBackorderCost;
-        const maxRounds = t.setup.initMaxRounds;
-        const visibleShippings = t.setup.visibleShippings;
-        const visibleDemands = t.setup.visibleDemands;
-        const allowMessaging = t.setup.allowMessaging;
-        const demand = t.setup.initDemand;
-        */
-        console.log(title);
-        alert(title);
-    }
+        const title = t.value;
+
+        const mirko = AutoForm.getFormValues('insertGameSettingsForm');
+        console.log(mirko);
+
 });
+*/
 
 SimpleSchema.debug = true;
