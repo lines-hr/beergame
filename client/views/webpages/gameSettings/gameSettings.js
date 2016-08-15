@@ -64,6 +64,22 @@ Template.gameSettings.events({
         e.preventDefault();
 
         FlowRouter.go('/room');
+    },
+
+    'click #shippingDelayBtn': function(e, t) {
+        var disable = event.target.checked;
+
+        if(disable) {
+            Session.set('disabledCheckbox', 'disabled');
+        } else {
+            Session.set('disabledCheckbox', null);
+        }
+    }
+});
+
+Template.gameSettings.helpers({
+    isDisabled: function() {
+        return Session.get('disabledCheckbox') === null;
     }
 });
 
@@ -88,17 +104,8 @@ AutoForm.addHooks(null, {
     }
 });
 
-/*
-Template.gameSettings.events({
-    'submit #insertGameSettingsForm'(e) {
-        e.preventDefault();
-        const t = e.target;
-        const title = t.value;
-
-        const mirko = AutoForm.getFormValues('insertGameSettingsForm');
-        console.log(mirko);
-
-});
-*/
+Template.gameSettings.destroyed = function(){
+    Session.set('disabledCheckbox', null);
+};
 
 SimpleSchema.debug = true;

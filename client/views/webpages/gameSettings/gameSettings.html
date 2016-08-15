@@ -35,11 +35,16 @@
 
         <div class="row">
             <div class="col-sm-6">
-                <div><h3>Shipping Delay <input type="checkbox" unchecked></h3></div>
+                <div><h3>Shipping Delay <input id="shippingDelayBtn" type="checkbox" unchecked></h3></div>
                 <div class="clearfix"></div>
                 <div class="row">
-                    <div class="col-sm-6">{{> afQuickField name="setup.initRoundLengthShippingDelay" type="number" min="0" }}</div>
-                    <div class="col-sm-6">{{> afQuickField name="setup.initAmountShippingDelay" type="number" min="0" }}</div>
+                    {{#if isDisabled}}
+                        <div class="col-sm-6">{{> afQuickField name="setup.initRoundLengthShippingDelay" type="number" min="0" disabled=true}}</div>
+                        <div class="col-sm-6">{{> afQuickField name="setup.initAmountShippingDelay" type="number" min="0" disabled=true}}</div>
+                    {{else}}
+                        <div class="col-sm-6">{{> afQuickField name="setup.initRoundLengthShippingDelay" type="number" min="0"}}</div>
+                        <div class="col-sm-6">{{> afQuickField name="setup.initAmountShippingDelay" type="number" min="0"}}</div>
+                    {{/if}}
                 </div>
             </div>
 
