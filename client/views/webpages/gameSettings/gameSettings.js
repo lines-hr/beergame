@@ -1,4 +1,5 @@
 //meteor npm install --save chart
+/*
 var Chart = require("chart");
 
 function updateChart(d) {
@@ -49,6 +50,7 @@ function updateChart(d) {
         }
     });
 }
+*/
 
 Template.gameSettings.onCreated(function () {
     Meteor.subscribe("GameSetup");
@@ -73,11 +75,11 @@ AutoForm.addHooks('insertGameSettingsForm', {
     onError: function (name, error, template) {
         console.log(name + " error:", error);
     },
-    formToDoc: function (doc) {
+/*    formToDoc: function (doc) {
         demandSetup = doc.setup.initDemand;
         if(demandSetup)
             updateChart(demandSetup);
-    }
+    }*/
 });
 
 AutoForm.addHooks(null, {
