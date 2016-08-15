@@ -5,34 +5,55 @@ Template.room.onCreated(function () {
 Template.room.helpers({
     isDefault: function() {
        return Session.get('templateName') !== null && Session.get('templateName') !== undefined;
+    },
+
+    getUserSettings: function() {
+        var gameId = Session.get('userGameSettings');
+        var userSettings = [];
+
+        GameSetup.find({_id: gameId}).forEach(function (obj) {
+            userSettings.push(obj.title);
+            if(obj.setup.gamePassword !== "") {
+                userSettings.push('Yes');
+            } else {
+                userSettings.push('No');
+            }
+            userSettings.push(obj.setup.initMaxRounds);
+            userSettings.push(obj.setup.initStock);
+            userSettings.push(obj.setup.initIncomingDelivery);
+            userSettings.push(obj.setup.initIncomingOrder);
+            userSettings.push(obj.setup.initBackorder);
+            if(obj.setup.initRoundLengthShippingDelay === undefined) {
+                userSettings.push('-');
+            } else {
+                userSettings.push(obj.setup.initRoundLengthShippingDelay);
+            }
+            if(obj.setup.initRoundLengthShippingDelay === undefined) {
+                userSettings.push('-');
+            } else {
+                userSettings.push(obj.setup.initAmountShippingDelay);
+            }
+            userSettings.push(obj.setup.initInventoryCost);
+            userSettings.push(obj.setup.initBackorderCost);
+            if(obj.setup.visibleShippings === true) {
+                userSettings.push('Yes');
+            } else {
+                userSettings.push('No');
+            }
+            if(obj.setup.visibleDemands === true) {
+                userSettings.push('Yes');
+            } else {
+                userSettings.push('No');
+            }
+            if(obj.setup.allowMessaging === true) {
+                userSettings.push('Yes');
+            } else {
+                userSettings.push('No');
+            }
+        });
+
+        return userSettings;
     }
-    /* TODO trenutno je hardcodeano, no za ispis defaultnog templatea mi se čini
-       TODO da ne će ni trebati jer ionako tek kad se ude u igru se dodaju vrijednosti,
-       TODO koje jednostavno dodamo tako da appendamo cijeli Default Beergame
-    ,
-
-    defaultTemplate: function() {
-        var defaultSettings = [];
-
-        GameSetup.find({title: "Default Beergame"}).forEach(function (obj) {
-            defaultSettings.push(obj.title);
-            defaultSettings.push(obj.setup.initMaxRounds);
-            defaultSettings.push(obj.setup.initStock);
-            defaultSettings.push(obj.setup.initIncomingDelivery);
-            defaultSettings.push(obj.setup.initIncomingOrder);
-            defaultSettings.push(obj.setup.initBackorder);
-            defaultSettings.push(obj.setup.initRoundLengthShippingDelay);
-            defaultSettings.push(obj.setup.initAmountShippingDelay);
-            defaultSettings.push(obj.setup.initInventoryCost);
-            defaultSettings.push(obj.setup.initBackorderCost);
-            defaultSettings.push(obj.setup.visibleShippings);
-            defaultSettings.push(obj.setup.visibleDemands);
-            defaultSettings.push(obj.setup.allowMessaging);
-            defaultSettings.push(obj.setup.initDemand);
-        })
-
-        return defaultSettings;
-    }*/
 });
 
 Template.room.destroyed = function(){

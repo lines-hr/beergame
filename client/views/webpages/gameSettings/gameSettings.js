@@ -54,18 +54,13 @@ function updateChart(d) {
 
 Template.gameSettings.onCreated(function () {
     Meteor.subscribe("GameSetup");
+    Session.set('disabledCheckbox', null);
 });
 
 Template.gameSettings.onRendered(function () {
 });
 
 Template.gameSettings.events({
-    'click #goRoomBtn': function(e) {
-        e.preventDefault();
-
-        FlowRouter.go('/room');
-    },
-
     'click #shippingDelayBtn': function(e, t) {
         var disable = event.target.checked;
 
@@ -94,17 +89,26 @@ Template.gameSettings.helpers({
 
 AutoForm.addHooks('insertGameSettingsForm', {
     onSubmit: function (insertDoc, updateDoc, currentDoc) {
-/*        console.log(arguments);
-        return false;*/
+        /*
+        console.log(arguments);
+        return false;
+        */
     },
+
     onError: function (name, error, template) {
         console.log(name + " error:", error);
     },
-/*    formToDoc: function (doc) {
+    /*
+    formToDoc: function (doc) {
         demandSetup = doc.setup.initDemand;
         if(demandSetup)
             updateChart(demandSetup);
-    }*/
+    },
+    */
+    onSuccess: function(formType, result) {
+        Session.set("userGameSettings", this.docId);
+        FlowRouter.go('/room');
+    }
 });
 
 AutoForm.addHooks(null, {
