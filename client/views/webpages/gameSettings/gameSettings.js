@@ -74,13 +74,22 @@ Template.gameSettings.events({
         } else {
             Session.set('disabledCheckbox', null);
         }
+    },
+
+    'input #maxRoundsValidation': function (event, template) {
+        Session.set("maxRoundValidate", event.currentTarget.value);
     }
 });
 
 Template.gameSettings.helpers({
     isDisabled: function() {
         return Session.get('disabledCheckbox') === null;
+    },
+
+    getMaxRounds: function() {
+        return Session.get('maxRoundValidate');
     }
+
 });
 
 AutoForm.addHooks('insertGameSettingsForm', {

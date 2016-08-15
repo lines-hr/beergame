@@ -4,7 +4,7 @@ Template.room.onCreated(function () {
 
 Template.room.helpers({
     isDefault: function() {
-       return Session.get('templateName') !== null;
+       return Session.get('templateName') !== null && Session.get('templateName') !== undefined;
     }
     /* TODO trenutno je hardcodeano, no za ispis defaultnog templatea mi se čini
        TODO da ne će ni trebati jer ionako tek kad se ude u igru se dodaju vrijednosti,
