@@ -54,6 +54,8 @@ function updateChart(d) {
 
 Template.gameSettings.onCreated(function () {
     Meteor.subscribe("GameSetup");
+    Meteor.subscribe("Game");
+
     Session.set('disabledCheckbox', null);
 });
 
@@ -106,6 +108,12 @@ AutoForm.addHooks('insertGameSettingsForm', {
     },
     */
     onSuccess: function(formType, result) {
+        Game.insert({
+            gameSetup: this.docId,
+            gameAdmins: this.userId,
+            gameStatus: 'inLobby'
+        });
+
         Session.set("userGameSettings", this.docId);
         FlowRouter.go('/room');
     }
