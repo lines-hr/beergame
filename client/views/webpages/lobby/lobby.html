@@ -11,7 +11,15 @@
 
         <div class="row">
             <div class="col-sm-9">
-                {{lobbyGames}}
+                <div class="row">
+                    <div class="col-xs-4">Title</div>
+                </div>
+
+                {{#each lobbyGames}}
+                    <div class="row">
+                        {{> lobbyObservers}}
+                    </div>
+                {{/each}}
             </div>
 
             <div class="col-sm-3">

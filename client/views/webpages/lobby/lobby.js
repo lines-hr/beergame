@@ -17,7 +17,7 @@ Template.lobby.helpers({
 
         Game.find({gameStatus: 'inLobby'}).forEach(function (obj) {
             GameSetup.find({_id: new Mongo.ObjectID(obj.gameSetup)}).forEach(function (obj2) {
-                games.push(obj2.title);
+                games.push({title: obj2.title, gameId: obj._id});
             });
         });
 
