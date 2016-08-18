@@ -110,7 +110,7 @@ AutoForm.addHooks('insertGameSettingsForm', {
     onSuccess: function(formType, result) {
         Game.insert({
             gameSetup: this.docId,
-            gameAdmins: this.userId,
+            gameAdmins: Meteor.userId(),
             gameStatus: 'inLobby'
         });
 

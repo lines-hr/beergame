@@ -27,7 +27,7 @@ Template.gameSettingsNewGame.events({
 
         Game.insert({
             gameSetup: templateId,
-            gameAdmins: this.userId,
+            gameAdmins: Meteor.userId(),
             gameStatus: 'inLobby'
         });
 

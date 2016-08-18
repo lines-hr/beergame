@@ -8,11 +8,8 @@ Template.lobbyObservers.events({
         game = e.target.value;
         user = Meteor.userId();
 
-        /*Game.update({_id: game}, {$set:
-            { "mirko": user }
-        });*/
-        Game.update({_id: game}, {$set:
-            { "observer.observerId": user }
+        Game.update({_id: game}, {$push:
+            { "observers": user }
         });
 
 
