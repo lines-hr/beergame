@@ -2,6 +2,9 @@ Template.headerLayout.helpers({
     activeIfTemplateIs: function (template) {
         var currentRoute = FlowRouter.getRouteName();
         return currentRoute && template === currentRoute ? 'active' : '';
+    },
+    roomActive: function () {
+        return Session.get("roomActive") === "1";
     }
 });
 

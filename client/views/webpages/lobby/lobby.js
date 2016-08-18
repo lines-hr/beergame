@@ -22,5 +22,12 @@ Template.lobby.helpers({
         });
 
         return games;
+    },
+
+    forbidCreate: function () {
+        if (Session.get("roomActive") === undefined) {
+            return true;
+        }
+        return Session.get("roomActive") === "0";
     }
 });

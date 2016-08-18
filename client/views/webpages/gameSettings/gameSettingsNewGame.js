@@ -16,6 +16,8 @@ Template.gameSettingsNewGame.events({
         e.preventDefault();
 
         Session.set('templateName', 'Default Beergame');
+        Session.set('roomActive', '1');
+        delete Session.keys['userGameSettings'];
 
         var templateId = "";
 

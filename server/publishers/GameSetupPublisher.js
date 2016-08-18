@@ -5,5 +5,8 @@ Meteor.publish("GameSetup", function () {
 GameSetup.allow({
     insert: function (userId, doc) {
         return !!userId && ( ("isGlobal" in doc && !doc.isGlobal) || !("isGlobal" in doc) );
+    },
+    remove: function(userId) {
+        return userId;
     }
 });

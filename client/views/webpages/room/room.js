@@ -1,10 +1,39 @@
 Template.room.onCreated(function () {
     Meteor.subscribe("GameSetup");
+    Meteor.subscribe("Game");
+});
+
+Template.room.events({
+    'click #cancelGame': function () {
+        Session.set('roomActive', "0");
+
+        var defaultSetup = "";
+        GameSetup.find({title: 'Default Beergame'}).forEach(function (obj) {
+            defaultSetup = obj._id._str;
+        });
+
+        gameId = "";
+        gameStatusId = "";
+        Game.find({gameStatus: 'inLobby'}).forEach(function (obj) {
+            gameId = obj._id;
+            gameStatusId = obj.gameSetup;
+        });
+
+        if (defaultSetup !== gameStatusId) {
+            GameSetup.remove({_id: gameStatusId});
+        }
+
+        Game.remove({_id: gameId});
+        delete Session.keys['userGameSettings'];
+
+        Session.set("templateName", '')
+        FlowRouter.go('/lobby');
+    }
 });
 
 Template.room.helpers({
     isDefault: function() {
-       return Session.get('templateName') !== null && Session.get('templateName') !== undefined;
+       return Session.get('templateName') === 'Default Beergame';
     },
 
     getUserSettings: function() {
@@ -57,6 +86,6 @@ Template.room.helpers({
 });
 
 Template.room.destroyed = function(){
-    Session.set('templateName', null);
+    //Session.set('templateName', null);
 };
 
