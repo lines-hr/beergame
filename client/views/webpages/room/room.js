@@ -4,6 +4,21 @@ Template.room.onCreated(function () {
 });
 
 Template.room.events({
+    'click #exitRoom': function () {
+        game = "";
+        user = Meteor.userId();
+
+        Game.find({observers: Meteor.userId()}).forEach(function (obj) {
+            game = obj._id;
+        });
+
+        Game.update({_id: game}, {$pull:
+            { "observers": user }
+        });
+
+        FlowRouter.go('/lobby');
+    },
+
     'click #cancelGame': function () {
         Session.set('roomActive', "0");
 
@@ -32,10 +47,27 @@ Template.room.events({
 });
 
 Template.room.helpers({
+    joined: function () {
+        if(Game.find({observers: Meteor.userId()}).count() !== 1) {
+            return true;
+        }
+    },
+
+    listObservers: function() {
+        var observers = [];
+
+        Game.find({gameStatus: 'inLobby'}).forEach(function (obj) {
+            observers.push({observer: obj.observers});
+        });
+
+        return observers;
+    },
+
     isDefault: function() {
        return Session.get('templateName') === 'Default Beergame';
     },
 
+    //TODO joined useru prikazati podatke
     getUserSettings: function() {
         var gameId = Session.get('userGameSettings');
         var userSettings = [];

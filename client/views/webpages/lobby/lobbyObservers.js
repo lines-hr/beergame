@@ -12,7 +12,6 @@ Template.lobbyObservers.events({
             { "observers": user }
         });
 
-
-        //FlowRouter.go('/room');
+        FlowRouter.go('/room');
     }
 });

@@ -11,13 +11,23 @@
             <div class="col-sm-6">
                 <div class="row">
                     <h3>Observers</h3>
+
+                    {{#each listObservers}}
+                    <div class="row">
+                        {{> roomObservers}}
+                    </div>
+                    {{/each}}
                 </div>
 
                 <div class="row">
                     <h3>Players</h3>
                 </div>
 
-                <button id="cancelGame" class="btn btn-warning btn-block">Cancel Game</button>
+                {{#if joined}}
+                    <button id="cancelGame" class="btn btn-warning btn-block">Cancel Game</button>
+                {{else}}
+                    <button id="exitRoom" class="btn btn-warning btn-block">Exit Room</button>
+                {{/if}}
             </div>
 
             <div class="col-sm-6">
