@@ -5,13 +5,27 @@ Template.lobbyObservers.onCreated(function () {
 
 Template.lobbyObservers.events({
     'click .joinRoom': function (e) {
-        game = e.target.value;
-        user = Meteor.userId();
+/*        var game = e.target.value;
+        var user = Meteor.userId();
+        var gameSetup = "";
+        var gamePassword = "";
 
-        Game.update({_id: game}, {$push:
-            { "observers": user }
+        Game.find({_id: game}, {fields: {gameSetup: 1}}).forEach(function (obj) {
+            gameSetup = obj.gameSetup;
         });
 
-        FlowRouter.go('/room');
+        GameSetup.find({_id: new Mongo.ObjectID(gameSetup)}, {fields: {gamePassword: 1}}).forEach(function (obj) {
+            gamePassword = obj.gamePassword;
+        });
+
+        if (gamePassword === "") {
+            Game.update({_id: game}, {$push:
+                { "observers": user }
+            });
+
+            FlowRouter.go('/room');
+        } else {
+
+        }*/
     }
 });

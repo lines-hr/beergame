@@ -108,8 +108,34 @@ AutoForm.addHooks('insertGameSettingsForm', {
     },
     */
     onSuccess: function(formType, result) {
+        var game = {};
+
+        GameSetup.find(result).forEach(function (obj) {
+            game = {
+                setupId: obj._id,
+                setupOwner: obj.setupOwner,
+                isGlobal: obj.isGlobal,
+                title: obj.title,
+                gamePassword: obj.gamePassword,
+                setup: {
+                    initStock: obj.setup.initStock,
+                    initIncomingDelivery: obj.setup.initIncomingDelivery,
+                    initIncomingOrder: obj.setup.initIncomingOrder,
+                    initBackorder: obj.setup.initBackorder,
+                    initRoundLengthShippingDelay: obj.setup.initRoundLengthShippingDelay,
+                    initAmountShippingDelay: obj.setup.initAmountShippingDelay,
+                    initInventoryCost: obj.setup.initInventoryCost,
+                    initBackorderCost: obj.setup.initBackorderCost,
+                    visibleShippings: obj.setup.visibleShippings,
+                    visibleDemands: obj.setup.visibleDemands,
+                    allowMessaging: obj.setup.allowMessaging,
+                    initDemand: obj.setup.initDemand
+                }
+            }
+        });
+
         Game.insert({
-            gameSetup: this.docId,
+            gameSetup: game,
             gameAdmins: Meteor.userId(),
             gameStatus: 'inLobby'
         });

@@ -19,29 +19,26 @@ Template.room.events({
         FlowRouter.go('/lobby');
     },
 
+    /*
+    * Cancelling game and deleting game and setup
+    * TODO change function for user's more setups
+    * */
     'click #cancelGame': function () {
-        Session.set('roomActive', "0");
+        var gameId = "";
+        var setupId = "";
+        var name = "";
 
-        var defaultSetup = "";
-        GameSetup.find({title: 'Default Beergame'}).forEach(function (obj) {
-            defaultSetup = obj._id._str;
-        });
-
-        gameId = "";
-        gameStatusId = "";
-        Game.find({gameStatus: 'inLobby'}).forEach(function (obj) {
+        Game.find({gameAdmins: Meteor.userId(), gameStatus: "inLobby"}).forEach(function (obj) {
             gameId = obj._id;
-            gameStatusId = obj.gameSetup;
+            setupId = obj.gameSetup.setupId;
+            name = obj.gameSetup.title;
         });
 
-        if (defaultSetup !== gameStatusId) {
-            GameSetup.remove({_id: gameStatusId});
+        if (name !== "Default Beergame") {
+            GameSetup.remove(setupId);
         }
+        Game.remove(gameId);
 
-        Game.remove({_id: gameId});
-        delete Session.keys['userGameSettings'];
-
-        Session.set("templateName", '')
         FlowRouter.go('/lobby');
     }
 });
@@ -63,50 +60,48 @@ Template.room.helpers({
         return observers;
     },
 
-    isDefault: function() {
-       return Session.get('templateName') === 'Default Beergame';
-    },
-
-    //TODO joined useru prikazati podatke
+    /*
+    * Game info in lobby after game is created
+    * */
     getUserSettings: function() {
-        var gameId = Session.get('userGameSettings');
         var userSettings = [];
 
-        GameSetup.find({_id: gameId}).forEach(function (obj) {
-            userSettings.push(obj.title);
-            if(obj.setup.gamePassword !== "") {
-                userSettings.push('Yes');
-            } else {
+        Game.find({gameAdmins: Meteor.userId(), gameStatus: "inLobby"}).forEach(function (obj) {
+            userSettings.push(obj.gameSetup.title);
+            //TODO bug with password
+            if(obj.gameSetup.setup.gamePassword === undefined || obj.gameSetup.setup.gamePassword === "") {
                 userSettings.push('No');
+            } else {
+                userSettings.push('Yes');
             }
-            userSettings.push(obj.setup.initMaxRounds);
-            userSettings.push(obj.setup.initStock);
-            userSettings.push(obj.setup.initIncomingDelivery);
-            userSettings.push(obj.setup.initIncomingOrder);
-            userSettings.push(obj.setup.initBackorder);
-            if(obj.setup.initRoundLengthShippingDelay === undefined) {
+            userSettings.push(obj.gameSetup.setup.initDemand.length);
+            userSettings.push(obj.gameSetup.setup.initStock);
+            userSettings.push(obj.gameSetup.setup.initIncomingDelivery);
+            userSettings.push(obj.gameSetup.setup.initIncomingOrder);
+            userSettings.push(obj.gameSetup.setup.initBackorder);
+            if(obj.gameSetup.setup.initRoundLengthShippingDelay === undefined || obj.gameSetup.setup.initRoundLengthShippingDelay === 0) {
                 userSettings.push('-');
             } else {
-                userSettings.push(obj.setup.initRoundLengthShippingDelay);
+                userSettings.push(obj.gameSetup.setup.initRoundLengthShippingDelay);
             }
-            if(obj.setup.initRoundLengthShippingDelay === undefined) {
+            if(obj.gameSetup.setup.initRoundLengthShippingDelay === undefined || obj.gameSetup.setup.initRoundLengthShippingDelay === 0) {
                 userSettings.push('-');
             } else {
-                userSettings.push(obj.setup.initAmountShippingDelay);
+                userSettings.push(obj.gameSetup.setup.initAmountShippingDelay);
             }
-            userSettings.push(obj.setup.initInventoryCost);
-            userSettings.push(obj.setup.initBackorderCost);
-            if(obj.setup.visibleShippings === true) {
+            userSettings.push(obj.gameSetup.setup.initInventoryCost);
+            userSettings.push(obj.gameSetup.setup.initBackorderCost);
+            if(obj.gameSetup.setup.visibleShippings === true) {
                 userSettings.push('Yes');
             } else {
                 userSettings.push('No');
             }
-            if(obj.setup.visibleDemands === true) {
+            if(obj.gameSetup.setup.visibleDemands === true) {
                 userSettings.push('Yes');
             } else {
                 userSettings.push('No');
             }
-            if(obj.setup.allowMessaging === true) {
+            if(obj.gameSetup.setup.allowMessaging === true) {
                 userSettings.push('Yes');
             } else {
                 userSettings.push('No');
@@ -116,8 +111,3 @@ Template.room.helpers({
         return userSettings;
     }
 });
-
-Template.room.destroyed = function(){
-    //Session.set('templateName', null);
-};
-
