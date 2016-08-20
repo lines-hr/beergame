@@ -4,13 +4,59 @@ Template.room.onCreated(function () {
 });
 
 Template.room.events({
+    'click #ready': function (e) {
+        // TODO
+    },
+
+    'click .toObserve': function (e) {
+        var game = "";
+        var playerId = e.target.value;
+
+        Game.find({players: playerId, gameStatus: "inLobby"}).forEach(function (obj) {
+            game = obj._id;
+        });
+
+        Game.update({_id: game}, {$pull:
+        { players: playerId }
+        });
+
+        Game.update({_id: game}, {$push: {
+            observers: playerId
+            /*            "players.playerId": playerId,
+             "players.level": 1,
+             "players.isReady": false*/
+        }
+        });
+    },
+
+    'click .toPlay': function (e) {
+        var game = "";
+        var playerId = e.target.value;
+
+        Game.find({observers: playerId, gameStatus: "inLobby"}).forEach(function (obj) {
+            game = obj._id;
+        });
+
+        Game.update({_id: game}, {$pull:
+            { observers: playerId }
+        });
+
+        Game.update({_id: game}, {$push: {
+            players: playerId
+/*            "players.playerId": playerId,
+            "players.level": 1,
+            "players.isReady": false*/
+            }
+        });
+    },
+
     /*
     * Exiting room for joined user
     * */
     'click #exitRoom': function () {
-        game = "";
+        var game = "";
 
-        Game.find({observers: Meteor.userId()}).forEach(function (obj) {
+        Game.find({observers: Meteor.userId(), gameStatus: "inLobby"}).forEach(function (obj) {
             game = obj._id;
         });
 
@@ -56,6 +102,12 @@ Template.room.helpers({
         }
     },
 
+    added: function () {
+        if(Game.find({players: Meteor.userId()}).count() === 1) {
+            return true;
+        }
+    },
+
     /*
      * Game admin only have option for cancel game
      * */
@@ -67,6 +119,7 @@ Template.room.helpers({
 
     /*
     * Listing observers on game admin side
+    * TODO add nickname to register and show that nickname
     * */
     listObservers: function() {
         var observers = [];
@@ -76,6 +129,16 @@ Template.room.helpers({
         });
 
         return observers;
+    },
+
+    listPlayers: function() {
+        var players = [];
+
+        Game.find({gameAdmins: Meteor.userId(), gameStatus: 'inLobby'}).forEach(function (obj) {
+            players.push({player: obj.players});
+        });
+
+        return players;
     },
 
     /*
@@ -126,8 +189,50 @@ Template.room.helpers({
                     userSettings.push('No');
                 }
             });
-        } else {
+        } else if (Game.find({observers: Meteor.userId(), gameStatus: "inLobby"}).count() === 1) {
             Game.find({observers: Meteor.userId(), gameStatus: "inLobby"}).forEach(function (obj) {
+                userSettings.push(obj.gameSetup.title);
+                //TODO bug with password
+                if (obj.gameSetup.setup.gamePassword === undefined || obj.gameSetup.setup.gamePassword === "") {
+                    userSettings.push('No');
+                } else {
+                    userSettings.push('Yes');
+                }
+                userSettings.push(obj.gameSetup.setup.initDemand.length);
+                userSettings.push(obj.gameSetup.setup.initStock);
+                userSettings.push(obj.gameSetup.setup.initIncomingDelivery);
+                userSettings.push(obj.gameSetup.setup.initIncomingOrder);
+                userSettings.push(obj.gameSetup.setup.initBackorder);
+                if (obj.gameSetup.setup.initRoundLengthShippingDelay === undefined || obj.gameSetup.setup.initRoundLengthShippingDelay === 0) {
+                    userSettings.push('-');
+                } else {
+                    userSettings.push(obj.gameSetup.setup.initRoundLengthShippingDelay);
+                }
+                if (obj.gameSetup.setup.initRoundLengthShippingDelay === undefined || obj.gameSetup.setup.initRoundLengthShippingDelay === 0) {
+                    userSettings.push('-');
+                } else {
+                    userSettings.push(obj.gameSetup.setup.initAmountShippingDelay);
+                }
+                userSettings.push(obj.gameSetup.setup.initInventoryCost);
+                userSettings.push(obj.gameSetup.setup.initBackorderCost);
+                if (obj.gameSetup.setup.visibleShippings === true) {
+                    userSettings.push('Yes');
+                } else {
+                    userSettings.push('No');
+                }
+                if (obj.gameSetup.setup.visibleDemands === true) {
+                    userSettings.push('Yes');
+                } else {
+                    userSettings.push('No');
+                }
+                if (obj.gameSetup.setup.allowMessaging === true) {
+                    userSettings.push('Yes');
+                } else {
+                    userSettings.push('No');
+                }
+            });
+        } else {
+            Game.find({players: Meteor.userId(), gameStatus: "inLobby"}).forEach(function (obj) {
                 userSettings.push(obj.gameSetup.title);
                 //TODO bug with password
                 if (obj.gameSetup.setup.gamePassword === undefined || obj.gameSetup.setup.gamePassword === "") {

@@ -39,6 +39,7 @@ Template.lobbyObservers.helpers({
     forbidJoin: function () {
         var condition = "";
         var condition2 = "";
+        var condition3 = "";
 
         Game.find({gameAdmins: Meteor.userId(), gameStatus: "inLobby"}).forEach(function (obj) {
             condition = obj._id;
@@ -48,7 +49,11 @@ Template.lobbyObservers.helpers({
             condition2 = obj._id;
         });
 
-        if (condition || condition2) {
+        Game.find({players: Meteor.userId()}).forEach(function (obj) {
+            condition3 = obj._id;
+        });
+
+        if (condition || condition2 || condition3) {
             return false;
         } else {
             return true;
