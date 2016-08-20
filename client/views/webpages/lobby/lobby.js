@@ -15,26 +15,20 @@ Template.lobby.events({
 });
 
 Template.lobby.helpers({
+    /*
+    * Returning all inLobby games where fields gameId, password and title
+    * are used for lobbyObservers template
+    * */
     lobbyGames: function () {
         var games = [];
-        var gameSetup = [];
 
         Game.find({gameStatus: 'inLobby'}).forEach(function (obj) {
-            gameSetup.push({setupId: obj.gameSetup});
-        });
-
-        // solving problem with _id { _str } in default, and _id in custom created games
-        for (var i = 0; i < gameSetup.length; i++) {
-            if (gameSetup[i].setupId === "57b1f3b48497292bf6a16906") {
-                GameSetup.find({_id: new Mongo.ObjectID(gameSetup[i].setupId)}).forEach(function (obj) {
-                    games.push({title: obj.title, gameId: obj._id});
-                });
+            if (obj.gameSetup.gamePassword) {
+                games.push({gameId: obj._id, password: "Yes", title: obj.gameSetup.title});
             } else {
-                GameSetup.find({_id: gameSetup[i].setupId}).forEach(function (obj) {
-                    games.push({title: obj.title, gameId: obj._id});
-                });
+                games.push({gameId: obj._id, password: "No", title: obj.gameSetup.title});
             }
-        }
+        });
 
         return games;
     },

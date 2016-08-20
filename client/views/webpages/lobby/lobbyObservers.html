@@ -4,8 +4,16 @@
         {{title}}
     </div>
 
+    <div class="col-xs-4">
+        {{password}}
+    </div>
+
     <div class="col-xs-2">
+        {{#if forbidJoin}}
         <button value="{{gameId}}" type="button" class="btn btn-default joinRoom">Join</button>
+        {{else}}
+        <button value="{{gameId}}" type="button" class="btn btn-default joinRoom" disabled="disabled">Join</button>
+        {{/if}}
     </div>
 
 </template>

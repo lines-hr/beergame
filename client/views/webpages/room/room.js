@@ -4,16 +4,18 @@ Template.room.onCreated(function () {
 });
 
 Template.room.events({
+    /*
+    * Exiting room for joined user
+    * */
     'click #exitRoom': function () {
         game = "";
-        user = Meteor.userId();
 
         Game.find({observers: Meteor.userId()}).forEach(function (obj) {
             game = obj._id;
         });
 
         Game.update({_id: game}, {$pull:
-            { "observers": user }
+            { observers: Meteor.userId() }
         });
 
         FlowRouter.go('/lobby');
@@ -44,16 +46,22 @@ Template.room.events({
 });
 
 Template.room.helpers({
+    /*
+    * Observer only have option for exit game
+    * */
     joined: function () {
         if(Game.find({observers: Meteor.userId()}).count() !== 1) {
             return true;
         }
     },
 
+    /*
+    * Listing observers on game admin side
+    * */
     listObservers: function() {
         var observers = [];
 
-        Game.find({gameStatus: 'inLobby'}).forEach(function (obj) {
+        Game.find({gameAdmins: Meteor.userId(), gameStatus: 'inLobby'}).forEach(function (obj) {
             observers.push({observer: obj.observers});
         });
 
