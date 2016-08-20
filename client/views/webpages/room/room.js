@@ -84,47 +84,91 @@ Template.room.helpers({
     getUserSettings: function() {
         var userSettings = [];
 
-        Game.find({gameStatus: "inLobby"}).forEach(function (obj) {
-            userSettings.push(obj.gameSetup.title);
-            //TODO bug with password
-            if(obj.gameSetup.setup.gamePassword === undefined || obj.gameSetup.setup.gamePassword === "") {
-                userSettings.push('No');
-            } else {
-                userSettings.push('Yes');
-            }
-            userSettings.push(obj.gameSetup.setup.initDemand.length);
-            userSettings.push(obj.gameSetup.setup.initStock);
-            userSettings.push(obj.gameSetup.setup.initIncomingDelivery);
-            userSettings.push(obj.gameSetup.setup.initIncomingOrder);
-            userSettings.push(obj.gameSetup.setup.initBackorder);
-            if(obj.gameSetup.setup.initRoundLengthShippingDelay === undefined || obj.gameSetup.setup.initRoundLengthShippingDelay === 0) {
-                userSettings.push('-');
-            } else {
-                userSettings.push(obj.gameSetup.setup.initRoundLengthShippingDelay);
-            }
-            if(obj.gameSetup.setup.initRoundLengthShippingDelay === undefined || obj.gameSetup.setup.initRoundLengthShippingDelay === 0) {
-                userSettings.push('-');
-            } else {
-                userSettings.push(obj.gameSetup.setup.initAmountShippingDelay);
-            }
-            userSettings.push(obj.gameSetup.setup.initInventoryCost);
-            userSettings.push(obj.gameSetup.setup.initBackorderCost);
-            if(obj.gameSetup.setup.visibleShippings === true) {
-                userSettings.push('Yes');
-            } else {
-                userSettings.push('No');
-            }
-            if(obj.gameSetup.setup.visibleDemands === true) {
-                userSettings.push('Yes');
-            } else {
-                userSettings.push('No');
-            }
-            if(obj.gameSetup.setup.allowMessaging === true) {
-                userSettings.push('Yes');
-            } else {
-                userSettings.push('No');
-            }
-        });
+        if (Game.find({gameAdmins: Meteor.userId(), gameStatus: "inLobby"}).count() === 1) {
+            Game.find({gameAdmins: Meteor.userId(), gameStatus: "inLobby"}).forEach(function (obj) {
+                userSettings.push(obj.gameSetup.title);
+                //TODO bug with password
+                if (obj.gameSetup.setup.gamePassword === undefined || obj.gameSetup.setup.gamePassword === "") {
+                    userSettings.push('No');
+                } else {
+                    userSettings.push('Yes');
+                }
+                userSettings.push(obj.gameSetup.setup.initDemand.length);
+                userSettings.push(obj.gameSetup.setup.initStock);
+                userSettings.push(obj.gameSetup.setup.initIncomingDelivery);
+                userSettings.push(obj.gameSetup.setup.initIncomingOrder);
+                userSettings.push(obj.gameSetup.setup.initBackorder);
+                if (obj.gameSetup.setup.initRoundLengthShippingDelay === undefined || obj.gameSetup.setup.initRoundLengthShippingDelay === 0) {
+                    userSettings.push('-');
+                } else {
+                    userSettings.push(obj.gameSetup.setup.initRoundLengthShippingDelay);
+                }
+                if (obj.gameSetup.setup.initRoundLengthShippingDelay === undefined || obj.gameSetup.setup.initRoundLengthShippingDelay === 0) {
+                    userSettings.push('-');
+                } else {
+                    userSettings.push(obj.gameSetup.setup.initAmountShippingDelay);
+                }
+                userSettings.push(obj.gameSetup.setup.initInventoryCost);
+                userSettings.push(obj.gameSetup.setup.initBackorderCost);
+                if (obj.gameSetup.setup.visibleShippings === true) {
+                    userSettings.push('Yes');
+                } else {
+                    userSettings.push('No');
+                }
+                if (obj.gameSetup.setup.visibleDemands === true) {
+                    userSettings.push('Yes');
+                } else {
+                    userSettings.push('No');
+                }
+                if (obj.gameSetup.setup.allowMessaging === true) {
+                    userSettings.push('Yes');
+                } else {
+                    userSettings.push('No');
+                }
+            });
+        } else {
+            Game.find({observers: Meteor.userId(), gameStatus: "inLobby"}).forEach(function (obj) {
+                userSettings.push(obj.gameSetup.title);
+                //TODO bug with password
+                if (obj.gameSetup.setup.gamePassword === undefined || obj.gameSetup.setup.gamePassword === "") {
+                    userSettings.push('No');
+                } else {
+                    userSettings.push('Yes');
+                }
+                userSettings.push(obj.gameSetup.setup.initDemand.length);
+                userSettings.push(obj.gameSetup.setup.initStock);
+                userSettings.push(obj.gameSetup.setup.initIncomingDelivery);
+                userSettings.push(obj.gameSetup.setup.initIncomingOrder);
+                userSettings.push(obj.gameSetup.setup.initBackorder);
+                if (obj.gameSetup.setup.initRoundLengthShippingDelay === undefined || obj.gameSetup.setup.initRoundLengthShippingDelay === 0) {
+                    userSettings.push('-');
+                } else {
+                    userSettings.push(obj.gameSetup.setup.initRoundLengthShippingDelay);
+                }
+                if (obj.gameSetup.setup.initRoundLengthShippingDelay === undefined || obj.gameSetup.setup.initRoundLengthShippingDelay === 0) {
+                    userSettings.push('-');
+                } else {
+                    userSettings.push(obj.gameSetup.setup.initAmountShippingDelay);
+                }
+                userSettings.push(obj.gameSetup.setup.initInventoryCost);
+                userSettings.push(obj.gameSetup.setup.initBackorderCost);
+                if (obj.gameSetup.setup.visibleShippings === true) {
+                    userSettings.push('Yes');
+                } else {
+                    userSettings.push('No');
+                }
+                if (obj.gameSetup.setup.visibleDemands === true) {
+                    userSettings.push('Yes');
+                } else {
+                    userSettings.push('No');
+                }
+                if (obj.gameSetup.setup.allowMessaging === true) {
+                    userSettings.push('Yes');
+                } else {
+                    userSettings.push('No');
+                }
+            });
+        }
 
         return userSettings;
     }
