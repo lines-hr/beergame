@@ -12,26 +12,26 @@ Template.room.events({
         var game = "";
         var playerId = e.target.value;
 
-        Game.find({players: playerId, gameStatus: "inLobby"}).forEach(function (obj) {
+        Game.find({"players.playerId": playerId, gameStatus: "inLobby"}).forEach(function (obj) {
             game = obj._id;
         });
 
-        Game.update({_id: game}, {$pull:
-        { players: playerId }
+        Game.update({_id: game}, {$pull: {
+            "players": {
+                    playerId: playerId
+                }
+            }
         });
 
-        Game.update({_id: game}, {$push: {
-            observers: playerId
-            /*            "players.playerId": playerId,
-             "players.level": 1,
-             "players.isReady": false*/
-        }
+        Game.update({_id: game}, {$push:
+            { observers: playerId }
         });
     },
 
     'click .toPlay': function (e) {
         var game = "";
         var playerId = e.target.value;
+        var player = {};
 
         Game.find({observers: playerId, gameStatus: "inLobby"}).forEach(function (obj) {
             game = obj._id;
@@ -41,12 +41,13 @@ Template.room.events({
             { observers: playerId }
         });
 
-        Game.update({_id: game}, {$push: {
-            players: playerId
-/*            "players.playerId": playerId,
-            "players.level": 1,
-            "players.isReady": false*/
-            }
+        player = {
+            playerId: playerId,
+            isReady: false
+        }
+
+        Game.update({_id: game}, {$push:
+            { players: player }
         });
     },
 
@@ -55,14 +56,30 @@ Template.room.events({
     * */
     'click #exitRoom': function () {
         var game = "";
+        var game2 = "";
 
         Game.find({observers: Meteor.userId(), gameStatus: "inLobby"}).forEach(function (obj) {
             game = obj._id;
         });
 
-        Game.update({_id: game}, {$pull:
-            { observers: Meteor.userId() }
+        Game.find({"players.playerId": Meteor.userId(), gameStatus: "inLobby"}).forEach(function (obj) {
+            game2 = obj._id;
         });
+
+        if (Game.find({observers: Meteor.userId(), gameStatus: "inLobby"}).count() === 1) {
+            Game.update({_id: game}, {$pull:
+                { observers: Meteor.userId() }
+            });
+        }
+
+        if (Game.find({"players.playerId": Meteor.userId(), gameStatus: "inLobby"}).count() === 1) {
+            Game.update({_id: game2}, {$pull: {
+                    "players": {
+                        playerId: Meteor.userId()
+                    }
+                }
+            });
+        }
 
         FlowRouter.go('/lobby');
     },
@@ -86,6 +103,7 @@ Template.room.events({
             GameSetup.remove(setupId);
         }
         Game.update({_id: gameId}, {$set: {observers: []}});
+        Game.update({_id: gameId}, {$set: {players: []}});
         Game.remove(gameId);
 
         FlowRouter.go('/lobby');
@@ -103,7 +121,7 @@ Template.room.helpers({
     },
 
     added: function () {
-        if(Game.find({players: Meteor.userId()}).count() === 1) {
+        if(Game.find({"players.playerId": Meteor.userId()}).count() === 1) {
             return true;
         }
     },
@@ -135,7 +153,9 @@ Template.room.helpers({
         var players = [];
 
         Game.find({gameAdmins: Meteor.userId(), gameStatus: 'inLobby'}).forEach(function (obj) {
-            players.push({player: obj.players});
+            obj.players.forEach(function (obj2) {
+                players.push({player: obj2.playerId});
+            })
         });
 
         return players;

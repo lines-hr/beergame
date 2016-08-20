@@ -50,7 +50,7 @@ Template.lobby.helpers({
             condition2 = obj._id;
         });
 
-        Game.find({players: Meteor.userId()}).forEach(function (obj) {
+        Game.find({"players.playerId": Meteor.userId()}).forEach(function (obj) {
             condition3 = obj._id;
         });
 
