@@ -4,6 +4,34 @@ Template.room.onCreated(function () {
 });
 
 Template.room.events({
+    'click #startGame': function (e) {
+        var condition = true;
+        var game = "";
+
+        Game.find({gameAdmins: Meteor.userId(), gameStatus: "inLobby"}).forEach(function (obj) {
+            obj.players.forEach(function (obj2) {
+                game = obj._id;
+
+                if (obj2.isReady === false) {
+                    condition = false;
+                }
+            })
+        });
+
+        if (condition === true) {
+            Game.update({_id: game}, {$set: {
+                gameStatus: "inGame",
+                observers: []
+                }
+            });
+
+            FlowRouter.go("/game");
+        } else {
+            // TODO make it more pretty
+            alert("Not all players are ready!");
+        }
+    },
+
     'click #ready': function (e) {
         var status = e.target.value;
         var game = "";
@@ -151,6 +179,26 @@ Template.room.events({
 });
 
 Template.room.helpers({
+    summon: function () {
+        if (Game.find({"players.playerId": Meteor.userId(), gameStatus: "inGame"}).count() === 1 || Game.find({gameAdmins: Meteor.userId(), gameStatus: "inGame"}).count()) {
+            FlowRouter.go("/game");
+        }
+    },
+
+    gameReady: function () {
+        var condition = 0;
+
+        Game.find({gameAdmins: Meteor.userId(), gameStatus: "inLobby"}).forEach(function (obj) {
+            condition = obj.players.length;
+        });
+
+        if (condition === 2) {
+            return true;
+        } else {
+            return false;
+        }
+    },
+
     isReady: function () {
         var status = "";
 
@@ -210,19 +258,18 @@ Template.room.helpers({
     * TODO add nickname to register and show that nickname
     * */
     listObservers: function() {
+        var temp = [];
         var observers = [];
-        var t = [];
 
         Game.find({gameAdmins: Meteor.userId(), gameStatus: 'inLobby'}).forEach(function (obj) {
-            //observers.push({observer: obj.observers});
-            observers.push(obj.observers);
+            temp.push(obj.observers);
         });
 
-        for (var i = 0; i < observers[0].length; i++) {
-            t.push(observers[0][i]);
+        for (var i = 0; i < temp[0].length; i++) {
+            observers.push(temp[0][i]);
         }
 
-        return t;
+        return observers;
     },
 
     listPlayers: function() {

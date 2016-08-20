@@ -3,8 +3,14 @@ Template.headerLayout.helpers({
         var currentRoute = FlowRouter.getRouteName();
         return currentRoute && template === currentRoute ? 'active' : '';
     },
-    roomActive: function () {
-        return Session.get("roomActive") === "1";
+    gameInProgress: function () {
+        if (Game.find({gameAdmins: Meteor.userId(), gameStatus: "inGame"}).count() === 1) {
+            return true;
+        } if (Game.find({"players.playerId": Meteor.userId(), gameStatus: "inGame"}).count() === 1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 });
 

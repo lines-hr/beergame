@@ -15,8 +15,9 @@
                 <div class="navbar-collapse collapse" id="navbar">
                     <ul class="nav navbar-nav">
                         <li class="{{ activeIfTemplateIs 'index' }}"><a href="/">Home</a></li>
-                        {{#if currentUser}}<li class="{{ activeIfTemplateIs 'lobby' }}"><a href="/lobby">Lobby</a></li>{{/if}}
-                        {{#if roomActive}}<li class="{{ activeIfTemplateIs 'room' }}"><a href="/room">Room</a></li>{{/if}}
+                        <li class="{{ activeIfTemplateIs 'lobby' }}"><a href="/lobby">Lobby</a></li>
+                        <li class="{{ activeIfTemplateIs 'room' }}"><a href="/room">Room</a></li>
+                        {{#if gameInProgress}}<li class="{{ activeIfTemplateIs 'game' }}"><a href="/game">Game</a></li>{{/if}}
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">

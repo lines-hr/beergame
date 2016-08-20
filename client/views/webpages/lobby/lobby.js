@@ -36,11 +36,14 @@ Template.lobby.helpers({
     /*
     * Condition for creating new game. If user created game and didn't cancel it
     * he can't create new game.
+    * TODO probably condition will change because it will find observers in finished games also, but
+    * TODO this can't be tested yet
     * */
     forbidCreate: function () {
         var condition = "";
         var condition2 = "";
         var condition3 = "";
+        var condition4 = "";
 
         Game.find({gameAdmins: Meteor.userId(), gameStatus: "inLobby"}).forEach(function (obj) {
             condition = obj._id;
@@ -54,7 +57,11 @@ Template.lobby.helpers({
             condition3 = obj._id;
         });
 
-        if (condition || condition2 || condition3) {
+        Game.find({"gameAdmins": Meteor.userId(), gameStatus: "inGame"}).forEach(function (obj) {
+            condition4 = obj._id;
+        });
+
+        if (condition || condition2 || condition3 || condition4) {
             return false;
         } else {
             return true;

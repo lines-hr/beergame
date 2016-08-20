@@ -1,5 +1,7 @@
 <template name="room">
 
+    {{summon}}
+
     <div class="container">
         <div class="row">
             <div class="jumbotron">
@@ -37,6 +39,10 @@
                     {{#each listPlayers}}
                         {{> roomPlayers}}
                     {{/each}}
+                {{/if}}
+
+                {{#if gameReady}}
+                    <button id="startGame" class="btn btn-primary btn-block btn-lg">START Game</button>
                 {{/if}}
 
                 {{#if createdGame}}
