@@ -53,31 +53,7 @@ Template.gameSettingsNewGame.events({
             gameStatus: 'inLobby'
         });
 
-        Session.set("roomActive", "1");
-        Session.set("templateName", "Default Beergame");
         delete Session.keys['userGameSettings'];
-
-        /*Session.set('templateName', 'Default Beergame');
-        Session.set('roomActive', '1');
-        delete Session.keys['userGameSettings'];
-
-        var templateId = {
-            //title
-        };
-
-        //TODO a
-        GameSetup.find({title: Session.get('templateName')}).forEach(function (obj) {
-            templateId.title = obj.title;
-
-        });
-
-        console.log(templateId);
-
-        Game.insert({
-            gameSetup: templateId,
-            gameAdmins: Meteor.userId(),
-            gameStatus: 'inLobby'
-        });*/
 
         $('#newGameModal').on('hidden.bs.modal', function() {
             FlowRouter.go('/room');

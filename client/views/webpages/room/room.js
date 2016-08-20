@@ -39,6 +39,7 @@ Template.room.events({
         if (name !== "Default Beergame") {
             GameSetup.remove(setupId);
         }
+        Game.update({_id: gameId}, {$set: {observers: []}});
         Game.remove(gameId);
 
         FlowRouter.go('/lobby');
@@ -50,7 +51,16 @@ Template.room.helpers({
     * Observer only have option for exit game
     * */
     joined: function () {
-        if(Game.find({observers: Meteor.userId()}).count() !== 1) {
+        if(Game.find({observers: Meteor.userId()}).count() === 1) {
+            return true;
+        }
+    },
+
+    /*
+     * Game admin only have option for cancel game
+     * */
+    createdGame: function () {
+        if(Game.find({gameAdmins: Meteor.userId()}).count() === 1) {
             return true;
         }
     },
@@ -74,7 +84,7 @@ Template.room.helpers({
     getUserSettings: function() {
         var userSettings = [];
 
-        Game.find({gameAdmins: Meteor.userId(), gameStatus: "inLobby"}).forEach(function (obj) {
+        Game.find({gameStatus: "inLobby"}).forEach(function (obj) {
             userSettings.push(obj.gameSetup.title);
             //TODO bug with password
             if(obj.gameSetup.setup.gamePassword === undefined || obj.gameSetup.setup.gamePassword === "") {

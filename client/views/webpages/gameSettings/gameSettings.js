@@ -141,8 +141,6 @@ AutoForm.addHooks('insertGameSettingsForm', {
         });
 
         Session.set("userGameSettings", this.docId);
-        Session.set("roomActive", "1");
-        Session.set("templateName", "custom");
         delete Session.keys['disabledCheckbox'];
 
         FlowRouter.go('/room');
