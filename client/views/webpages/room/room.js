@@ -5,7 +5,47 @@ Template.room.onCreated(function () {
 
 Template.room.events({
     'click #ready': function (e) {
-        // TODO
+        var status = e.target.value;
+        var game = "";
+        var player = {};
+
+        Game.find({"players.playerId": Meteor.userId(), gameStatus: "inLobby"}).forEach(function (obj) {
+            game = obj._id;
+        });
+
+        if (status === "ready") {
+            Game.update({_id: game}, {$pull: {
+                    "players": {
+                        playerId: Meteor.userId()
+                    }
+                }
+            });
+
+            player = {
+                playerId: Meteor.userId(),
+                isReady: true
+            }
+
+            Game.update({_id: game}, {$push:
+                { players: player }
+            });
+        } else {
+            Game.update({_id: game}, {$pull: {
+                    "players": {
+                        playerId: Meteor.userId()
+                    }
+                }
+            });
+
+            player = {
+                playerId: Meteor.userId(),
+                isReady: false
+            }
+
+            Game.update({_id: game}, {$push:
+                { players: player }
+            });
+        }
     },
 
     'click .toObserve': function (e) {
@@ -111,18 +151,48 @@ Template.room.events({
 });
 
 Template.room.helpers({
+    isReady: function () {
+        var status = "";
+
+        Game.find({"players.playerId": Meteor.userId(), gameStatus: "inLobby"}).forEach(function (obj) {
+            obj.players.forEach(function (obj2){
+                if (obj2.playerId === Meteor.userId()) {
+                    status = obj2.isReady;
+                }
+            })
+        });
+
+        if(status === true) {
+            return true;
+        } else {
+            return false;
+        }
+    },
+
     /*
     * Observer only have option for exit game
     * */
     joined: function () {
         if(Game.find({observers: Meteor.userId()}).count() === 1) {
             return true;
+        } else {
+            return false;
         }
     },
 
     added: function () {
         if(Game.find({"players.playerId": Meteor.userId()}).count() === 1) {
             return true;
+        } else {
+            return false;
+        }
+    },
+
+    admin: function () {
+        if(Game.find({gameAdmins: Meteor.userId()}).count() === 1) {
+            return true;
+        } else {
+            return false;
         }
     },
 
@@ -141,12 +211,18 @@ Template.room.helpers({
     * */
     listObservers: function() {
         var observers = [];
+        var t = [];
 
         Game.find({gameAdmins: Meteor.userId(), gameStatus: 'inLobby'}).forEach(function (obj) {
-            observers.push({observer: obj.observers});
+            //observers.push({observer: obj.observers});
+            observers.push(obj.observers);
         });
 
-        return observers;
+        for (var i = 0; i < observers[0].length; i++) {
+            t.push(observers[0][i]);
+        }
+
+        return t;
     },
 
     listPlayers: function() {
@@ -252,7 +328,7 @@ Template.room.helpers({
                 }
             });
         } else {
-            Game.find({players: Meteor.userId(), gameStatus: "inLobby"}).forEach(function (obj) {
+            Game.find({"players.playerId": Meteor.userId(), gameStatus: "inLobby"}).forEach(function (obj) {
                 userSettings.push(obj.gameSetup.title);
                 //TODO bug with password
                 if (obj.gameSetup.setup.gamePassword === undefined || obj.gameSetup.setup.gamePassword === "") {

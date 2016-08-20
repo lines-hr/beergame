@@ -9,19 +9,35 @@
 
         <div class="row">
             <div class="col-sm-6">
-                {{#each listObservers}}
-                    {{> roomObservers}}
-                {{/each}}
+                {{#if admin}}
+                    <div class="row">
+                        <h3>Observers</h3>
+                    </div>
 
-                <div class="clearfix"></div>
+                    {{#each listObservers}}
+                        {{> roomObservers}}
+                    {{/each}}
 
-                {{#if added}}
-                    <button id="ready" class="btn btn-primary btn-block">Ready</button>
+                    <div class="clearfix"></div>
                 {{/if}}
 
-                {{#each listPlayers}}
-                    {{> roomPlayers}}
-                {{/each}}
+                {{#if added}}
+                    {{#if isReady}}
+                        <button value="notReady" id="ready" class="btn btn-danger btn-block">Click For Not Ready</button>
+                    {{else}}
+                        <button value="ready" id="ready" class="btn btn-primary btn-block">Click For Ready</button>
+                    {{/if}}
+                {{/if}}
+
+                {{#if admin}}
+                    <div class="row">
+                        <h3>Players</h3>
+                    </div>
+
+                    {{#each listPlayers}}
+                        {{> roomPlayers}}
+                    {{/each}}
+                {{/if}}
 
                 {{#if createdGame}}
                     <button id="cancelGame" class="btn btn-warning btn-block">Cancel Game</button>
