@@ -63,6 +63,10 @@ Template.gameSettings.onRendered(function () {
 });
 
 Template.gameSettings.events({
+    'click #cancelCreate': function () {
+        FlowRouter.go("/lobby");
+    },
+
     'click #shippingDelayBtn': function(e, t) {
         var disable = event.target.checked;
 

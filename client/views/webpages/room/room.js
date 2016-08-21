@@ -274,14 +274,21 @@ Template.room.helpers({
 
     listPlayers: function() {
         var players = [];
+        var i = 0;
+        var positions = ['Retailer', 'Wholesailer', 'Distributor', 'Factory'];
 
         Game.find({gameAdmins: Meteor.userId(), gameStatus: 'inLobby'}).forEach(function (obj) {
             obj.players.forEach(function (obj2) {
-                players.push({player: obj2.playerId});
+                players.push({player: obj2.playerId, position: positions[i]});
+                i = i + 1;
             })
         });
 
         return players;
+    },
+
+    positions: function() {
+        return [{position: 'Retailer'}, {position: 'Wholesailer'}, {position: 'Distributor'}, {position: 'Factory'}];
     },
 
     /*

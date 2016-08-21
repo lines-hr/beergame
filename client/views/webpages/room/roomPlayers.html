@@ -1,8 +1,6 @@
 <template name="roomPlayers">
 
-    <div class="col-xs-12">
-        {{player}}
-        {{#if player}}<button value="{{player}}" class="btn btn-success glyphicon glyphicon-minus toObserve"></button>{{/if}}
-    </div>
+    <td>{{player}}</td>
+    {{#if player}}<td><button value="{{player}}" class="btn btn-danger btn-xs glyphicon glyphicon-minus toObserve"></button></td>{{/if}}
 
 </template>

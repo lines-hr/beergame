@@ -16,9 +16,17 @@
                         <h3>Observers</h3>
                     </div>
 
-                    {{#each listObservers}}
-                        {{> roomObservers}}
-                    {{/each}}
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <table class="table">
+                            <tbody>{{#each listObservers}}
+                                <tr>
+                                    {{> roomObservers}}
+                                </tr>
+                            {{/each}}</tbody>
+                            </table>
+                        </div>
+                    </div>
 
                     <div class="clearfix"></div>
                 {{/if}}
@@ -36,9 +44,27 @@
                         <h3>Players</h3>
                     </div>
 
-                    {{#each listPlayers}}
-                        {{> roomPlayers}}
-                    {{/each}}
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <table class="table">
+                            <tbody>{{#each positions}}
+                                <tr>
+                                    <td>{{position}}</td>
+                                </tr>
+                            {{/each}}</tbody>
+                            </table>
+                        </div>
+
+                        <div class="col-xs-6">
+                            <table class="table">
+                            <tbody>{{#each listPlayers}}
+                            <tr>
+                                {{> roomPlayers}}
+                            </tr>
+                            {{/each}}</tbody>
+                            </table>
+                        </div>
+                    </div>
                 {{/if}}
 
                 {{#if gameReady}}
