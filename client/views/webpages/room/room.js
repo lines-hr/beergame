@@ -36,9 +36,15 @@ Template.room.events({
         var status = e.target.value;
         var game = "";
         var player = {};
+        var id = 0;
 
         Game.find({"players.playerId": Meteor.userId(), gameStatus: "inLobby"}).forEach(function (obj) {
             game = obj._id;
+            obj.players.forEach(function(obj2) {
+                if (obj2.playerId === Meteor.userId()) {
+                    id = obj2.id;
+                }
+            })
         });
 
         if (status === "ready") {
@@ -50,6 +56,7 @@ Template.room.events({
             });
 
             player = {
+                id: id,
                 playerId: Meteor.userId(),
                 isReady: true
             }
@@ -66,6 +73,7 @@ Template.room.events({
             });
 
             player = {
+                id: id,
                 playerId: Meteor.userId(),
                 isReady: false
             }
@@ -100,9 +108,15 @@ Template.room.events({
         var game = "";
         var playerId = e.target.value;
         var player = {};
+        var count = 0;
 
         Game.find({observers: playerId, gameStatus: "inLobby"}).forEach(function (obj) {
             game = obj._id;
+            obj.players.forEach(function (obj2) {
+                if (obj2.id > count) {
+                    count = obj2.id;
+                }
+            })
         });
 
         Game.update({_id: game}, {$pull:
@@ -110,6 +124,7 @@ Template.room.events({
         });
 
         player = {
+            id: count + 1,
             playerId: playerId,
             isReady: false
         }
@@ -274,17 +289,14 @@ Template.room.helpers({
 
     listPlayers: function() {
         var players = [];
-        var i = 0;
-        var positions = ['Retailer', 'Wholesailer', 'Distributor', 'Factory'];
 
         Game.find({gameAdmins: Meteor.userId(), gameStatus: 'inLobby'}).forEach(function (obj) {
             obj.players.forEach(function (obj2) {
-                players.push({player: obj2.playerId, position: positions[i]});
-                i = i + 1;
+                players.push({player: obj2.playerId, position: obj2.id});
             })
         });
 
-        return players;
+        return players.sort(function(a,b) {return (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0);} );
     },
 
     positions: function() {
