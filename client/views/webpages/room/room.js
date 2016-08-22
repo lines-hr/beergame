@@ -48,22 +48,7 @@ Template.room.events({
         });
 
         if (status === "ready") {
-            Game.update({_id: game}, {$pull: {
-                    "players": {
-                        playerId: Meteor.userId()
-                    }
-                }
-            });
-
-            player = {
-                id: id,
-                playerId: Meteor.userId(),
-                isReady: true
-            }
-
-            Game.update({_id: game}, {$push:
-                { players: player }
-            });
+            Meteor.call('Game.room.events.ready', game);
         } else {
             Game.update({_id: game}, {$pull: {
                     "players": {
@@ -112,11 +97,11 @@ Template.room.events({
 
         Game.find({observers: playerId, gameStatus: "inLobby"}).forEach(function (obj) {
             game = obj._id;
-            obj.players.forEach(function (obj2) {
+/*            obj.players.forEach(function (obj2) {
                 if (obj2.id > count) {
                     count = obj2.id;
                 }
-            })
+            })*/
         });
 
         Game.update({_id: game}, {$pull:

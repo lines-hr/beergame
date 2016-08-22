@@ -1,6 +1,6 @@
-//meteor npm install --save chart
-/*
-var Chart = require("chart");
+/* TODO
+meteor npm install --save chart
+var Chart = require('chart');
 
 function updateChart(d) {
 
@@ -9,7 +9,7 @@ function updateChart(d) {
         if (!value.roundNumber || !value.demand) return false;
         chartData.push({x: value.roundNumber, y: value.demand});
     });
-    scatterChart = new Chart($("#demandChart"), {
+    scatterChart = new Chart($('#demandChart'), {
         type: 'line',
         data: {
             datasets: [{
@@ -17,7 +17,7 @@ function updateChart(d) {
                 data: chartData,
                 lineTension: 0,
                 fill: false,
-                borderColor: "#F00"
+                borderColor: '#F00'
             }]
         },
         options: {
@@ -52,48 +52,15 @@ function updateChart(d) {
 }
 */
 
-Template.gameSettings.onCreated(function () {
-    Meteor.subscribe("GameSetup");
-    Meteor.subscribe("Game");
-
-    Session.set('disabledCheckbox', null);
-});
-
-Template.gameSettings.onRendered(function () {
-});
-
 Template.gameSettings.events({
+    /* Button for cancel game in creating game settings */
     'click #cancelCreate': function () {
-        FlowRouter.go("/lobby");
-    },
-
-    'click #shippingDelayBtn': function(e, t) {
-        var disable = event.target.checked;
-
-        if(disable) {
-            Session.set('disabledCheckbox', 'disabled');
-        } else {
-            Session.set('disabledCheckbox', null);
-        }
-    },
-
-    'input #maxRoundsValidation': function (event, template) {
-        Session.set("maxRoundValidate", event.currentTarget.value);
+        FlowRouter.go('/lobby');
     }
-});
-
-Template.gameSettings.helpers({
-    isDisabled: function() {
-        return Session.get('disabledCheckbox') === null;
-    },
-
-    getMaxRounds: function() {
-        return Session.get('maxRoundValidate');
-    }
-
 });
 
 AutoForm.addHooks('insertGameSettingsForm', {
+    //TODO yolo in production not needed
     onSubmit: function (insertDoc, updateDoc, currentDoc) {
         /*
         console.log(arguments);
@@ -101,9 +68,12 @@ AutoForm.addHooks('insertGameSettingsForm', {
         */
     },
 
+    //TODO yolo in production not needed
     onError: function (name, error, template) {
-        console.log(name + " error:", error);
+        console.log(name + ' error:', error);
     },
+
+    //TODO yolo
     /*
     formToDoc: function (doc) {
         demandSetup = doc.setup.initDemand;
@@ -111,50 +81,19 @@ AutoForm.addHooks('insertGameSettingsForm', {
             updateChart(demandSetup);
     },
     */
+
     onSuccess: function(formType, result) {
-        var game = {};
-
-        GameSetup.find(result).forEach(function (obj) {
-            game = {
-                setupId: obj._id,
-                setupOwner: obj.setupOwner,
-                isGlobal: obj.isGlobal,
-                title: obj.title,
-                gamePassword: obj.gamePassword,
-                setup: {
-                    initStock: obj.setup.initStock,
-                    initIncomingDelivery: obj.setup.initIncomingDelivery,
-                    initIncomingOrder: obj.setup.initIncomingOrder,
-                    initBackorder: obj.setup.initBackorder,
-                    initRoundLengthShippingDelay: obj.setup.initRoundLengthShippingDelay,
-                    initAmountShippingDelay: obj.setup.initAmountShippingDelay,
-                    initInventoryCost: obj.setup.initInventoryCost,
-                    initBackorderCost: obj.setup.initBackorderCost,
-                    visibleShippings: obj.setup.visibleShippings,
-                    visibleDemands: obj.setup.visibleDemands,
-                    allowMessaging: obj.setup.allowMessaging,
-                    initDemand: obj.setup.initDemand
-                }
-            }
-        });
-
-        Game.insert({
-            gameSetup: game,
-            gameAdmins: Meteor.userId(),
-            gameStatus: 'inLobby'
-        });
-
-        Session.set("userGameSettings", this.docId);
-        delete Session.keys['disabledCheckbox'];
-
+        Meteor.call('Game.gameSettings.autoform.onSuccess', result);
         FlowRouter.go('/room');
     }
 });
 
+//TODO yolo in production not needed
 AutoForm.addHooks(null, {
     onError: function (name, error, template) {
-        console.log(name + " error:", error);
+        console.log(name + ' error:', error);
     }
 });
 
+//TODO yolo in production not needed
 SimpleSchema.debug = true;

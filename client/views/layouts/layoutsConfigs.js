@@ -1,22 +1,18 @@
 Template.headerLayout.helpers({
+    /* Checks if links are active for active link display in navigation */
     activeIfTemplateIs: function (template) {
-        var currentRoute = FlowRouter.getRouteName();
-        return currentRoute && template === currentRoute ? 'active' : '';
+        //TODO maknuti komentar kasnije return FlowRouter.getRouteName() && template === currentRoute ? 'active' : '';
     },
+
+    /* Checks if game has status 'inProgress' and if true then game page is allowed to be visible */
+    // TODO
     gameInProgress: function () {
-        if (Game.find({gameAdmins: Meteor.userId(), gameStatus: "inGame"}).count() === 1) {
-            return true;
-        } if (Game.find({"players.playerId": Meteor.userId(), gameStatus: "inGame"}).count() === 1) {
-            return true;
-        } else {
-            return false;
-        }
     }
 });
 
 Template.footerLayout.helpers({
+    /* Prints current year in footer */
     copyrightDate: function () {
-        var dt = new Date();
-        return dt.toString().substr(11, 4);
+        return new Date().toString().substr(11, 4);
     }
 });

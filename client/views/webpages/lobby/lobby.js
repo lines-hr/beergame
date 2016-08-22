@@ -1,12 +1,5 @@
-Template.lobby.onCreated(function () {
-    Meteor.subscribe("GameSetup");
-    Meteor.subscribe("Game");
-});
-
 Template.lobby.events({
-    /*
-    * New game button in lobby
-    * */
+    /* New game button in lobby */
     'click #newGameBtn': function(e) {
         e.preventDefault();
         
@@ -15,56 +8,13 @@ Template.lobby.events({
 });
 
 Template.lobby.helpers({
-    /*
-    * Returning all inLobby games where fields gameId, password and title
-    * are used for lobbyObservers template
-    * */
+    /* Returning all 'inLobby' games */
     lobbyGames: function () {
-        var games = [];
-
-        Game.find({gameStatus: 'inLobby'}).forEach(function (obj) {
-            if (obj.gameSetup.gamePassword) {
-                games.push({gameId: obj._id, password: "Yes", title: obj.gameSetup.title});
-            } else {
-                games.push({gameId: obj._id, password: "No", title: obj.gameSetup.title});
-            }
-        });
-
-        return games;
+        return ReactiveMethod.call('Game.lobby.helpers.lobbyGames');
     },
 
-    /*
-    * Condition for creating new game. If user created game and didn't cancel it
-    * he can't create new game.
-    * TODO probably condition will change because it will find observers in finished games also, but
-    * TODO this can't be tested yet
-    * */
+    /* Conditions for creating game */
     forbidCreate: function () {
-        var condition = "";
-        var condition2 = "";
-        var condition3 = "";
-        var condition4 = "";
-
-        Game.find({gameAdmins: Meteor.userId(), gameStatus: "inLobby"}).forEach(function (obj) {
-            condition = obj._id;
-        });
-
-        Game.find({observers: Meteor.userId()}).forEach(function (obj) {
-            condition2 = obj._id;
-        });
-
-        Game.find({"players.playerId": Meteor.userId()}).forEach(function (obj) {
-            condition3 = obj._id;
-        });
-
-        Game.find({"gameAdmins": Meteor.userId(), gameStatus: "inGame"}).forEach(function (obj) {
-            condition4 = obj._id;
-        });
-
-        if (condition || condition2 || condition3 || condition4) {
-            return false;
-        } else {
-            return true;
-        }
+        return ReactiveMethod.call('Game.lobby.helpers.forbidUser');
     }
 });
