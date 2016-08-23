@@ -24,10 +24,10 @@
             </div>
 
             <div class="col-sm-3">
-                {{#if forbidCreate}}
-                <button id="newGameBtn" type="button" class="btn btn-success">Create New Game</button>
+                {{#if enableCreate}}
+                    <button id="newGameBtn" type="button" class="btn btn-success">Create New Game</button>
                 {{else}}
-                <button id="newGameBtn" type="button" class="btn btn-success" disabled="disabled">Create New Game</button>
+                    <button id="newGameBtn" type="button" class="btn btn-success" disabled="disabled">Create New Game</button>
                 {{/if}}
             </div>
         </div>

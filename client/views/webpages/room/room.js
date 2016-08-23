@@ -1,427 +1,98 @@
+//TODO only for delelopment
 Template.room.onCreated(function () {
-    Meteor.subscribe("GameSetup");
-    Meteor.subscribe("Game");
+    Meteor.subscribe('Game');
+    Meteor.subscribe('GameSetup');
 });
 
 Template.room.events({
     'click #startGame': function (e) {
-        var condition = true;
-        var game = "";
 
-        Game.find({gameAdmins: Meteor.userId(), gameStatus: "inLobby"}).forEach(function (obj) {
-            obj.players.forEach(function (obj2) {
-                game = obj._id;
-
-                if (obj2.isReady === false) {
-                    condition = false;
-                }
-            })
-        });
-
-        if (condition === true) {
-            Game.update({_id: game}, {$set: {
-                gameStatus: "inGame",
-                observers: []
-                }
-            });
-
-            FlowRouter.go("/game");
-        } else {
-            // TODO make it more pretty
-            alert("Not all players are ready!");
-        }
     },
 
     'click #ready': function (e) {
-        var status = e.target.value;
-        var game = "";
-        var player = {};
-        var id = 0;
-
-        Game.find({"players.playerId": Meteor.userId(), gameStatus: "inLobby"}).forEach(function (obj) {
-            game = obj._id;
-            obj.players.forEach(function(obj2) {
-                if (obj2.playerId === Meteor.userId()) {
-                    id = obj2.id;
-                }
-            })
-        });
-
-        if (status === "ready") {
-            Meteor.call('Game.room.events.ready', game);
-        } else {
-            Game.update({_id: game}, {$pull: {
-                    "players": {
-                        playerId: Meteor.userId()
-                    }
-                }
-            });
-
-            player = {
-                id: id,
-                playerId: Meteor.userId(),
-                isReady: false
-            }
-
-            Game.update({_id: game}, {$push:
-                { players: player }
-            });
-        }
+        //if (status === "ready") {
+        //    Meteor.call('Game.room.events.ready', game);
     },
 
+    /*  */
     'click .toObserve': function (e) {
-        var game = "";
-        var playerId = e.target.value;
 
-        Game.find({"players.playerId": playerId, gameStatus: "inLobby"}).forEach(function (obj) {
-            game = obj._id;
-        });
-
-        Game.update({_id: game}, {$pull: {
-            "players": {
-                    playerId: playerId
-                }
-            }
-        });
-
-        Game.update({_id: game}, {$push:
-            { observers: playerId }
-        });
     },
 
+    /* Join game */
     'click .toPlay': function (e) {
-        var game = "";
-        var playerId = e.target.value;
-        var player = {};
-        var count = 0;
 
-        Game.find({observers: playerId, gameStatus: "inLobby"}).forEach(function (obj) {
-            game = obj._id;
-/*            obj.players.forEach(function (obj2) {
-                if (obj2.id > count) {
-                    count = obj2.id;
-                }
-            })*/
-        });
-
-        Game.update({_id: game}, {$pull:
-            { observers: playerId }
-        });
-
-        player = {
-            id: count + 1,
-            playerId: playerId,
-            isReady: false
-        }
-
-        Game.update({_id: game}, {$push:
-            { players: player }
-        });
     },
 
-    /*
-    * Exiting room for joined user
-    * */
+    /* Exiting room for joined user */
     'click #exitRoom': function () {
-        var game = "";
-        var game2 = "";
-
-        Game.find({observers: Meteor.userId(), gameStatus: "inLobby"}).forEach(function (obj) {
-            game = obj._id;
-        });
-
-        Game.find({"players.playerId": Meteor.userId(), gameStatus: "inLobby"}).forEach(function (obj) {
-            game2 = obj._id;
-        });
-
-        if (Game.find({observers: Meteor.userId(), gameStatus: "inLobby"}).count() === 1) {
-            Game.update({_id: game}, {$pull:
-                { observers: Meteor.userId() }
-            });
-        }
-
-        if (Game.find({"players.playerId": Meteor.userId(), gameStatus: "inLobby"}).count() === 1) {
-            Game.update({_id: game2}, {$pull: {
-                    "players": {
-                        playerId: Meteor.userId()
-                    }
-                }
-            });
-        }
-
+        Meteor.call('Game.room.events.exitRoom');
         FlowRouter.go('/lobby');
     },
 
-    /*
-    * Cancelling game and deleting game and setup
-    * TODO change function for user's more setups
-    * */
+    /* Cancelling game and deleting game */
     'click #cancelGame': function () {
-        var gameId = "";
-        var setupId = "";
-        var name = "";
-
-        Game.find({gameAdmins: Meteor.userId(), gameStatus: "inLobby"}).forEach(function (obj) {
-            gameId = obj._id;
-            setupId = obj.gameSetup.setupId;
-            name = obj.gameSetup.title;
-        });
-
-        if (name !== "Default Beergame") {
-            GameSetup.remove(setupId);
-        }
-        Game.update({_id: gameId}, {$set: {observers: []}});
-        Game.update({_id: gameId}, {$set: {players: []}});
-        Game.remove(gameId);
-
+        Meteor.call('GameSetup.room.events.cancelGame');
+        Meteor.call('Game.room.events.cancelGame');
         FlowRouter.go('/lobby');
     }
 });
 
 Template.room.helpers({
+    /* Redirect to game if 'inProgress'*/
     summon: function () {
-        if (Game.find({"players.playerId": Meteor.userId(), gameStatus: "inGame"}).count() === 1 || Game.find({gameAdmins: Meteor.userId(), gameStatus: "inGame"}).count()) {
-            FlowRouter.go("/game");
-        }
+
     },
 
+    /* Check if game is ready - all players must be ready */
     gameReady: function () {
-        var condition = 0;
 
-        Game.find({gameAdmins: Meteor.userId(), gameStatus: "inLobby"}).forEach(function (obj) {
-            condition = obj.players.length;
-        });
-
-        if (condition === 2) {
-            return true;
-        } else {
-            return false;
-        }
     },
 
-    isReady: function () {
-        var status = "";
+    /* Check if player is ready */
+    ready: function () {
 
-        Game.find({"players.playerId": Meteor.userId(), gameStatus: "inLobby"}).forEach(function (obj) {
-            obj.players.forEach(function (obj2){
-                if (obj2.playerId === Meteor.userId()) {
-                    status = obj2.isReady;
-                }
-            })
-        });
-
-        if(status === true) {
-            return true;
-        } else {
-            return false;
-        }
     },
 
-    /*
-    * Observer only have option for exit game
-    * */
-    joined: function () {
-        if(Game.find({observers: Meteor.userId()}).count() === 1) {
-            return true;
-        } else {
-            return false;
-        }
+    /* Check if user is in room */
+    inRoom: function () {
+        return ReactiveMethod.call('Game.room.helpers.inRoom');
     },
 
+    /* Check if user is added */
     added: function () {
-        if(Game.find({"players.playerId": Meteor.userId()}).count() === 1) {
-            return true;
-        } else {
-            return false;
-        }
+        return ReactiveMethod.call('Game.room.helpers.added');
     },
 
+    /* Check if admin */
     admin: function () {
-        if(Game.find({gameAdmins: Meteor.userId()}).count() === 1) {
-            return true;
-        } else {
-            return false;
-        }
+        return ReactiveMethod.call('Game.room.helpers.admin');
     },
 
-    /*
-     * Game admin only have option for cancel game
-     * */
+    /* Game admin only have option for cancel game */
+    //TODO check if needed
     createdGame: function () {
-        if(Game.find({gameAdmins: Meteor.userId()}).count() === 1) {
-            return true;
-        }
+        return ReactiveMethod.call('Game.room.helpers.admin');
     },
 
-    /*
-    * Listing observers on game admin side
-    * TODO add nickname to register and show that nickname
-    * */
+    /* Listing observers on game admin side */
     listObservers: function() {
-        var temp = [];
-        var observers = [];
 
-        Game.find({gameAdmins: Meteor.userId(), gameStatus: 'inLobby'}).forEach(function (obj) {
-            temp.push(obj.observers);
-        });
-
-        for (var i = 0; i < temp[0].length; i++) {
-            observers.push(temp[0][i]);
-        }
-
-        return observers;
     },
 
+    /* Listing players on game admin side */
     listPlayers: function() {
-        var players = [];
-
-        Game.find({gameAdmins: Meteor.userId(), gameStatus: 'inLobby'}).forEach(function (obj) {
-            obj.players.forEach(function (obj2) {
-                players.push({player: obj2.playerId, position: obj2.id});
-            })
-        });
-
-        return players.sort(function(a,b) {return (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0);} );
+        //players.push({player: obj2.playerId, position: obj2.id});
+        //return players.sort(function(a,b) {return (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0);} );
     },
 
+    /* Players positions */
     positions: function() {
-        return [{position: 'Retailer'}, {position: 'Wholesailer'}, {position: 'Distributor'}, {position: 'Factory'}];
+
     },
 
-    /*
-    * Game info in lobby after game is created
-    * */
-    getUserSettings: function() {
-        var userSettings = [];
-
-        if (Game.find({gameAdmins: Meteor.userId(), gameStatus: "inLobby"}).count() === 1) {
-            Game.find({gameAdmins: Meteor.userId(), gameStatus: "inLobby"}).forEach(function (obj) {
-                userSettings.push(obj.gameSetup.title);
-                //TODO bug with password
-                if (obj.gameSetup.setup.gamePassword === undefined || obj.gameSetup.setup.gamePassword === "") {
-                    userSettings.push('No');
-                } else {
-                    userSettings.push('Yes');
-                }
-                userSettings.push(obj.gameSetup.setup.initDemand.length);
-                userSettings.push(obj.gameSetup.setup.initStock);
-                userSettings.push(obj.gameSetup.setup.initIncomingDelivery);
-                userSettings.push(obj.gameSetup.setup.initIncomingOrder);
-                userSettings.push(obj.gameSetup.setup.initBackorder);
-                if (obj.gameSetup.setup.initRoundLengthShippingDelay === undefined || obj.gameSetup.setup.initRoundLengthShippingDelay === 0) {
-                    userSettings.push('-');
-                } else {
-                    userSettings.push(obj.gameSetup.setup.initRoundLengthShippingDelay);
-                }
-                if (obj.gameSetup.setup.initRoundLengthShippingDelay === undefined || obj.gameSetup.setup.initRoundLengthShippingDelay === 0) {
-                    userSettings.push('-');
-                } else {
-                    userSettings.push(obj.gameSetup.setup.initAmountShippingDelay);
-                }
-                userSettings.push(obj.gameSetup.setup.initInventoryCost);
-                userSettings.push(obj.gameSetup.setup.initBackorderCost);
-                if (obj.gameSetup.setup.visibleShippings === true) {
-                    userSettings.push('Yes');
-                } else {
-                    userSettings.push('No');
-                }
-                if (obj.gameSetup.setup.visibleDemands === true) {
-                    userSettings.push('Yes');
-                } else {
-                    userSettings.push('No');
-                }
-                if (obj.gameSetup.setup.allowMessaging === true) {
-                    userSettings.push('Yes');
-                } else {
-                    userSettings.push('No');
-                }
-            });
-        } else if (Game.find({observers: Meteor.userId(), gameStatus: "inLobby"}).count() === 1) {
-            Game.find({observers: Meteor.userId(), gameStatus: "inLobby"}).forEach(function (obj) {
-                userSettings.push(obj.gameSetup.title);
-                //TODO bug with password
-                if (obj.gameSetup.setup.gamePassword === undefined || obj.gameSetup.setup.gamePassword === "") {
-                    userSettings.push('No');
-                } else {
-                    userSettings.push('Yes');
-                }
-                userSettings.push(obj.gameSetup.setup.initDemand.length);
-                userSettings.push(obj.gameSetup.setup.initStock);
-                userSettings.push(obj.gameSetup.setup.initIncomingDelivery);
-                userSettings.push(obj.gameSetup.setup.initIncomingOrder);
-                userSettings.push(obj.gameSetup.setup.initBackorder);
-                if (obj.gameSetup.setup.initRoundLengthShippingDelay === undefined || obj.gameSetup.setup.initRoundLengthShippingDelay === 0) {
-                    userSettings.push('-');
-                } else {
-                    userSettings.push(obj.gameSetup.setup.initRoundLengthShippingDelay);
-                }
-                if (obj.gameSetup.setup.initRoundLengthShippingDelay === undefined || obj.gameSetup.setup.initRoundLengthShippingDelay === 0) {
-                    userSettings.push('-');
-                } else {
-                    userSettings.push(obj.gameSetup.setup.initAmountShippingDelay);
-                }
-                userSettings.push(obj.gameSetup.setup.initInventoryCost);
-                userSettings.push(obj.gameSetup.setup.initBackorderCost);
-                if (obj.gameSetup.setup.visibleShippings === true) {
-                    userSettings.push('Yes');
-                } else {
-                    userSettings.push('No');
-                }
-                if (obj.gameSetup.setup.visibleDemands === true) {
-                    userSettings.push('Yes');
-                } else {
-                    userSettings.push('No');
-                }
-                if (obj.gameSetup.setup.allowMessaging === true) {
-                    userSettings.push('Yes');
-                } else {
-                    userSettings.push('No');
-                }
-            });
-        } else {
-            Game.find({"players.playerId": Meteor.userId(), gameStatus: "inLobby"}).forEach(function (obj) {
-                userSettings.push(obj.gameSetup.title);
-                //TODO bug with password
-                if (obj.gameSetup.setup.gamePassword === undefined || obj.gameSetup.setup.gamePassword === "") {
-                    userSettings.push('No');
-                } else {
-                    userSettings.push('Yes');
-                }
-                userSettings.push(obj.gameSetup.setup.initDemand.length);
-                userSettings.push(obj.gameSetup.setup.initStock);
-                userSettings.push(obj.gameSetup.setup.initIncomingDelivery);
-                userSettings.push(obj.gameSetup.setup.initIncomingOrder);
-                userSettings.push(obj.gameSetup.setup.initBackorder);
-                if (obj.gameSetup.setup.initRoundLengthShippingDelay === undefined || obj.gameSetup.setup.initRoundLengthShippingDelay === 0) {
-                    userSettings.push('-');
-                } else {
-                    userSettings.push(obj.gameSetup.setup.initRoundLengthShippingDelay);
-                }
-                if (obj.gameSetup.setup.initRoundLengthShippingDelay === undefined || obj.gameSetup.setup.initRoundLengthShippingDelay === 0) {
-                    userSettings.push('-');
-                } else {
-                    userSettings.push(obj.gameSetup.setup.initAmountShippingDelay);
-                }
-                userSettings.push(obj.gameSetup.setup.initInventoryCost);
-                userSettings.push(obj.gameSetup.setup.initBackorderCost);
-                if (obj.gameSetup.setup.visibleShippings === true) {
-                    userSettings.push('Yes');
-                } else {
-                    userSettings.push('No');
-                }
-                if (obj.gameSetup.setup.visibleDemands === true) {
-                    userSettings.push('Yes');
-                } else {
-                    userSettings.push('No');
-                }
-                if (obj.gameSetup.setup.allowMessaging === true) {
-                    userSettings.push('Yes');
-                } else {
-                    userSettings.push('No');
-                }
-            });
-        }
-
-        return userSettings;
+    /* Game info in room after game is created */
+    getGameSettings: function() {
+        return ReactiveMethod.call('Game.room.helpers.getGameSettings');
     }
 });

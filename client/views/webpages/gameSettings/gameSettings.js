@@ -54,7 +54,7 @@ function updateChart(d) {
 
 Template.gameSettings.events({
     /* Button for cancel game in creating game settings */
-    'click #cancelCreate': function () {
+    'click #cancelCreateBtn': function () {
         FlowRouter.go('/lobby');
     }
 });
@@ -84,6 +84,7 @@ AutoForm.addHooks('insertGameSettingsForm', {
 
     onSuccess: function(formType, result) {
         Meteor.call('Game.gameSettings.autoform.onSuccess', result);
+
         FlowRouter.go('/room');
     }
 });

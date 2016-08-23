@@ -27,19 +27,19 @@
                             </table>
                         </div>
                     </div>
-
-                    <div class="clearfix"></div>
                 {{/if}}
 
+                <div class="clearfix"></div>
+
                 {{#if added}}
-                    {{#if isReady}}
+                    {{#if ready}}
                         <button value="notReady" id="ready" class="btn btn-danger btn-block">Click For Not Ready</button>
                     {{else}}
                         <button value="ready" id="ready" class="btn btn-primary btn-block">Click For Ready</button>
                     {{/if}}
                 {{/if}}
 
-                {{#if admin}}
+                {{#if admin}}{{#if added}}
                     <div class="row">
                         <h3>Players</h3>
                     </div>
@@ -65,19 +65,17 @@
                             </table>
                         </div>
                     </div>
-                {{/if}}
+                {{/if}}{{/if}}
 
                 {{#if gameReady}}
                     <button id="startGame" class="btn btn-primary btn-block btn-lg">START Game</button>
                 {{/if}}
 
-                {{#if createdGame}}
+                {{#if admin}}
                     <button id="cancelGame" class="btn btn-warning btn-block">Cancel Game</button>
                 {{/if}}
-                {{#if joined}}
-                    <button id="exitRoom" class="btn btn-warning btn-block">Exit Room</button>
-                {{/if}}
-                {{#if added}}
+
+                {{#if inRoom}}
                     <button id="exitRoom" class="btn btn-warning btn-block">Exit Room</button>
                 {{/if}}
             </div>
@@ -93,72 +91,62 @@
                     <tbody>
                     <tr>
                         <td>Title</td>
-                        <td>{{getUserSettings.[0]}}</td>
+                        <td>{{ getGameSettings.[0] }}</td>
                     </tr>
 
                     <tr>
-                        <td>Protected By Password</td>
-                        <td>{{getUserSettings.[1]}}</td>
+                        <td>Admin</td>
+                        <td>{{ getGameSettings.[1] }}</td>
                     </tr>
 
                     <tr>
                         <td>Game Length</td>
-                        <td>{{getUserSettings.[2]}}</td>
+                        <td>{{ getGameSettings.[2] }}</td>
                     </tr>
 
                     <tr>
                         <td>Stock</td>
-                        <td>{{getUserSettings.[3]}}</td>
+                        <td>{{ getGameSettings.[3] }}</td>
                     </tr>
 
                     <tr>
                         <td>Incoming Delivery</td>
-                        <td>{{getUserSettings.[4]}}</td>
+                        <td>{{ getGameSettings.[4] }}</td>
                     </tr>
 
                     <tr>
                         <td>Incoming Order</td>
-                        <td>{{getUserSettings.[5]}}</td>
+                        <td>{{ getGameSettings.[5] }}</td>
                     </tr>
 
                     <tr>
                         <td>Backorder</td>
-                        <td>{{getUserSettings.[6]}}</td>
-                    </tr>
-
-                    <tr>
-                        <td>Shipping Delay Rounds</td>
-                        <td>{{getUserSettings.[7]}}</td>
-                    </tr>
-
-                    <tr>
-                        <td>Shipping Delay Amount</td>
-                        <td>{{getUserSettings.[8]}}</td>
+                        <td>{{ getGameSettings.[6] }}</td>
                     </tr>
 
                     <tr>
                         <td>Stock Unit Cost</td>
-                        <td>{{getUserSettings.[9]}}</td>
+                        <td>{{ getGameSettings.[7] }}</td>
                     </tr>
 
                     <tr>
                         <td>Backorder Unit Cost</td>
-                        <td>{{getUserSettings.[10]}}</td>
+                        <td>{{ getGameSettings.[8] }}</td>
                     </tr>
 
                     <tr>
                         <td>Visible Shippings</td>
-                        <td>{{getUserSettings.[11]}}</td>
+                        <td>{{ getGameSettings.[9] }}</td>
                     </tr>
 
                     <tr>
                         <td>Visible Demands</td>
-                        <td>{{getUserSettings.[12]}}</td>
+                        <td>{{ getGameSettings.[10] }}</td>
                     </tr>
 
                     <tr>
                         <td>Allow Messaging</td>
-                        <td>{{getUserSettings.[13]}}</td>
+                        <td>{{ getGameSettings.[11] }}</td>
                     </tr>
                     </tbody>
                 </table>

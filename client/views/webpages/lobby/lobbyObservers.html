@@ -9,10 +9,10 @@
     </div>
 
     <div class="col-xs-2">
-        {{#if forbidJoin}}
-        <button value="{{gameId}}" type="button" class="btn btn-default joinRoom">Join</button>
+        {{#if enableJoin}}
+            <button value="{{gameId}}" type="button" class="btn btn-default joinRoom">Join</button>
         {{else}}
-        <button value="{{gameId}}" type="button" class="btn btn-default joinRoom" disabled="disabled">Join</button>
+            <button value="{{gameId}}" type="button" class="btn btn-default joinRoom" disabled="disabled">Join</button>
         {{/if}}
     </div>
 

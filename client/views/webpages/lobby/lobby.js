@@ -1,3 +1,9 @@
+//TODO only for delelopment
+Template.lobby.onCreated(function () {
+    Meteor.subscribe('Game');
+    Meteor.subscribe('GameSetup');
+});
+
 Template.lobby.events({
     /* New game button in lobby */
     'click #newGameBtn': function(e) {
@@ -14,7 +20,7 @@ Template.lobby.helpers({
     },
 
     /* Conditions for creating game */
-    forbidCreate: function () {
-        return ReactiveMethod.call('Game.lobby.helpers.forbidUser');
+    enableCreate: function () {
+        return ReactiveMethod.call('Game.helpers.enableUser');
     }
 });
