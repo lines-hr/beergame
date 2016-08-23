@@ -16,12 +16,14 @@ Template.room.events({
 
     /*  */
     'click .toObserve': function (e) {
-
+        removedUserId = e.target.value;
+        Meteor.call('Game.room.events.toObserver', removedUserId);
     },
 
     /* Join game */
     'click .toPlay': function (e) {
-
+        addedUserId = e.target.value;
+        Meteor.call('Game.room.events.toPlay', addedUserId);
     },
 
     /* Exiting room for joined user */
@@ -77,18 +79,20 @@ Template.room.helpers({
 
     /* Listing observers on game admin side */
     listObservers: function() {
-
+        return ReactiveMethod.call('Game.room.helpers.listObservers');
     },
 
     /* Listing players on game admin side */
     listPlayers: function() {
+        return ReactiveMethod.call('Game.room.helpers.listPlayers');
+
         //players.push({player: obj2.playerId, position: obj2.id});
         //return players.sort(function(a,b) {return (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0);} );
     },
 
     /* Players positions */
     positions: function() {
-
+        return ReactiveMethod.call('Game.room.helpers.positions');
     },
 
     /* Game info in room after game is created */

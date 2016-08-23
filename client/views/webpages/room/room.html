@@ -13,17 +13,21 @@
             <div class="col-sm-6">
                 {{#if admin}}
                     <div class="row">
-                        <h3>Observers</h3>
+                        <div class="col-xs-12">
+                            <h3>Observers</h3>
+                        </div>
                     </div>
 
                     <div class="row">
                         <div class="col-xs-6">
                             <table class="table">
-                            <tbody>{{#each listObservers}}
+                            <tbody>
+                            {{#each listObservers}}
                                 <tr>
                                     {{> roomObservers}}
                                 </tr>
-                            {{/each}}</tbody>
+                            {{/each}}
+                            </tbody>
                             </table>
                         </div>
                     </div>
@@ -39,33 +43,39 @@
                     {{/if}}
                 {{/if}}
 
-                {{#if admin}}{{#if added}}
+                {{#if admin added}}
                     <div class="row">
-                        <h3>Players</h3>
+                        <div class="col-xs-12">
+                            <h3>Players</h3>
+                        </div>
                     </div>
 
                     <div class="row">
                         <div class="col-xs-6">
                             <table class="table">
-                            <tbody>{{#each positions}}
+                            <tbody>
+                            {{#each positions}}
                                 <tr>
                                     <td>{{position}}</td>
                                 </tr>
-                            {{/each}}</tbody>
+                            {{/each}}
+                            </tbody>
                             </table>
                         </div>
 
                         <div class="col-xs-6">
                             <table class="table">
-                            <tbody>{{#each listPlayers}}
+                            <tbody>
+                            {{#each listPlayers}}
                             <tr>
                                 {{> roomPlayers}}
                             </tr>
-                            {{/each}}</tbody>
+                            {{/each}}
+                            </tbody>
                             </table>
                         </div>
                     </div>
-                {{/if}}{{/if}}
+                {{/if}}
 
                 {{#if gameReady}}
                     <button id="startGame" class="btn btn-primary btn-block btn-lg">START Game</button>
