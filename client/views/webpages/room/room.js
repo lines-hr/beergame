@@ -6,12 +6,17 @@ Template.room.onCreated(function () {
 
 Template.room.events({
     'click #startGame': function (e) {
-
+        Meteor.call('Game.room.events.startGame');
     },
 
     'click #ready': function (e) {
-        //if (status === "ready") {
-        //    Meteor.call('Game.room.events.ready', game);
+        const status = e.target.value;
+
+        if (status === "ready") {
+            Meteor.call('Game.room.events.ready', true);
+        } else {
+            Meteor.call('Game.room.events.ready', false);
+        }
     },
 
     /*  */
@@ -43,48 +48,46 @@ Template.room.events({
 Template.room.helpers({
     /* Redirect to game if 'inProgress'*/
     summon: function () {
+        const summon = Meteor.apply('Game.helpers.summon', [], { returnStubValue: true });
 
+        if (summon) {
+            FlowRouter.go('/game');
+        }
     },
 
-    /* Check if game is ready - all players must be ready */
-    gameReady: function () {
-
+    /**/
+    allPlayersReady: function () {
+        return Meteor.apply('Game.room.helpers.allPlayersReady', [], { returnStubValue: true });
     },
 
     /* Check if player is ready */
     ready: function () {
-
+        return Meteor.apply('Game.room.helpers.ready', [], { returnStubValue: true });
     },
 
     /* Check if user is in room */
     inRoom: function () {
-        return ReactiveMethod.call('Game.room.helpers.inRoom');
+        return Meteor.apply('Game.room.helpers.inRoom', [], { returnStubValue: true });
     },
 
     /* Check if user is added */
     added: function () {
-        return ReactiveMethod.call('Game.room.helpers.added');
+        return Meteor.apply('Game.room.helpers.added', [], { returnStubValue: true });
     },
 
     /* Check if admin */
     admin: function () {
-        return ReactiveMethod.call('Game.room.helpers.admin');
-    },
-
-    /* Game admin only have option for cancel game */
-    //TODO check if needed
-    createdGame: function () {
-        return ReactiveMethod.call('Game.room.helpers.admin');
+        return Meteor.apply('Game.room.helpers.admin', [], { returnStubValue: true });
     },
 
     /* Listing observers on game admin side */
     listObservers: function() {
-        return ReactiveMethod.call('Game.room.helpers.listObservers');
+        return Meteor.apply('Game.room.helpers.listObservers', [], { returnStubValue: true });
     },
 
     /* Listing players on game admin side */
     listPlayers: function() {
-        return ReactiveMethod.call('Game.room.helpers.listPlayers');
+        return Meteor.apply('Game.room.helpers.listPlayers', [], { returnStubValue: true });
 
         //players.push({player: obj2.playerId, position: obj2.id});
         //return players.sort(function(a,b) {return (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0);} );
@@ -92,11 +95,11 @@ Template.room.helpers({
 
     /* Players positions */
     positions: function() {
-        return ReactiveMethod.call('Game.room.helpers.positions');
+        return Meteor.apply('Game.room.helpers.positions', [], { returnStubValue: true });
     },
 
     /* Game info in room after game is created */
     getGameSettings: function() {
-        return ReactiveMethod.call('Game.room.helpers.getGameSettings');
+        return Meteor.apply('Game.room.helpers.getGameSettings', [], { returnStubValue: true });
     }
 });

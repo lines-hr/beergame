@@ -10,6 +10,6 @@ Template.lobbyObservers.events({
 Template.lobbyObservers.helpers({
     /* Conditions for joining room/game */
     enableJoin: function () {
-        return ReactiveMethod.call('Game.helpers.enableUser');
+        return Meteor.apply('Game.helpers.enableUser', [], { returnStubValue: true });
     }
 });

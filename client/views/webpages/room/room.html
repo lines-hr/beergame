@@ -43,7 +43,7 @@
                     {{/if}}
                 {{/if}}
 
-                {{#if admin added}}
+                {{#if admin}}
                     <div class="row">
                         <div class="col-xs-12">
                             <h3>Players</h3>
@@ -77,11 +77,13 @@
                     </div>
                 {{/if}}
 
-                {{#if gameReady}}
-                    <button id="startGame" class="btn btn-primary btn-block btn-lg">START Game</button>
-                {{/if}}
-
                 {{#if admin}}
+                    {{#if allPlayersReady}}
+                        <button id="startGame" class="btn btn-primary btn-block btn-lg">START Game</button>
+                    {{else}}
+                        <button class="btn btn-default btn-block btn-lg">START Game</button>
+                    {{/if}}
+
                     <button id="cancelGame" class="btn btn-warning btn-block">Cancel Game</button>
                 {{/if}}
 
