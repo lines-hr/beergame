@@ -1,7 +1,6 @@
 <template name="gameSettings">
 
     <div class="container">
-        {{#autoForm collection="GameSetup" id="insertGameSettingsForm" type="insert"}}
 
         <div class="row">
             <div class="jumbotron">
@@ -9,50 +8,72 @@
             </div>
         </div>
 
-        <div><h3>Game Title</h3></div>
-        <div class="clearfix"></div>
-        <div class="row">
-            <div class="col-xs-12">{{> afQuickField name="title" type="text" placeholder="Pls Enter Game Title..." }}</div>
-        </div>
+        <div class="col-md-3">
+            <div><h3>User Setups</h3></div>
+            <div class="clearfix"></div>
 
-        <div><h3>Initial Values</h3></div>
-        <div class="clearfix"></div>
-        <div class="row">
-            <div class="col-sm-3">{{> afQuickField name="setup.initStock" type="number"}}</div>
-            <div class="col-sm-3">{{> afQuickField name="setup.initIncomingDelivery" type="number"}}</div>
-            <div class="col-sm-3">{{> afQuickField name="setup.initIncomingOrder" type="number"}}</div>
-            <div class="col-sm-3">{{> afQuickField name="setup.initBackorder" type="number"}}</div>
-        </div>
-
-        <div><h3>Costs</h3></div>
-        <div class="clearfix"></div>
-        <div class="row">
-            <div class="col-sm-3">{{> afQuickField name="setup.initInventoryCost" type="number"}}</div>
-            <div class="col-sm-3">{{> afQuickField name="setup.initBackorderCost" type="number"}}</div>
-        </div>
-
-        <div><h3>Tracking</h3></div>
-        <div class="clearfix"></div>
-        <div class="row">
-            <div class="col-sm-4">{{> afQuickField name="setup.visibleShippings" type="boolean-checkbox"}}</div>
-            <div class="col-sm-4">{{> afQuickField name="setup.visibleDemands" type="boolean-checkbox"}}</div>
-            <div class="col-sm-4">{{> afQuickField name="setup.allowMessaging" type="boolean-checkbox"}}</div>
-        </div>
-
-        <div class="row">
-            <div class="col-xs-12 col-sm-3">
-                {{> afArrayField  name="setup.initDemand"}}
+            <div class="list-group">
+                {{ #each loadSetups }}
+                    {{> gameSettingsSetups }}
+                {{ else }}
+                    <h4>No Settings Found</h4>
+                {{ /each }}
             </div>
         </div>
 
-        <!-- TODO <canvas id="demandChart"></canvas>; -->
+        <div class="col-md-9">
+            {{#autoForm collection="GameSetup" id="insertGameSettingsForm" type=method doc=currentGameSetupId}}
 
-        <div class="row">
-            <div class="col-xs-12 col-sm-2"><button type="submit" class="btn btn-success">Create New Game</button></div>
-            <div class="col-xs-12 col-sm-2"><button id="cancelCreateBtn" type="submit" class="btn btn-warning">Cancel</button></div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-2"><button type="submit" class="btn btn-success">Save Settings</button></div>
+                <div class="col-xs-12 col-sm-2"><button class="cancelSettings btn btn-warning">Cancel</button></div>
+            </div>
+
+            <div><h3>Game Title</h3></div>
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-xs-12">{{> afQuickField name="title" type="text" placeholder="Pls Enter Game Title..." }}</div>
+            </div>
+
+            <div><h3>Initial Values</h3></div>
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-sm-3">{{> afQuickField name="setup.initStock" type="number"}}</div>
+                <div class="col-sm-3">{{> afQuickField name="setup.initIncomingDelivery" type="number"}}</div>
+                <div class="col-sm-3">{{> afQuickField name="setup.initIncomingOrder" type="number"}}</div>
+                <div class="col-sm-3">{{> afQuickField name="setup.initBackorder" type="number"}}</div>
+            </div>
+
+            <div><h3>Costs</h3></div>
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-sm-3">{{> afQuickField name="setup.initInventoryCost" type="number"}}</div>
+                <div class="col-sm-3">{{> afQuickField name="setup.initBackorderCost" type="number"}}</div>
+            </div>
+
+            <div><h3>Tracking</h3></div>
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-sm-4">{{> afQuickField name="setup.visibleShippings" type="boolean-checkbox"}}</div>
+                <div class="col-sm-4">{{> afQuickField name="setup.visibleDemands" type="boolean-checkbox"}}</div>
+                <div class="col-sm-4">{{> afQuickField name="setup.allowMessaging" type="boolean-checkbox"}}</div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-3">
+                    {{> afArrayField  name="setup.initDemand"}}
+                </div>
+            </div>
+
+            <!-- TODO <canvas id="demandChart"></canvas>; -->
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-2"><button type="submit" class="btn btn-success">Save Settings</button></div>
+                <div class="col-xs-12 col-sm-2"><button class="cancelSettings btn btn-warning">Cancel</button></div>
+            </div>
+
+            {{/autoForm}}
         </div>
-
-        {{/autoForm}}
     </div>
 
 </template>

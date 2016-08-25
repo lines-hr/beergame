@@ -1,0 +1,19 @@
+<template name="lobbyGame">
+
+    <div class="col-xs-4">
+        {{title}}
+    </div>
+
+    <div class="col-xs-4">
+        {{gameAdmin}}
+    </div>
+
+    <div class="col-xs-2">
+        {{#if enableJoin}}
+            <button type="button" class="btn btn-default joinRoom">Join</button>
+        {{else}}
+            <button type="button" class="btn btn-default joinRoom" disabled="disabled">Join</button>
+        {{/if}}
+    </div>
+
+</template>

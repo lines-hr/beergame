@@ -5,12 +5,23 @@
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">New Game</h4>
+                        <h4 class="modal-title">Game</h4>
                     </div>
 
                     <div class="modal-body">
-                        <button id="newTemplateBtn" type="button" class="btn btn-success btn-block">New Settings</button>
-                        <button value="pls" id="defaultTemplateBtn" type="button" class="btn btn-primary btn-block">Default Settings</button>
+                        <h4 class="modal-title text-center">Choose Setup</h4>
+
+                        <div class="list-group">
+                            {{ #each loadSetups }}
+                                {{> gameSettingsSetups }}
+                            {{ else }}
+                                <h4 class="text-center">No Settings Found</h4>
+                            {{ /each }}
+                        </div>
+
+                        <h4 class="modal-title text-center">Or</h4>
+
+                        <button id="newTemplateBtn" type="button" class="btn btn-success btn-block">Create New Setup</button>
                     </div>
 
                     <div class="modal-footer">
