@@ -182,7 +182,9 @@
         <item url="file://$USER_HOME$/.meteor/packages/ecmascript-runtime/0.3.13/npm/node_modules/core-js/modules/$.get-names.js" />
         <item url="file://$USER_HOME$/.meteor/packages/ecmascript-runtime/0.3.13/npm/node_modules/core-js/modules/es6.reflect.delete-property.js" />
         <item url="file://$USER_HOME$/.meteor/packages/ecmascript-runtime/0.3.13/npm/node_modules/core-js/modules/$.to-length.js" />
+        <item url="file://$USER_HOME$/.meteor/packages/aldeed_simple-schema/1.3.0/npm/node_modules/string/lib/string.js" />
         <item url="file://$USER_HOME$/.meteor/packages/ecmascript-runtime/0.3.13/npm/node_modules/core-js/modules/es6.regexp.replace.js" />
+        <item url="file://$USER_HOME$/.meteor/packages/aldeed_simple-schema/1.3.0/npm/node_modules/string/lib/string.min.js" />
         <item url="file://$USER_HOME$/.meteor/packages/ecmascript-runtime/0.3.13/npm/node_modules/core-js/modules/es6.object.keys.js" />
         <item url="file://$USER_HOME$/.meteor/packages/ecmascript-runtime/0.3.13/npm/node_modules/core-js/modules/es6.array.find-index.js" />
         <item url="file://$USER_HOME$/.meteor/packages/ecmascript-runtime/0.3.13/npm/node_modules/core-js/modules/$.js" />
@@ -3859,8 +3861,6 @@
         <item url="file://$USER_HOME$/.meteor/packages/babel-compiler/6.9.0/npm/node_modules/vlq/dist/vlq.js" />
         <item url="file://$USER_HOME$/.meteor/packages/babel-compiler/6.9.0/npm/node_modules/vlq/src/vlq.js" />
         <item url="file://$USER_HOME$/.meteor/packages/babel-compiler/6.9.0/npm/node_modules/ms/index.js" />
-        <item url="file://$USER_HOME$/.meteor/packages/aldeed_simple-schema/1.1.0/npm/node_modules/string/lib/string.min.js" />
-        <item url="file://$USER_HOME$/.meteor/packages/aldeed_simple-schema/1.1.0/npm/node_modules/string/lib/string.js" />
         <item url="file://$USER_HOME$/.meteor/packages/kadira_flow-router/2.12.1/npm/node_modules/page/page.js" />
         <item url="file://$USER_HOME$/.meteor/packages/kadira_flow-router/2.12.1/npm/node_modules/page/index.js" />
         <item url="file://$USER_HOME$/.meteor/packages/kadira_flow-router/2.12.1/npm/node_modules/qs/dist/qs.js" />
@@ -4595,7 +4595,9 @@
       <root url="file://$USER_HOME$/.meteor/packages/ecmascript-runtime/0.3.13/npm/node_modules/core-js/modules/$.get-names.js" />
       <root url="file://$USER_HOME$/.meteor/packages/ecmascript-runtime/0.3.13/npm/node_modules/core-js/modules/es6.reflect.delete-property.js" />
       <root url="file://$USER_HOME$/.meteor/packages/ecmascript-runtime/0.3.13/npm/node_modules/core-js/modules/$.to-length.js" />
+      <root url="file://$USER_HOME$/.meteor/packages/aldeed_simple-schema/1.3.0/npm/node_modules/string/lib/string.js" />
       <root url="file://$USER_HOME$/.meteor/packages/ecmascript-runtime/0.3.13/npm/node_modules/core-js/modules/es6.regexp.replace.js" />
+      <root url="file://$USER_HOME$/.meteor/packages/aldeed_simple-schema/1.3.0/npm/node_modules/string/lib/string.min.js" />
       <root url="file://$USER_HOME$/.meteor/packages/ecmascript-runtime/0.3.13/npm/node_modules/core-js/modules/es6.object.keys.js" />
       <root url="file://$USER_HOME$/.meteor/packages/ecmascript-runtime/0.3.13/npm/node_modules/core-js/modules/es6.array.find-index.js" />
       <root url="file://$USER_HOME$/.meteor/packages/ecmascript-runtime/0.3.13/npm/node_modules/core-js/modules/$.js" />
@@ -8272,8 +8274,6 @@
       <root url="file://$USER_HOME$/.meteor/packages/babel-compiler/6.9.0/npm/node_modules/vlq/dist/vlq.js" />
       <root url="file://$USER_HOME$/.meteor/packages/babel-compiler/6.9.0/npm/node_modules/vlq/src/vlq.js" />
       <root url="file://$USER_HOME$/.meteor/packages/babel-compiler/6.9.0/npm/node_modules/ms/index.js" />
-      <root url="file://$USER_HOME$/.meteor/packages/aldeed_simple-schema/1.1.0/npm/node_modules/string/lib/string.min.js" />
-      <root url="file://$USER_HOME$/.meteor/packages/aldeed_simple-schema/1.1.0/npm/node_modules/string/lib/string.js" />
       <root url="file://$USER_HOME$/.meteor/packages/kadira_flow-router/2.12.1/npm/node_modules/page/page.js" />
       <root url="file://$USER_HOME$/.meteor/packages/kadira_flow-router/2.12.1/npm/node_modules/page/index.js" />
       <root url="file://$USER_HOME$/.meteor/packages/kadira_flow-router/2.12.1/npm/node_modules/qs/dist/qs.js" />

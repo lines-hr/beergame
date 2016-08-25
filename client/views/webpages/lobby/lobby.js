@@ -1,6 +1,10 @@
 Template.lobby.onCreated(function () {
-    Meteor.subscribe('GameLobby');
-    Meteor.subscribe('LobbyUser');
+
+    this.autorun(() => {
+        this.subscribe('GameLobby');
+        this.subscribe('User');
+    });
+
 });
 
 Template.lobby.events({

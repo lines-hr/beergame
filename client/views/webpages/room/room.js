@@ -1,18 +1,31 @@
-var gameId = '';
+var gameId;
 
 Template.room.onCreated(function () {
-    gameId = FlowRouter.getParam('gameId');
-    Meteor.subscribe('GameAdmin', gameId);
-    Meteor.subscribe('GameUser', gameId);
-    Meteor.subscribe('RoomUser', gameId);
+
+    this.getGameId = () => FlowRouter.getParam('gameId');
+
+    gameId = this.getGameId();
+
+    this.autorun(() => {
+        this.subscribe('GameAdmin', this.getGameId());
+        this.subscribe('GameUser', this.getGameId());
+        this.subscribe('User');
+    });
+
 });
 
-Tracker.autorun(function (c) {
-    if (Game.findOne({ _id: gameId }))
-        return;
-    c.stop();
-    FlowRouter.go('/lobby');
+Template.room.onRendered(function () {
+
+    this.autorun(function (c) {
+        var game = Game.find({"_id": gameId}).count();
+        if (game === 0){
+            c.stop();
+            FlowRouter.go("/lobby");
+        }
+    });
+
 });
+
 
 Template.room.events({
     'click #cancelGame': function () {
