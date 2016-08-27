@@ -32,9 +32,6 @@ Meteor.publish('RoomUser', function (gameId) {
             $in: userIds
         }
     });
-
-
-
 });
 
 Meteor.publish('LobbyUser', function () {

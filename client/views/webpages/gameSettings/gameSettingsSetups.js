@@ -2,10 +2,17 @@ Template.gameSettingsSetups.events({
     'click .loadSetup': function (e) {
         e.preventDefault();
 
-        var doc = Meteor.apply('Game.createGame', [this], { returnStubValue: true });
+        const game = {
+            gameAdmin: Meteor.userId(),
+            status: 'inLobby',
+            title: this.title,
+            gameSetup: this.setup
+        };
+
+        var gameId = Game.insert(game);
 
         $('#newGameModal').on('hidden.bs.modal', function() {
-            FlowRouter.go('/room/' + doc);
+            FlowRouter.go('/room/' + gameId);
         }).modal('hide');
     }
 });

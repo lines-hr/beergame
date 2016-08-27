@@ -1,6 +1,9 @@
 <template name="roomPlayers">
 
-    <td>{{ user }}</td>
-    {{#if user}}<td><button value="{{ userId }}" class="btn btn-danger btn-xs glyphicon glyphicon-minus toObserve"></button></td>{{/if}}
+    <td>{{ username }}</td>
+
+    {{#if isGameAdmin}}
+        <td><button class="btn btn-danger btn-xs glyphicon glyphicon-minus toObserver"></button></td>
+    {{/if}}
 
 </template>

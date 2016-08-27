@@ -1,6 +1,9 @@
 <template name="roomObservers">
 
     <td>{{ username }}</td>
-    {{#if username}}<td><button value="{{ _id }}" class="btn btn-success btn-xs glyphicon glyphicon-plus toPlay"></button></td>{{/if}}
+
+    {{#if isGameAdmin}}
+        <td><button class="btn btn-success btn-xs glyphicon glyphicon-plus toPlayer"></button></td>
+    {{/if}}
 
 </template>

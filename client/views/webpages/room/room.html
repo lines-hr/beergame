@@ -11,27 +11,25 @@
 
         <div class="row">
             <div class="col-sm-6">
-                {{#if admin}}
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <h3>Observers</h3>
-                        </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h3>Observers</h3>
                     </div>
+                </div>
 
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <table class="table">
-                            <tbody>
-                            {{#each listObservers}}
-                                <tr>
-                                    {{> roomObservers}}
-                                </tr>
-                            {{/each}}
-                            </tbody>
-                            </table>
-                        </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <table class="table">
+                        <tbody>
+                        {{#each listObservers}}
+                            <tr>
+                                {{> roomObservers}}
+                            </tr>
+                        {{/each}}
+                        </tbody>
+                        </table>
                     </div>
-                {{/if}}
+                </div>
 
                 <div class="clearfix"></div>
 
@@ -43,41 +41,39 @@
                     {{/if}}
                 {{/if}}
 
-                {{#if admin}}
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <h3>Players</h3>
-                        </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h3>Players</h3>
                     </div>
+                </div>
 
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <table class="table">
-                            <tbody>
-                            {{#each positions}}
-                                <tr>
-                                    <td>{{position}}</td>
-                                </tr>
-                            {{/each}}
-                            </tbody>
-                            </table>
-                        </div>
-
-                        <div class="col-xs-6">
-                            <table class="table">
-                            <tbody>
-                            {{#each listPlayers}}
+                <div class="row">
+                    <div class="col-xs-6">
+                        <table class="table">
+                        <tbody>
+                        {{#each positions}}
                             <tr>
-                                {{> roomPlayers}}
+                                <td>{{position}}</td>
                             </tr>
-                            {{/each}}
-                            </tbody>
-                            </table>
-                        </div>
+                        {{/each}}
+                        </tbody>
+                        </table>
                     </div>
-                {{/if}}
 
-                {{#if admin}}
+                    <div class="col-xs-6">
+                        <table class="table">
+                        <tbody>
+                        {{#each listPlayers}}
+                        <tr>
+                            {{> roomPlayers}}
+                        </tr>
+                        {{/each}}
+                        </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                {{#if isGameAdmin}}
                     {{#if allPlayersReady}}
                         <button id="startGame" class="btn btn-primary btn-block btn-lg">START Game</button>
                     {{else}}
@@ -85,9 +81,7 @@
                     {{/if}}
 
                     <button id="cancelGame" class="btn btn-warning btn-block">Cancel Game</button>
-                {{/if}}
-
-                {{#if inRoom}}
+                {{else}}
                     <button id="exitRoom" class="btn btn-warning btn-block">Exit Room</button>
                 {{/if}}
             </div>

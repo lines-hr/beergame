@@ -1,50 +1,96 @@
 var gameId;
 
+Template.registerHelper('isGameAdmin', function () {
+    var game = Game.findOne({ _id: gameId });
+
+    if (typeof game !== 'undefined') {
+        if (game.gameAdmin === Meteor.userId()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+});
+
 Template.room.onCreated(function () {
+    var self = this;
 
     this.getGameId = () => FlowRouter.getParam('gameId');
 
     gameId = this.getGameId();
 
     this.autorun(() => {
-        this.subscribe('GameAdmin', this.getGameId());
-        this.subscribe('GameUser', this.getGameId());
+        this.subscribe('GameRoom', this.getGameId(), function () {
+            self.autorun(function (c) {
+                var game = Game.find({"_id": gameId, status: 'inLobby'}).count();
+                if (game === 0){
+                    c.stop();
+                    FlowRouter.go("/lobby");
+                }
+            });
+        });
+
         this.subscribe('User');
     });
-
 });
-
-Template.room.onRendered(function () {
-
-    this.autorun(function (c) {
-        var game = Game.find({"_id": gameId}).count();
-        if (game === 0){
-            c.stop();
-            FlowRouter.go("/lobby");
-        }
-    });
-
-});
-
 
 Template.room.events({
     'click #cancelGame': function () {
         Meteor.call('Game.room.events.cancelGame');
         FlowRouter.go('/lobby');
+    },
+
+    'click #exitRoom': function () {
+        Meteor.call('Game.room.events.exitRoom', gameId);
+        FlowRouter.go('/lobby');
+    },
+
+    'click .toPlayer': function () {
+        Meteor.call('Game.room.events.toPlayer', this._id);
+    },
+
+    'click .toObserver': function () {
+        Meteor.call('Game.room.events.toObserver', this._id);
     }
 });
 
 Template.room.helpers({
-    admin: function () {
-        var game = Game.findOne({ _id: gameId });
+    listObservers: function () {
+        const game = Game.findOne({_id: gameId});
+        var observers = [];
 
-        if (typeof game !== 'undefined') {
-            if (game.gameAdmin === Meteor.userId()) {
-                return true;
-            } else {
-                return false;
-            }
+        if (game && game.observers) {
+            game.observers.forEach(function (obj) {
+                observers.push(obj.observerId);
+            });
+
+            return Meteor.users.find({
+                _id: {
+                    $in: observers
+                }
+            }).fetch();
         }
+    },
+
+    listPlayers: function () {
+        const game = Game.findOne({_id: gameId});
+        var players = [];
+
+        if (game && game.players) {
+            game.players.forEach(function (obj) {
+                players.push(obj.playerId);
+            });
+
+            return Meteor.users.find({
+                _id: {
+                    $in: players
+                }
+            }).fetch();
+        }
+    },
+
+    positions: function () {
+        return [{position: 'Retailer'}, {position: 'Wholesailer'}, {position: 'Distributor'}, {position: 'Factory'}];
     }
 });
 

@@ -1,10 +1,33 @@
 Template.lobby.onCreated(function () {
+    var self = this;
 
     this.autorun(() => {
-        this.subscribe('GameLobby');
+        this.subscribe('GameLobby', function () {
+            var condition = Game.findOne(
+                {
+                    $and: [
+                        {
+                            $or: [
+                                { gameAdmin: Meteor.userId() },
+                                { 'observers.observerId': Meteor.userId() },
+                                { 'players.playerId': Meteor.userId() }
+                            ]
+                        },
+                        {
+                            $or: [
+                                { status: 'inLobby' },
+                                { status: 'inProgress' }
+                            ]
+                        }
+                    ]
+                });
+
+            if (condition){
+                FlowRouter.go("/room/" + condition._id);
+            }
+        });
         this.subscribe('User');
     });
-
 });
 
 Template.lobby.events({
