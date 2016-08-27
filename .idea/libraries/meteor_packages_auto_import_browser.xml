@@ -172,9 +172,11 @@
         <item url="file://$USER_HOME$/.meteor/packages/aldeed_autoform/5.8.1/web.browser/autoform-validation.js" />
         <item url="file://$USER_HOME$/.meteor/packages/mongo-id/1.0.5/web.browser/id.js" />
         <item url="file://$USER_HOME$/.meteor/packages/aldeed_autoform/5.8.1/web.browser/autoform-formdata.js" />
+        <item url="file://$USER_HOME$/.meteor/packages/chrismbeckett_toastr/2.1.2_1/web.browser/packages/chrismbeckett_toastr.js" />
         <item url="file://$USER_HOME$/.meteor/packages/aldeed_autoform/5.8.1/web.browser/form-preserve.js" />
         <item url="file://$USER_HOME$/.meteor/packages/ecmascript-runtime/0.3.13/web.browser/runtime.js" />
         <item url="file://$USER_HOME$/.meteor/packages/aldeed_autoform/5.8.1/web.browser/autoform.js" />
+        <item url="file://$USER_HOME$/.meteor/packages/chrismbeckett_toastr/2.1.2_1/web.browser/packages/chrismbeckett_toastr/lib/toastr.css" />
         <item url="file://$USER_HOME$/.meteor/packages/ecmascript-runtime/0.3.13/web.browser/runtime-tests.js" />
         <item url="file://$USER_HOME$/.meteor/packages/aldeed_autoform/5.8.1/web.browser/formTypes/readonly.js" />
         <item url="file://$USER_HOME$/.meteor/packages/aldeed_autoform/5.8.1/web.browser/formTypes/update-pushArray.js" />
@@ -525,9 +527,11 @@
       <root url="file://$USER_HOME$/.meteor/packages/aldeed_autoform/5.8.1/web.browser/autoform-validation.js" />
       <root url="file://$USER_HOME$/.meteor/packages/mongo-id/1.0.5/web.browser/id.js" />
       <root url="file://$USER_HOME$/.meteor/packages/aldeed_autoform/5.8.1/web.browser/autoform-formdata.js" />
+      <root url="file://$USER_HOME$/.meteor/packages/chrismbeckett_toastr/2.1.2_1/web.browser/packages/chrismbeckett_toastr.js" />
       <root url="file://$USER_HOME$/.meteor/packages/aldeed_autoform/5.8.1/web.browser/form-preserve.js" />
       <root url="file://$USER_HOME$/.meteor/packages/ecmascript-runtime/0.3.13/web.browser/runtime.js" />
       <root url="file://$USER_HOME$/.meteor/packages/aldeed_autoform/5.8.1/web.browser/autoform.js" />
+      <root url="file://$USER_HOME$/.meteor/packages/chrismbeckett_toastr/2.1.2_1/web.browser/packages/chrismbeckett_toastr/lib/toastr.css" />
       <root url="file://$USER_HOME$/.meteor/packages/ecmascript-runtime/0.3.13/web.browser/runtime-tests.js" />
       <root url="file://$USER_HOME$/.meteor/packages/aldeed_autoform/5.8.1/web.browser/formTypes/readonly.js" />
       <root url="file://$USER_HOME$/.meteor/packages/aldeed_autoform/5.8.1/web.browser/formTypes/update-pushArray.js" />

@@ -42,7 +42,7 @@ Template.lobby.helpers({
     lobbyGames: function() {
         lobbyGames = [];
 
-        Game.find().forEach(function (obj) {
+        Game.find({"status": "inLobby"}).forEach(function (obj) {
             if (user = Meteor.users.findOne(obj.gameAdmin)) {
                 lobbyGames.push({_id: obj._id, title: obj.title, gameAdmin: user.username});
             } else {

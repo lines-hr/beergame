@@ -2,22 +2,17 @@ Template.gameSettingsSetups.events({
     'click .loadSetup': function (e) {
         e.preventDefault();
 
-        //var old =
-        var gameSetup = {};
+        var initDemand = this.setup.initDemand;
 
-        this.setup.forEach(function(value, index){
-            if (index !== "initDemand") {
-                gameSetup.push({index: value});
-            }
-        });
+        delete this.setup.initDemand;
 
         const game = {
             gameAdmin: Meteor.userId(),
             status: 'inLobby',
             title: this.title,
-            gameSetup: gameSetup,
-            numRounds: _.size(this.setup.initDemand),
-            __initDemand: this.setup.initDemand
+            gameSetup: this.setup,
+            numRounds: _.size(initDemand),
+            __initDemand: initDemand
         };
 
         var gameId = Game.insert(game);

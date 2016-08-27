@@ -1,3 +1,5 @@
+const NUMBER_OF_PLAYERS = 2;
+
 var gameId;
 
 Template.registerHelper('isGameAdmin', function () {
@@ -35,17 +37,78 @@ Template.room.onCreated(function () {
 
     this.autorun(() => {
         this.subscribe('GameRoom', this.getGameId(), function () {
+
+            var cursorGame = Game.find({"_id": gameId}, {fields: {players: 1}});
+            var observerHandle;
+            if(cursorGame){
+                observerHandle = cursorGame.observe({
+                    changed: function (newdoc, olddoc) {
+
+                        var newPlayerIds = new Array();
+                        var oldPlayerIds = new Array();
+                        var numPlayersReady = 0;
+
+                        newdoc.players.forEach(function(p){
+                            newPlayerIds.push(p.playerId);
+                            if (p.isReady) numPlayersReady++;
+                        });
+
+                        if (numPlayersReady === NUMBER_OF_PLAYERS){
+                            toastr["success"]("All players are ready! Waiting for administrator to start the game.");
+                        }
+
+                        olddoc.players.forEach(function(p){
+                            oldPlayerIds.push(p.playerId);
+                        });
+
+                        var inPlayer = _.difference(newPlayerIds,oldPlayerIds)[0];
+                        var outPlayer = "";
+                        if (typeof inPlayer === "undefined")
+                            outPlayer = _.difference(oldPlayerIds, newPlayerIds)[0];
+
+                        if(typeof inPlayer !== "undefined"){
+                            var user = Meteor.users.findOne({_id: inPlayer});
+                            var game = Game.findOne({_id: gameId});
+                            if(user && game){
+                                var player = _.find(game.players, function (p) {
+                                    return p.playerId === user._id;
+                                });
+                                if(player)
+                                    toastr["info"]("User " + user.username + " assigned to " + player.position + ".");
+                            }
+
+                        }
+
+                        if(typeof outPlayer !== "undefined"){
+                            var user = Meteor.users.findOne({_id: outPlayer});
+                            if(user)
+                                toastr["info"]("User " + user.username + " unassigned.");
+                        }
+                    }
+                });
+            }
+
             self.autorun(function (c) {
-                var game = Game.find({"_id": gameId, status: 'inLobby'}).count();
-                if (game === 0){
+                var game = Game.findOne({"_id": gameId});
+                if (!game){
+                    observerHandle.stop();
                     c.stop();
                     FlowRouter.go("/lobby");
+                } else {
+                    if(game && game.status === "inProgress"){
+                        observerHandle.stop();
+                        c.stop();
+                        FlowRouter.go("/game/" + game._id);
+                    }
                 }
             });
+
         });
 
         this.subscribe('User');
     });
+
+
 });
 
 Template.room.events({
@@ -69,6 +132,10 @@ Template.room.events({
 
     'click #toggleReady': function () {
         Meteor.call('Game.room.events.toggleReady', gameId);
+    },
+
+    'click #startGame': function () {
+        Meteor.call('Game.room.events.startGame', gameId);
     }
 });
 
@@ -124,26 +191,33 @@ Template.room.helpers({
     game: function () {
         var game = Game.findOne({_id: gameId, status: 'inLobby'});
 
-        if (game) {
+        if (game && game.gameSetup) {
             var admin = Meteor.users.findOne({_id: game.gameAdmin});
 
             if (admin) {
-                game.numRounds = _.size(game.gameSetup.initDemandp.initDemand);
                 game.adminUsername = admin.username;
-                game.shippings = (game.gameSetup.visibleShippings) ? 'Yes' : 'No';
-                game.demands = (game.gameSetup.visibleDemands) ? 'Yes' : 'No';
-                game.messaging = (game.gameSetup.allowMessaging) ? 'Yes' : 'No';
+
+                game.shippings = (typeof game.gameSetup.visibleShippings !== "undefined") ? 'Yes' : 'No';
+                game.demands = (typeof game.gameSetup.visibleDemands !== "undefined") ? 'Yes' : 'No';
+                game.messaging = (typeof game.gameSetup.allowMessaging !== "undefined") ? 'Yes' : 'No';
 
                 return game;
             }
         }
+    },
+
+    allPlayersReady: function () {
+        var game = Game.findOne({_id: gameId, status: 'inLobby'});
+        var numPlayers = 0;
+        if(game && game.players){
+            game.players.forEach(function(p){
+                if(p.isReady) numPlayers++;
+            });
+            return (numPlayers === NUMBER_OF_PLAYERS) ? true : false;
+        }
+        return false;
     }
 });
-
-
-
-
-
 
 
 

@@ -12,24 +12,31 @@ Meteor.publish('GameRoom', function (gameId) {
 });
 
 Meteor.publish('GameLobby', function () {
-    return Game.find({status: 'inLobby'}, {fields: {
-        _id: 1,
-        gameAdmin: 1,
-        title: 1,
-        observers: 1,
-        players: 1,
-        status: 1
-    }});
+    return Game.find({
+        $or: [
+            {status: 'inLobby'},
+            {status: 'inProgress'},
+        ]
+    }, {
+        fields: {
+            _id: 1,
+            gameAdmin: 1,
+            title: 1,
+            observers: 1,
+            players: 1,
+            status: 1
+        }
+    });
 });
 
 Game.allow({
     insert: function (userId) {
-        var condition = Meteor.apply('Game.helpers.enableUserActions', [], { returnStubValue: true });
+        var condition = Meteor.apply('Game.helpers.enableUserActions', [], {returnStubValue: true});
         return !!userId && condition;
     },
 
-    update: function (userId, doc){
-        var condition = Meteor.apply('Game.helpers.enableUserActions', [], { returnStubValue: true });
+    update: function (userId, doc) {
+        var condition = Meteor.apply('Game.helpers.enableUserActions', [], {returnStubValue: true});
         return (userId === doc.gameAdmin) && condition;
     }
 });
