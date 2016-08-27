@@ -3,7 +3,30 @@
     <td>{{ username }}</td>
 
     {{#if isGameAdmin}}
-        <td><button class="btn btn-success btn-xs glyphicon glyphicon-plus toPlayer"></button></td>
+        <td>
+            <div class="btn-group">
+                <button type="button" class="btn btn-success dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Add <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    {{#if activeRetailer }}
+                        <li><a href="#" class="position">Retailer</a></li>
+                    {{/if}}
+
+                    {{#if activeWholesailer }}
+                        <li><a href="#" class="position">Wholesailer</a></li>
+                    {{/if}}
+
+                    {{#if activeDistributor }}
+                        <li><a href="#" class="position">Distributor</a></li>
+                    {{/if}}
+
+                    {{#if activeFactory }}
+                        <li><a href="#" class="position">Factory</a></li>
+                    {{/if}}
+                </ul>
+            </div>
+        </td>
     {{/if}}
 
 </template>

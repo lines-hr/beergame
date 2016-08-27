@@ -33,14 +33,6 @@
 
                 <div class="clearfix"></div>
 
-                {{#if added}}
-                    {{#if ready}}
-                        <button value="notReady" id="ready" class="btn btn-danger btn-block">Click For Not Ready</button>
-                    {{else}}
-                        <button value="ready" id="ready" class="btn btn-primary btn-block">Click For Ready</button>
-                    {{/if}}
-                {{/if}}
-
                 <div class="row">
                     <div class="col-xs-12">
                         <h3>Players</h3>
@@ -48,30 +40,30 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-xs-6">
+                    <div class="col-xs-12">
                         <table class="table">
                         <tbody>
-                        {{#each positions}}
+                        {{#each listPlayers}}
                             <tr>
                                 <td>{{position}}</td>
+                                <td>{{player.username}}</td>
+                                {{#if isGameAdmin}}
+                                    <td><button class="btn btn-danger btn-xs glyphicon glyphicon-minus toObserver"></button></td>
+                                {{/if}}
                             </tr>
                         {{/each}}
                         </tbody>
                         </table>
                     </div>
-
-                    <div class="col-xs-6">
-                        <table class="table">
-                        <tbody>
-                        {{#each listPlayers}}
-                        <tr>
-                            {{> roomPlayers}}
-                        </tr>
-                        {{/each}}
-                        </tbody>
-                        </table>
-                    </div>
                 </div>
+
+                {{#if isPlayer}}
+                    {{#if playerReady}}
+                        <button id="toggleReady" class="btn btn-danger btn-block">Click For Not Ready</button>
+                    {{else}}
+                        <button id="toggleReady" class="btn btn-primary btn-block">Click For Ready</button>
+                    {{/if}}
+                {{/if}}
 
                 {{#if isGameAdmin}}
                     {{#if allPlayersReady}}
@@ -97,62 +89,62 @@
                     <tbody>
                     <tr>
                         <td>Title</td>
-                        <td>{{ getGameSettings.[0] }}</td>
+                        <td>{{ game.title }}</td>
                     </tr>
 
                     <tr>
                         <td>Admin</td>
-                        <td>{{ getGameSettings.[1] }}</td>
+                        <td>{{ game.adminUsername }}</td>
                     </tr>
 
                     <tr>
                         <td>Game Length</td>
-                        <td>{{ getGameSettings.[2] }}</td>
+                        <td>{{ game.numRounds }}</td>
                     </tr>
 
                     <tr>
                         <td>Stock</td>
-                        <td>{{ getGameSettings.[3] }}</td>
+                        <td>{{ game.gameSetup.initStock }}</td>
                     </tr>
 
                     <tr>
                         <td>Incoming Delivery</td>
-                        <td>{{ getGameSettings.[4] }}</td>
+                        <td>{{ game.gameSetup.initIncomingDelivery }}</td>
                     </tr>
 
                     <tr>
                         <td>Incoming Order</td>
-                        <td>{{ getGameSettings.[5] }}</td>
+                        <td>{{ game.gameSetup.initIncomingOrder }}</td>
                     </tr>
 
                     <tr>
                         <td>Backorder</td>
-                        <td>{{ getGameSettings.[6] }}</td>
+                        <td>{{ game.gameSetup.initBackorder }}</td>
                     </tr>
 
                     <tr>
                         <td>Stock Unit Cost</td>
-                        <td>{{ getGameSettings.[7] }}</td>
+                        <td>{{ game.gameSetup.initInventoryCost }}</td>
                     </tr>
 
                     <tr>
                         <td>Backorder Unit Cost</td>
-                        <td>{{ getGameSettings.[8] }}</td>
+                        <td>{{ game.gameSetup.initBackorderCost }}</td>
                     </tr>
 
                     <tr>
                         <td>Visible Shippings</td>
-                        <td>{{ getGameSettings.[9] }}</td>
+                        <td>{{ game.shippings }}</td>
                     </tr>
 
                     <tr>
                         <td>Visible Demands</td>
-                        <td>{{ getGameSettings.[10] }}</td>
+                        <td>{{ game.demands }}</td>
                     </tr>
 
                     <tr>
                         <td>Allow Messaging</td>
-                        <td>{{ getGameSettings.[11] }}</td>
+                        <td>{{ game.messaging }}</td>
                     </tr>
                     </tbody>
                 </table>

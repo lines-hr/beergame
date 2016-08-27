@@ -12,6 +12,20 @@ Template.registerHelper('isGameAdmin', function () {
     }
 });
 
+Template.registerHelper('isPlayer', function () {
+    var game = Game.findOne({ _id: gameId });
+
+    if (game) {
+        var player = _.find(game.players, function(p){
+            return p.playerId === Meteor.userId();
+        });
+
+        return (player) ? true : false;
+    } else {
+        return false;
+    }
+});
+
 Template.room.onCreated(function () {
     var self = this;
 
@@ -45,12 +59,16 @@ Template.room.events({
         FlowRouter.go('/lobby');
     },
 
-    'click .toPlayer': function () {
-        Meteor.call('Game.room.events.toPlayer', this._id);
+    'click .position': function (e) {
+        Meteor.call('Game.room.events.toPlayer', this._id, e.target.text);
     },
 
     'click .toObserver': function () {
-        Meteor.call('Game.room.events.toObserver', this._id);
+        Meteor.call('Game.room.events.toObserver', this.playerId);
+    },
+
+    'click #toggleReady': function () {
+        Meteor.call('Game.room.events.toggleReady', gameId);
     }
 });
 
@@ -73,24 +91,52 @@ Template.room.helpers({
     },
 
     listPlayers: function () {
-        const game = Game.findOne({_id: gameId});
-        var players = [];
+        var game = Game.findOne({_id: gameId});
+        var users = Meteor.users.find().fetch();
 
-        if (game && game.players) {
-            game.players.forEach(function (obj) {
-                players.push(obj.playerId);
+        if (game && users && game.players) {
+            game.players.forEach(function(o){
+                o.player = _.find(users, function(obj){
+                    if (obj._id === o.playerId){
+                        return obj.username;
+                    }
+                });
             });
 
-            return Meteor.users.find({
-                _id: {
-                    $in: players
-                }
-            }).fetch();
+            return game.players;
         }
     },
 
-    positions: function () {
-        return [{position: 'Retailer'}, {position: 'Wholesailer'}, {position: 'Distributor'}, {position: 'Factory'}];
+    playerReady: function () {
+        var game = Game.findOne({_id: gameId, status: 'inLobby'});
+
+        if (game) {
+            var player = _.find(game.players, function(p){
+                return p.playerId === Meteor.userId() && p.isReady === true;
+            });
+
+            return (player) ? true : false;
+        } else {
+            return false;
+        }
+    },
+
+    game: function () {
+        var game = Game.findOne({_id: gameId, status: 'inLobby'});
+
+        if (game) {
+            var admin = Meteor.users.findOne({_id: game.gameAdmin});
+
+            if (admin) {
+                game.numRounds = _.size(game.gameSetup.initDemandp.initDemand);
+                game.adminUsername = admin.username;
+                game.shippings = (game.gameSetup.visibleShippings) ? 'Yes' : 'No';
+                game.demands = (game.gameSetup.visibleDemands) ? 'Yes' : 'No';
+                game.messaging = (game.gameSetup.allowMessaging) ? 'Yes' : 'No';
+
+                return game;
+            }
+        }
     }
 });
 

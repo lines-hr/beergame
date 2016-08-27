@@ -1,5 +1,14 @@
 Meteor.publish('GameRoom', function (gameId) {
-    return Game.find({_id: gameId});//, gameAdmin: Meteor.userId(), status: 'inLobby'});
+    return Game.find(
+        {
+            _id: gameId
+        },
+        {
+            fields: {
+                '__initDemand': 0
+            }
+        }
+    );
 });
 
 Meteor.publish('GameLobby', function () {
