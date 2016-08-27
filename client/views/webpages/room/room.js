@@ -1,4 +1,4 @@
-const NUMBER_OF_PLAYERS = 2;
+const NUMBER_OF_PLAYERS = 1;
 
 var gameId;
 
@@ -48,18 +48,22 @@ Template.room.onCreated(function () {
                         var oldPlayerIds = new Array();
                         var numPlayersReady = 0;
 
-                        newdoc.players.forEach(function(p){
-                            newPlayerIds.push(p.playerId);
-                            if (p.isReady) numPlayersReady++;
-                        });
+                        if (newdoc.players) {
+                            newdoc.players.forEach(function (p) {
+                                newPlayerIds.push(p.playerId);
+                                if (p.isReady) numPlayersReady++;
+                            });
+                        }
 
                         if (numPlayersReady === NUMBER_OF_PLAYERS){
                             toastr["success"]("All players are ready! Waiting for administrator to start the game.");
                         }
 
-                        olddoc.players.forEach(function(p){
-                            oldPlayerIds.push(p.playerId);
-                        });
+                        if (olddoc.players) {
+                            olddoc.players.forEach(function (p) {
+                                oldPlayerIds.push(p.playerId);
+                            });
+                        }
 
                         var inPlayer = _.difference(newPlayerIds,oldPlayerIds)[0];
                         var outPlayer = "";
