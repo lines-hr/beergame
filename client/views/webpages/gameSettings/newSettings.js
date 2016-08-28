@@ -1,41 +1,23 @@
-Template.gameSettings.onCreated(function () {
+Template.newSettings.onCreated(function () {
     Meteor.subscribe('GameSetup');
-
-    this.formType = new ReactiveVar('insert');
 });
 
-Template.gameSettings.onRendered(function () {
+Template.newSettings.onRendered(function () {
 });
 
-Template.gameSettings.events({
+Template.newSettings.events({
     'click .cancelSettings' : function () {
         FlowRouter.go('/lobby');
     }
 });
 
-Template.gameSettings.helpers({
+Template.newSettings.helpers({
     loadSetups: function () {
         return GameSetup.find();
-    },
-
-    currentSchedule: function () {
-        var currentSchedule = GameSetup.findOne({_id: Session.get('gameLoadId')});
-
-        if (currentSchedule) {
-            Template.instance().formType.set('update');
-
-            return currentSchedule;
-        }
-    },
-
-    formType: function () {
-        var formType = Template.instance().formType.get();
-
-        return formType;
     }
 });
 
-AutoForm.addHooks('insertGameSettingsForm', {
+AutoForm.addHooks('insertNewSettingsForm', {
     //TODO yolo in production not needed
     onSubmit: function (insertDoc, updateDoc, currentDoc) {
         console.log(arguments);
@@ -57,7 +39,9 @@ AutoForm.addHooks('insertGameSettingsForm', {
     */
 
     onSuccess: function(formType, result) {
-        //FlowRouter.go('/lobby');
+        var gameId = Meteor.apply('Game.loadSetup', [result], { returnStubValue: true });
+
+        FlowRouter.go('/room/' + gameId);
     }
 });
 
@@ -133,7 +117,7 @@ function updateChart(d) {
 }
 *!/
 
-Template.gameSettings.events({
+Template.newSettings.events({
     /!* Button for cancel game in creating game settings *!/
     'click #cancelCreateBtn': function () {
         FlowRouter.go('/lobby');
@@ -164,7 +148,7 @@ AutoForm.addHooks('insertGameSettingsForm', {
     *!/
 
     onSuccess: function(formType, result) {
-        Meteor.call('Game.gameSettings.autoform.onSuccess', result);
+        Meteor.call('Game.newSettings.autoform.onSuccess', result);
 
         FlowRouter.go('/room');
     }

@@ -6,9 +6,6 @@ Template.lobbyGame.events({
     }
 });
 
-Template.lobbyGame.helpers({
-});
-
 
 
 

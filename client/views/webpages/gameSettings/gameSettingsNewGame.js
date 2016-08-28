@@ -7,7 +7,7 @@ Template.gameSettingsNewGame.events({
         e.preventDefault();
 
         $('#newGameModal').on('hidden.bs.modal', function() {
-            FlowRouter.go('/gameSettings');
+            FlowRouter.go('/newSettings');
         }).modal('hide');
     }
 });

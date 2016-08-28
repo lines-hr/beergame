@@ -1,0 +1,31 @@
+<!--
+
+Useru je zabranjeno editat default, jer sa updateom moze jedino updateat, ne i spremat kao novu instancu
+sto znaci da moramo imati insert za novu, update za stare i neku soluciju za default
+Zasad je useru onemoguceno updateanje globalne, a takoder se useru mogu napisati
+upute sto je svako polje i u kojim razmjerima bi ih trebao (ne morao) popunjavati
+
+-->
+
+<template name="listSettings">
+
+    {{#unless isGlobal}}
+<!--
+        <a href="" class="editSetup list-group-item {{#if isGlobal}}list-group-item-info{{/if}}">
+-->
+        <a href="" class="editSetup list-group-item">
+            {{ title }}
+
+<!--
+            {{#if isOwner }}
+-->
+            <button class="removeSetup btn btn-danger btn-xs pull-right">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+            </button>
+<!--
+            {{/if}}
+-->
+        </a>
+    {{/unless}}
+
+</template>
