@@ -12,11 +12,11 @@
                         <h4 class="modal-title text-center">Choose Setup</h4>
 
                         <div class="list-group">
-                            {{ #each loadSetups }}
-                                {{> gameSettingsSetups }}
-                            {{ else }}
+                            {{#each loadSetups}}
+                                {{> gameSettingsSetups}}
+                            {{else}}
                                 <h4 class="text-center">No Settings Found</h4>
-                            {{ /each }}
+                            {{/each}}
                         </div>
 
                         <h4 class="modal-title text-center">Or</h4>
