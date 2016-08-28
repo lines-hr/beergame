@@ -2,14 +2,92 @@
 
     <div class="container">
         <div class="row">
-            <div class="jumbotron">
-                <h1>Game</h1>
-            </div>
-        </div>
+            <div class="col-sm-6">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Round 25</th>
+                            <th colspan="2" class="text-center">I'm A Wholesailer</th>
+                        </tr>
+                    </thead>
 
-        <div class="row">
-            <div class="col-xs-12">
-                :) yolo
+                    <tfoot>
+                        <tr>
+                            <td><i class="glyphicon glyphicon-paste" aria-hidden="true"></i></td>
+                            <td>Your Order</td>
+                            <td class="text-center"><input type="number" class="form-control" id="order"></td>
+                        </tr>
+                    </tfoot>
+
+                    <tbody>
+                        <tr>
+                            <td><i class="glyphicon glyphicon-log-in" aria-hidden="true"></i></td>
+                            <td>Incoming Delivery</td>
+                            <td class="text-center">21</td>
+                        </tr>
+
+                        <tr>
+                            <td><i class="fa fa-clock-o" aria-hidden="true"></i></td>
+                            <td>Pending Incoming Delivery</td>
+                            <td class="text-center">2</td>
+                        </tr>
+
+                        <tr class="game-data-warning">
+                            <td><i class="fa fa-check" aria-hidden="true"></i></td>
+                            <td>Available</td>
+                            <td class="text-center">0</td>
+                        </tr>
+
+                        <tr>
+                            <td><i class="glyphicon glyphicon-copy" aria-hidden="true"></i></td>
+                            <td>Incoming Order</td>
+                            <td class="text-center">3</td>
+                        </tr>
+
+                        <tr>
+                            <td><i class="glyphicon glyphicon-log-out" aria-hidden="true"></i></td>
+                            <td>Your Delivery</td>
+                            <td class="text-center">3</td>
+                        </tr>
+
+                        <tr>
+                            <td><i class="fa fa-repeat" aria-hidden="true"></i></td>
+                            <td>Backorder</td>
+                            <td class="text-center">2</td>
+                        </tr>
+
+                        <tr>
+                            <td><i class="fa fa-cubes" aria-hidden="true"></i></td>
+                            <td>Inventory</td>
+                            <td class="text-center">23</td>
+                        </tr>
+
+                        <tr class="game-data-cost">
+                            <td><i class="fa fa-usd" aria-hidden="true"></i></td>
+                            <td><strong>Total Cost</strong></td>
+                            <td class="text-center"><strong>2</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="col-sm-6 col-sm-offset-3">
+                    <button class="btn btn-primary btn-block" type="button">
+                        <span class="fa fa-paper-plane"></span> Order
+                    </button>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="col-xs-12">
+                    <h4>Chat</h4>
+                </div>
+
+                <div id="chat" class="col-xs-12">
+                    <div>Miki: yo ekipa!</div>
+                    <div>Kiki: yo</div>
+                    <div>Edo: pusa Marco</div>
+                    <div>Marco: .i. edo</div>
+                </div>
             </div>
         </div>
     </div>
