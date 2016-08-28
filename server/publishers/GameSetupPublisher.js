@@ -9,5 +9,9 @@ GameSetup.allow({
 
     remove: function(userId, doc) {
         return !!userId && doc.setupOwner === userId;
+    },
+
+    update: function(userId, doc) {
+        return !!userId && doc.setupOwner === userId;
     }
 });

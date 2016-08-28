@@ -1,7 +1,7 @@
-var currentGameSetup;
-
 Template.gameSettings.onCreated(function () {
     Meteor.subscribe('GameSetup');
+
+    this.formType = new ReactiveVar('insert');
 });
 
 Template.gameSettings.onRendered(function () {
@@ -18,8 +18,20 @@ Template.gameSettings.helpers({
         return GameSetup.find();
     },
 
-    currentGameSetupId: function () {
-        return Session.get('currentGameSetup');
+    currentSchedule: function () {
+        var currentSchedule = GameSetup.findOne({_id: Session.get('gameLoadId')});
+
+        if (currentSchedule) {
+            Template.instance().formType.set('update');
+
+            return currentSchedule;
+        }
+    },
+
+    formType: function () {
+        var formType = Template.instance().formType.get();
+
+        return formType;
     }
 });
 
@@ -45,7 +57,7 @@ AutoForm.addHooks('insertGameSettingsForm', {
     */
 
     onSuccess: function(formType, result) {
-        FlowRouter.go('/room/' + result);
+        //FlowRouter.go('/lobby');
     }
 });
 

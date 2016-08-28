@@ -22,10 +22,12 @@
         </div>
 
         <div class="col-md-9">
-            {{#autoForm collection="GameSetup" id="insertGameSettingsForm" type=insert doc=currentGameSetupId}}
+            {{#autoForm collection="GameSetup" id="insertGameSettingsForm" doc=currentSchedule type=formType}}
+
+            test: {{formType}}
 
             <div class="row">
-                <div class="col-xs-12 col-sm-2"><button type="submit" class="btn btn-success">Save Settings</button></div>
+                <div class="col-xs-12 col-sm-2"><button type="submit" class="btn btn-primary">Save Settings</button></div>
                 <div class="col-xs-12 col-sm-2"><button class="cancelSettings btn btn-warning">Cancel</button></div>
             </div>
 
