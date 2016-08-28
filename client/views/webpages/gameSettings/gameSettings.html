@@ -9,20 +9,20 @@
         </div>
 
         <div class="col-md-3">
-            <div><h3>User Setups</h3></div>
+            <div><h3>Load My Setup</h3></div>
             <div class="clearfix"></div>
 
             <div class="list-group">
                 {{ #each loadSetups }}
-                    {{> gameSettingsSetups }}
+                    {{> mySettings }}
                 {{ else }}
-                    <h4>No Settings Found</h4>
+                    <h4>No Setups Found</h4>
                 {{ /each }}
             </div>
         </div>
 
         <div class="col-md-9">
-            {{#autoForm collection="GameSetup" id="insertGameSettingsForm" type=method doc=currentGameSetupId}}
+            {{#autoForm collection="GameSetup" id="insertGameSettingsForm" type=insert doc=currentGameSetupId}}
 
             <div class="row">
                 <div class="col-xs-12 col-sm-2"><button type="submit" class="btn btn-success">Save Settings</button></div>

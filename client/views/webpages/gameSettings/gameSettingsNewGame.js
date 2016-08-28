@@ -3,12 +3,11 @@ Template.gameSettingsNewGame.onCreated(function () {
 });
 
 Template.gameSettingsNewGame.events({
-    /* Button for creating default settings game */
-    'click #defaultTemplateBtn': function(e) {
+    'click #newTemplateBtn': function (e) {
         e.preventDefault();
 
         $('#newGameModal').on('hidden.bs.modal', function() {
-            FlowRouter.go('/room/' + gameId);
+            FlowRouter.go('/gameSettings');
         }).modal('hide');
     }
 });

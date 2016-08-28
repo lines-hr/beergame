@@ -7,7 +7,7 @@ GameSetup.allow({
         return !!userId && ( ('isGlobal' in doc && !doc.isGlobal) || !('isGlobal' in doc) );
     },
 
-    remove: function(userId) {
-        return userId;
+    remove: function(userId, doc) {
+        return !!userId && doc.setupOwner === userId;
     }
 });

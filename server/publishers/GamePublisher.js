@@ -11,11 +11,20 @@ Meteor.publish('GameRoom', function (gameId) {
     );
 });
 
+Meteor.publish('GameAdmin', function (gameId) {
+    var game = Game.find({_id: gameId});
+    if (game.fetch().gameAdmin === this.userId){
+        return game;
+    }else{
+        return [];
+    }
+});
+
 Meteor.publish('GameLobby', function () {
     return Game.find({
         $or: [
             {status: 'inLobby'},
-            {status: 'inProgress'},
+            {status: 'inProgress'}
         ]
     }, {
         fields: {

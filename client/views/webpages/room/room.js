@@ -35,7 +35,13 @@ Template.room.onCreated(function () {
 
     gameId = this.getGameId();
 
+    toastr.options = {
+        "positionClass": "toast-top-right",
+        "preventDuplicates": true
+    }
+
     this.autorun(() => {
+        this.subscribe('GameAdmin', this.getGameId());
         this.subscribe('GameRoom', this.getGameId(), function () {
 
             var cursorGame = Game.find({"_id": gameId}, {fields: {players: 1}});
@@ -77,16 +83,26 @@ Template.room.onCreated(function () {
                                 var player = _.find(game.players, function (p) {
                                     return p.playerId === user._id;
                                 });
-                                if(player)
-                                    toastr["info"]("User " + user.username + " assigned to " + player.position + ".");
-                            }
 
+                                if(player) {
+                                    if (player.playerId === Meteor.userId()) {
+                                        toastr["success"]("You are assigned to " + player.position + ".");
+                                    } else {
+                                        toastr["info"]("User " + user.username + " assigned to " + player.position + ".");
+                                    }
+                                }
+                            }
                         }
 
                         if(typeof outPlayer !== "undefined"){
                             var user = Meteor.users.findOne({_id: outPlayer});
-                            if(user)
-                                toastr["info"]("User " + user.username + " unassigned.");
+                            if(user) {
+                                if (user._id === Meteor.userId()) {
+                                    toastr["warning"]("You have been unassigned.");
+                                } else {
+                                    toastr["info"]("User " + user.username + " unassigned.");
+                                }
+                            }
                         }
                     }
                 });
