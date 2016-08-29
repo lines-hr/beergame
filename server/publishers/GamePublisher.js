@@ -13,7 +13,7 @@ Meteor.publish('GameRoom', function (gameId) {
 
 Meteor.publish('GameAdmin', function (gameId) {
     var game = Game.find({_id: gameId});
-    if (game.fetch().gameAdmin === this.userId){
+    if (game.fetch()[0].gameAdmin === this.userId){
         return game;
     }else{
         return [];
@@ -31,6 +31,7 @@ Meteor.publish('GameLobby', function () {
             _id: 1,
             gameAdmin: 1,
             title: 1,
+            numRounds: 1,
             observers: 1,
             players: 1,
             status: 1

@@ -1,15 +1,27 @@
 <template name="lobbyGame">
 
-    <div class="col-xs-4">
+    <td>
         {{title}}
-    </div>
+    </td>
 
-    <div class="col-xs-4">
+    <td class="text-center">
         {{gameAdmin}}
-    </div>
+    </td>
 
-    <div class="col-xs-2">
-        <button type="button" class="btn btn-default joinRoom">Join</button>
-    </div>
+    <td class="text-center">
+        {{numRounds}}
+    </td>
+
+    <td class="hidden-xs text-center">
+        {{numPlayers}}
+    </td>
+
+    <td class="hidden-xs text-center">
+        {{numObservers}}
+    </td>
+
+    <td>
+        <button type="button" class="btn btn-primary btn-sm joinRoom"><i class="glyphicon glyphicon-log-in" aria-hidden="true"></i> Join</button>
+    </td>
 
 </template>

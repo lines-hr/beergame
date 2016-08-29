@@ -1,28 +1,31 @@
 <template name="roomObservers">
 
-    <td>{{ username }}</td>
-
+    <td>
+        <span class="{{#if me (_id)}}me{{/if}}">
+            {{username}}
+        </span>
+    </td>
     {{#if isGameAdmin}}
         <td>
             <div class="btn-group">
-                <button type="button" class="btn btn-success dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Add <span class="caret"></span>
+                <button type="button" class="btn btn-success dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-plus" aria-hidden="true"></i> Add <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
                     {{#if activeRetailer }}
-                        <li><a href="#" class="position">Retailer</a></li>
+                        <li><a href="#" class="position"><i class="fa fa-home" aria-hidden="true"></i> Retailer</a></li>
                     {{/if}}
 
                     {{#if activeWholesailer }}
-                        <li><a href="#" class="position">Wholesailer</a></li>
+                        <li><a href="#" class="position"><i class="fa fa-building" aria-hidden="true"></i> Wholesailer</a></li>
                     {{/if}}
 
                     {{#if activeDistributor }}
-                        <li><a href="#" class="position">Distributor</a></li>
+                        <li><a href="#" class="position"><i class="fa fa-truck" aria-hidden="true"></i> Distributor</a></li>
                     {{/if}}
 
                     {{#if activeFactory }}
-                        <li><a href="#" class="position">Factory</a></li>
+                        <li><a href="#" class="position"><i class="fa fa-industry" aria-hidden="true"></i> Factory</a></li>
                     {{/if}}
                 </ul>
             </div>

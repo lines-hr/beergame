@@ -11,7 +11,8 @@ Template.editSettings.onCreated(function () {
 });
 
 Template.editSettings.events({
-    'click .cancelSettings' : function () {
+    'click .cancelSettings' : function (e) {
+        e.preventDefault();
         FlowRouter.go('/lobby');
     }
 });

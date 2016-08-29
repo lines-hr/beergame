@@ -31,7 +31,7 @@ Template.lobby.onCreated(function () {
 });
 
 Template.lobby.events({
-    'click #newGameBtn': function(e) {
+    'click .newGameBtn': function(e) {
         e.preventDefault();
 
         $('#newGameModal').modal('show');
@@ -40,20 +40,26 @@ Template.lobby.events({
 
 Template.lobby.helpers({
     lobbyGames: function() {
-        lobbyGames = [];
-
-        Game.find({"status": "inLobby"}).forEach(function (obj) {
-            if (user = Meteor.users.findOne(obj.gameAdmin)) {
-                lobbyGames.push({_id: obj._id, title: obj.title, gameAdmin: user.username});
-            } else {
-                lobbyGames.push({_id: obj._id, title: obj.title, gameAdmin: 'John Yolo'});
+        lobbyGames = new Array();
+        Game.find({"status": "inLobby"}).forEach(function (g) {
+            if (admin = Meteor.users.findOne({_id: g.gameAdmin})) {
+                lobbyGames.push({
+                    _id: g._id,
+                    title: g.title,
+                    gameAdmin: admin.username,
+                    numRounds: g.numRounds,
+                    numPlayers: _.size(g.players),
+                    numObservers: _.size(g.observers),
+                    status: g.status
+                });
             }
         });
-
         return lobbyGames;
+    },
+    noGames: function () {
+        return Game.find({"status": "inLobby"}).count() === 0 ? true : false;
     }
 });
-
 
 
 

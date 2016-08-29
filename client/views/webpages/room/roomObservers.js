@@ -1,16 +1,3 @@
-var gameId;
-
-Template.room.onCreated(function () {
-    var self = this;
-
-    this.getGameId = () => FlowRouter.getParam('gameId');
-
-    gameId = this.getGameId();
-
-    this.autorun(() => {
-        this.subscribe('GameRoom', this.getGameId());
-    });
-});
 
 Template.roomObservers.helpers({
     activeRetailer: function() {
@@ -67,6 +54,9 @@ Template.roomObservers.helpers({
         } else {
             return true;
         }
+    },
+    me: function (userId) {
+        return Meteor.userId() === userId;
     }
 });
 

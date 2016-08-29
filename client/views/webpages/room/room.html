@@ -4,34 +4,38 @@
 
     <div class="container">
         <div class="row">
-            <div class="jumbotron">
-                <h1>Game Room</h1>
+            <h1 class="text-center">{{ game.title }}</h1>
+        </div>
+
+        <br>
+
+        <div class="container">
+            <div class="row">
+                {{#if isPlayer}}
+                    {{#if playerReady}}
+                        <button id="toggleReady" class="btn btn-danger btn-block room-buttons"><i class="fa fa-ban" aria-hidden="true"></i> Click For Not Ready</button>
+                    {{else}}
+                        <button id="toggleReady" class="btn btn-primary btn-block room-buttons"><i class="fa fa-check" aria-hidden="true"></i> Click For Ready</button>
+                    {{/if}}
+                {{/if}}
+
+                {{#if isGameAdmin}}
+                    {{#if allPlayersReady}}
+                        <button id="startGame" class="btn btn-primary btn-block btn-lg room-buttons"><i class="fa fa-play" aria-hidden="true"></i> START Game</button>
+                    {{else}}
+                        <button class="btn btn-default btn-block btn-lg room-buttons" disabled="disabled"><i class="fa fa-play" aria-hidden="true"></i> START Game</button>
+                    {{/if}}
+
+                    <button id="cancelGame" class="btn btn-warning btn-block room-buttons"><i class="fa fa-times" aria-hidden="true"></i> Cancel Game</button>
+                {{else}}
+                    <button id="exitRoom" class="btn btn-warning btn-block room-buttons"><i class="glyphicon glyphicon-log-out" aria-hidden="true"></i> Leave Room</button>
+                {{/if}}
             </div>
         </div>
 
         <div class="row">
             <div class="col-sm-6">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <h3>Observers</h3>
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-xs-6">
-                        <table class="table">
-                        <tbody>
-                        {{#each listObservers}}
-                            <tr>
-                                {{> roomObservers}}
-                            </tr>
-                        {{/each}}
-                        </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="clearfix"></div>
 
                 <div class="row">
                     <div class="col-xs-12">
@@ -41,14 +45,28 @@
 
                 <div class="row">
                     <div class="col-xs-12">
-                        <table class="table">
+                        <table class="table table-with-buttons">
                         <tbody>
                         {{#each listPlayers}}
-                            <tr>
-                                <td>{{position}}</td>
-                                <td>{{player.username}}</td>
+                            <tr class="{{#if me (playerId)}}info{{/if}}">
+                                <td><i class="{{iconClass}}" aria-hidden="true"></i> {{position}}</td>
+                                <td>
+                                    <span class="{{#if me (playerId)}}me{{/if}}">
+                                        {{username}}
+                                    </span>
+                                </td>
                                 {{#if isGameAdmin}}
-                                    <td><button class="btn btn-danger btn-xs glyphicon glyphicon-minus toObserver"></button></td>
+                                    <td><button class="btn btn-danger btn-sm toObserver"><i class="fa fa-remove" aria-hidden="true"></i> Remove</button></td>
+                                {{/if}}
+                            </tr>
+                        {{else}}
+                            <tr>
+                                <p>Currently, there are no players assigned.</p>
+                                {{#if isGameAdmin}}
+                                    <p>
+                                        Wait for observers to join your session.<br>
+                                        Assign 4 of them to desired supply chain by clicking the "Add"
+                                        button next to the observers username.</p>
                                 {{/if}}
                             </tr>
                         {{/each}}
@@ -57,97 +75,38 @@
                     </div>
                 </div>
 
-                {{#if isPlayer}}
-                    {{#if playerReady}}
-                        <button id="toggleReady" class="btn btn-danger btn-block">Click For Not Ready</button>
-                    {{else}}
-                        <button id="toggleReady" class="btn btn-primary btn-block">Click For Ready</button>
-                    {{/if}}
-                {{/if}}
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h3>Observers</h3>
+                    </div>
+                </div>
 
-                {{#if isGameAdmin}}
-                    {{#if allPlayersReady}}
-                        <button id="startGame" class="btn btn-primary btn-block btn-lg">START Game</button>
-                    {{else}}
-                        <button class="btn btn-default btn-block btn-lg" disabled="disabled">START Game</button>
-                    {{/if}}
+                <div class="row">
+                    <div class="col-md-6">
+                        <table class="table table-with-buttons">
+                            <tbody>
+                            {{#each listObservers}}
+                                <tr>
+                                    {{> roomObservers}}
+                                </tr>
+                            {{else}}
+                                <tr>
+                                    <p>Currently, there are no active observers in the lobby.</p>
+                                </tr>
+                            {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
-                    <button id="cancelGame" class="btn btn-warning btn-block">Cancel Game</button>
-                {{else}}
-                    <button id="exitRoom" class="btn btn-warning btn-block">Exit Room</button>
-                {{/if}}
             </div>
 
             <div class="col-sm-6">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>Current Settings</th>
-                    </tr>
-                    </thead>
-
-                    <tbody>
-                    <tr>
-                        <td>Title</td>
-                        <td>{{ game.title }}</td>
-                    </tr>
-
-                    <tr>
-                        <td>Admin</td>
-                        <td>{{ game.adminUsername }}</td>
-                    </tr>
-
-                    <tr>
-                        <td>Game Length</td>
-                        <td>{{ game.numRounds }}</td>
-                    </tr>
-
-                    <tr>
-                        <td>Stock</td>
-                        <td>{{ game.gameSetup.initStock }}</td>
-                    </tr>
-
-                    <tr>
-                        <td>Incoming Delivery</td>
-                        <td>{{ game.gameSetup.initIncomingDelivery }}</td>
-                    </tr>
-
-                    <tr>
-                        <td>Incoming Order</td>
-                        <td>{{ game.gameSetup.initIncomingOrder }}</td>
-                    </tr>
-
-                    <tr>
-                        <td>Backorder</td>
-                        <td>{{ game.gameSetup.initBackorder }}</td>
-                    </tr>
-
-                    <tr>
-                        <td>Stock Unit Cost</td>
-                        <td>{{ game.gameSetup.initInventoryCost }}</td>
-                    </tr>
-
-                    <tr>
-                        <td>Backorder Unit Cost</td>
-                        <td>{{ game.gameSetup.initBackorderCost }}</td>
-                    </tr>
-
-                    <tr>
-                        <td>Visible Shippings</td>
-                        <td>{{ game.shippings }}</td>
-                    </tr>
-
-                    <tr>
-                        <td>Visible Demands</td>
-                        <td>{{ game.demands }}</td>
-                    </tr>
-
-                    <tr>
-                        <td>Allow Messaging</td>
-                        <td>{{ game.messaging }}</td>
-                    </tr>
-                    </tbody>
-                </table>
+                {{#if isGameAdmin}}
+                    {{> roomListSettingsAdmin}}
+                {{else}}
+                    {{> roomListSettings (game)}}
+                {{/if}}
             </div>
         </div>
     </div>

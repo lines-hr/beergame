@@ -1,0 +1,85 @@
+<template name="roomListSettingsAdmin">
+
+    <br>
+
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#gameSettingsTab" aria-controls="gameSettingsTab" role="tab" data-toggle="tab">Game Settings</a></li>
+        <li role="presentation"><a href="#initDemandTab" aria-controls="initDemandTab" role="tab" data-toggle="tab">Customer demand</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane fade in active" id="gameSettingsTab">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Settings</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                <tr>
+                    <td>Game administrator</td>
+                    <td><b class="me">{{ adminGame.adminUsername }}</b></td>
+                </tr>
+
+                <tr class="warning">
+                    <td>Game Length</td>
+                    <td>{{ adminGame.numRounds }}</td>
+                </tr>
+
+                <tr>
+                    <td>Initial Stock</td>
+                    <td>{{ adminGame.gameSetup.initStock }}</td>
+                </tr>
+
+                <tr>
+                    <td>Initial Incoming Delivery</td>
+                    <td>{{ adminGame.gameSetup.initIncomingDelivery }}</td>
+                </tr>
+
+                <tr>
+                    <td>Initial Incoming Order</td>
+                    <td>{{ adminGame.gameSetup.initIncomingOrder }}</td>
+                </tr>
+
+                <tr>
+                    <td>Initial Backorder</td>
+                    <td>{{ adminGame.gameSetup.initBackorder }}</td>
+                </tr>
+
+                <tr class="warning">
+                    <td>Inventory cost of beer/round</td>
+                    <td>{{ adminGame.gameSetup.initInventoryCost }}</td>
+                </tr>
+
+                <tr class="warning">
+                    <td>Backorder cost of order/round</td>
+                    <td>{{ adminGame.gameSetup.initBackorderCost }}</td>
+                </tr>
+
+                <tr>
+                    <td>Visible Shippings</td>
+                    <td>{{ adminGame.shippings }}</td>
+                </tr>
+
+                <tr>
+                    <td>Visible Demands</td>
+                    <td>{{ adminGame.demands }}</td>
+                </tr>
+
+                <tr>
+                    <td>Allow Messaging</td>
+                    <td>{{ adminGame.messaging }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="initDemandTab">
+            <br>
+            <canvas id="demandChart"></canvas>
+        </div>
+    </div>
+
+
+</template>

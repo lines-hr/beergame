@@ -2,32 +2,6 @@ const NUMBER_OF_PLAYERS = 1;
 
 var gameId;
 
-Template.registerHelper('isGameAdmin', function () {
-    var game = Game.findOne({ _id: gameId });
-
-    if (typeof game !== 'undefined') {
-        if (game.gameAdmin === Meteor.userId()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-});
-
-Template.registerHelper('isPlayer', function () {
-    var game = Game.findOne({ _id: gameId });
-
-    if (game) {
-        var player = _.find(game.players, function(p){
-            return p.playerId === Meteor.userId();
-        });
-
-        return (player) ? true : false;
-    } else {
-        return false;
-    }
-});
-
 Template.room.onCreated(function () {
     var self = this;
 
@@ -62,7 +36,7 @@ Template.room.onCreated(function () {
                         }
 
                         if (numPlayersReady === NUMBER_OF_PLAYERS){
-                            toastr["success"]("All players are ready! Waiting for administrator to start the game.");
+                            toastr["success"]("All players are ready!");
                         }
 
                         if (olddoc.players) {
@@ -110,9 +84,16 @@ Template.room.onCreated(function () {
 
             self.autorun(function (c) {
                 var game = Game.findOne({"_id": gameId});
-                if (!game){
+                if (!game || game.status === "cancelled"){
                     observerHandle.stop();
                     c.stop();
+                    if(game && game.status === "cancelled"){
+                        if(Meteor.userId() === game.gameAdmin){
+                            toastr["info"]("Game cancelled");
+                        } else {
+                            toastr["warning"]("Administrator cancelled the game.");
+                        }
+                    }
                     FlowRouter.go("/lobby");
                 } else {
                     if(game && game.status === "inProgress"){
@@ -159,6 +140,32 @@ Template.room.events({
     }
 });
 
+Template.registerHelper('isGameAdmin', function () {
+    var game = Game.findOne({ _id: gameId });
+
+    if (typeof game !== 'undefined') {
+        if (game.gameAdmin === Meteor.userId()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+});
+
+Template.registerHelper('isPlayer', function () {
+    var game = Game.findOne({ _id: gameId });
+
+    if (game) {
+        var player = _.find(game.players, function(p){
+            return p.playerId === Meteor.userId();
+        });
+
+        return (player) ? true : false;
+    } else {
+        return false;
+    }
+});
+
 Template.room.helpers({
     listObservers: function () {
         const game = Game.findOne({_id: gameId});
@@ -183,11 +190,28 @@ Template.room.helpers({
 
         if (game && users && game.players) {
             game.players.forEach(function(o){
-                o.player = _.find(users, function(obj){
-                    if (obj._id === o.playerId){
-                        return obj.username;
-                    }
+                var player = _.find(users, function(obj){
+                    return obj._id === o.playerId;
                 });
+                o.username = player.username;
+
+                var iconClass;
+                switch (o.position){
+                    case "Retailer":
+                        iconClass = "fa fa-home";
+                        break;
+                    case "Wholesailer":
+                        iconClass = "fa fa-building";
+                        break;
+                    case "Distributor":
+                        iconClass = "fa fa-truck";
+                        break;
+                    case "Factory":
+                        iconClass = "fa fa-industry";
+                        break;
+                }
+                o.iconClass = iconClass;
+
             });
 
             return game.players;
@@ -217,9 +241,9 @@ Template.room.helpers({
             if (admin) {
                 game.adminUsername = admin.username;
 
-                game.shippings = (typeof game.gameSetup.visibleShippings !== "undefined") ? 'Yes' : 'No';
-                game.demands = (typeof game.gameSetup.visibleDemands !== "undefined") ? 'Yes' : 'No';
-                game.messaging = (typeof game.gameSetup.allowMessaging !== "undefined") ? 'Yes' : 'No';
+                game.shippings = (game.gameSetup.visibleShippings) ? 'Yes' : 'No';
+                game.demands = (game.gameSetup.visibleDemands) ? 'Yes' : 'No';
+                game.messaging = (game.gameSetup.allowMessaging) ? 'Yes' : 'No';
 
                 return game;
             }
@@ -236,6 +260,10 @@ Template.room.helpers({
             return (numPlayers === NUMBER_OF_PLAYERS) ? true : false;
         }
         return false;
+    },
+
+    me: function (userId) {
+        return Meteor.userId() === userId;
     }
 });
 

@@ -6,7 +6,8 @@ Template.newSettings.onRendered(function () {
 });
 
 Template.newSettings.events({
-    'click .cancelSettings' : function () {
+    'click .cancelSettings' : function (e) {
+        e.preventDefault();
         FlowRouter.go('/lobby');
     }
 });
