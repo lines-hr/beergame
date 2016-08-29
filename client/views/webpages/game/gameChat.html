@@ -1,0 +1,20 @@
+<template name="gameChat">
+    {{clock}}
+
+    <div id="chatbox">
+        {{#each listMessages }}
+            {{> userChat }}
+        {{/each}}
+    </div>
+
+    <div class="col-xs-12">
+        <div class="input-group">
+            <input id="newMessage" type="text" class="form-control" placeholder="Communicate with your pals! :)">
+
+            <span class="input-group-btn">
+                <button id="sendMessage" class="btn btn-default" type="submit">Send</button>
+            </span>
+        </div>
+    </div>
+
+</template>
