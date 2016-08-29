@@ -193,25 +193,27 @@ Template.room.helpers({
                 var player = _.find(users, function(obj){
                     return obj._id === o.playerId;
                 });
-                o.username = player.username;
 
-                var iconClass;
-                switch (o.position){
-                    case "Retailer":
-                        iconClass = "fa fa-home";
-                        break;
-                    case "Wholesailer":
-                        iconClass = "fa fa-building";
-                        break;
-                    case "Distributor":
-                        iconClass = "fa fa-truck";
-                        break;
-                    case "Factory":
-                        iconClass = "fa fa-industry";
-                        break;
+                if (player) {
+                    o.username = player.username;
+
+                    var iconClass;
+                    switch (o.position) {
+                        case "Retailer":
+                            iconClass = "fa fa-home";
+                            break;
+                        case "Wholesailer":
+                            iconClass = "fa fa-building";
+                            break;
+                        case "Distributor":
+                            iconClass = "fa fa-truck";
+                            break;
+                        case "Factory":
+                            iconClass = "fa fa-industry";
+                            break;
+                    }
+                    o.iconClass = iconClass;
                 }
-                o.iconClass = iconClass;
-
             });
 
             return game.players;
