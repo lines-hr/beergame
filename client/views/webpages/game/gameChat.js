@@ -33,6 +33,10 @@ Template.gameChat.events({
     }
 });
 
+Template.registerHelper('equals', function (a, b) {
+    return a === b;
+});
+
 Template.gameChat.helpers({
     listMessages: function () {
         game = Game.findOne({_id: gameId});
@@ -43,6 +47,7 @@ Template.gameChat.helpers({
             var intervalType;
             var interval;
             var seconds;
+            var userClass;
 
             game.messages.forEach(function (o) {
                 seconds = Math.floor((new Date() - o.timestamp) / 1000);
@@ -61,10 +66,17 @@ Template.gameChat.helpers({
                     timestamp = interval + ' ' + intervalType + ' ago';
                 }
 
+                if (o.authorId === Meteor.userId()) {
+                    userClass = 'userLogged';
+                } else {
+                    userClass = 'user';
+                }
+
                 messages.push({
                     timestamp: timestamp,
                     authorUsername: o.authorUsername,
-                    content: _.unescape(o.content)
+                    content: _.unescape(o.content),
+                    userClass: userClass
                 });
 
                 condition = false;
