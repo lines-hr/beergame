@@ -1,5 +1,9 @@
 var gameId;
 
+setInterval(function () {
+    Session.set('time', (new Date).toTimeString().substr(0, 8));
+}, 500);
+
 Template.game.onCreated(function () {
     var self = this;
 
@@ -31,5 +35,11 @@ Template.registerHelper('allowedMessaging', function () {
         } else {
             return false;
         }
+    }
+});
+
+Template.game.helpers({
+    clock: function () {
+        return Session.get('time');
     }
 });

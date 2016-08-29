@@ -1,9 +1,5 @@
 var gameId;
 
-setInterval(function () {
-    Session.set('time', (new Date).toTimeString().substr(0, 8));
-}, 1000);
-
 Template.gameChat.onCreated(function () {
     var self = this;
 
@@ -84,9 +80,5 @@ Template.gameChat.helpers({
 
             return messages;
         }
-    },
-
-    clock: function () {
-        return Session.get('time');
     }
 });

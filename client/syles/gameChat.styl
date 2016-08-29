@@ -1,6 +1,46 @@
+/* whole chat box without clock */
 #chatbox
-  height 340px
+  height 300px
   overflow-y scroll
+  background #f5f5f5
+  border-radius 25px
+  margin-bottom 20px
 
+/* all users */
+.userBox
+  margin-bottom 5px
+  padding 5px
+  word-wrap: break-word
+  color #222
+  .content
+    display inline-block
+    max-width 100%
+    text-align left
+  .timestamp
+    text-align center
+    color #777
+  .gravatar
+    width 40px
+    height auto
+    border-radius: 50%
+
+/* creator of message */
 .chatUser
-  background yellow
+  .content
+    background #c5e6f5
+    border-radius 20px 0 20px 20px
+    padding 20px 20px
+    float right
+  .authorUsername
+    text-align right
+  .gravatar
+    position: absolute;
+    right: 0px
+
+/* all users that are not creator of message */
+.user
+  .authorUsername
+    text-align left
+  .gravatar
+    position: absolute;
+    left: 0px
