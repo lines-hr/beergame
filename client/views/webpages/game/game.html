@@ -78,12 +78,30 @@
             </div>
 
             <div class="col-sm-6">
-                <div class="col-xs-12">
-                    <h4>Chat</h4>
-                </div>
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#graphTab" aria-controls="graphTab" role="tab" data-toggle="tab">Graph</a></li>
 
-                <div class="col-xs-12">
-                    {{> gameChat }}
+                    {{#if allowedMessaging}}
+                        <li role="presentation"><a href="#chatTab" aria-controls="chatTab" role="tab" data-toggle="tab">Chat</a></li>
+                    {{/if}}
+                </ul>
+
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in active" id="graphTab">
+                        Grafovi idu vamo
+                    </div>
+
+                    {{#if allowedMessaging}}
+                        <div role="tabpanel" class="tab-pane fade" id="chatTab">
+                            <div class="col-xs-12">
+                                <h4>Chat</h4>
+                            </div>
+
+                            <div class="col-xs-12">
+                                {{> gameChat }}
+                            </div>
+                        </div>
+                    {{/if}}
                 </div>
             </div>
         </div>

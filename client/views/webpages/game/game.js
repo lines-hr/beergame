@@ -21,3 +21,15 @@ Template.game.onCreated(function () {
         this.subscribe('User');
     });
 });
+
+Template.registerHelper('allowedMessaging', function () {
+    var game = Game.findOne({ _id: gameId });
+
+    if (game) {
+        if (game.gameSetup.allowMessaging === true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+});
