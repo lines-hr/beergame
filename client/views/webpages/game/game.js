@@ -69,19 +69,21 @@ Template.game.helpers({
 
                     var gameRound = GameRound.findOne({gameId: game._id, gameRound: game.currentRound});
 
-                    switch (player.position) {
-                        case "Retailer" :
-                            return typeof gameRound.dataRetailer.myOrder !== "undefined";
-                            break;
-                        case "Wholesaler" :
-                            return typeof gameRound.dataWholesaler.myOrder !== "undefined";
-                            break;
-                        case "Distributor" :
-                            return typeof gameRound.dataDistributor.myOrder !== "undefined";
-                            break;
-                        case "Factory" :
-                            return typeof gameRound.dataFactory.myOrder !== "undefined";
-                            break;
+                    if (gameRound) {
+                        switch (player.position) {
+                            case "Retailer" :
+                                return typeof gameRound.dataRetailer.myOrder !== "undefined";
+                                break;
+                            case "Wholesaler" :
+                                return typeof gameRound.dataWholesaler.myOrder !== "undefined";
+                                break;
+                            case "Distributor" :
+                                return typeof gameRound.dataDistributor.myOrder !== "undefined";
+                                break;
+                            case "Factory" :
+                                return typeof gameRound.dataFactory.myOrder !== "undefined";
+                                break;
+                        }
                     }
 
                 } else {

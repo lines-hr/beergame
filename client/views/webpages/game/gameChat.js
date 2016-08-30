@@ -10,20 +10,28 @@ Template.gameChat.onCreated(function () {
 
 Template.gameChat.events({
     'click #sendMessage': function (e, t) {
-        e.preventDefault();
+        sendMessage(t);
+    },
 
-        var message = t.find('#newMessage').value;
-        t.find('#newMessage').value = '';
-
-        if (message) {
-            Meteor.call('Game.gameChat.events.sendMessage', gameId, message);
-
-            $('#chatbox').stop().animate({
-                scrollTop: $('#chatbox')[0].scrollHeight
-            }, 800);
+    'keypress #newMessage': function (e, t) {
+        if (e.which === 13) {
+            sendMessage(t);
         }
     }
 });
+
+function sendMessage (t) {
+    var message = t.find('#newMessage').value;
+    t.find('#newMessage').value = '';
+
+    if (message) {
+        Meteor.call('Game.gameChat.events.sendMessage', gameId, message);
+
+        $('#chatbox').stop().animate({
+            scrollTop: $('#chatbox')[0].scrollHeight
+        }, 800);
+    }
+}
 
 Template.registerHelper('equals', function (a, b) {
     return a === b;
@@ -36,9 +44,14 @@ Template.gameChat.helpers({
         if (game) {
             var messages = new Array();
             var timestamp;
+
+            // TODO ostaviti ako se bude koristilo
+            /*
             var intervalType;
             var interval;
             var seconds;
+            */
+
             var userClass;
 
             game.messages.forEach(function (o) {
@@ -46,6 +59,8 @@ Template.gameChat.helpers({
                 var user = Meteor.users.findOne({_id: o.authorId});
                 if (user && user.profile.emailHash) {
 
+                    // TODO ostaviti ako se bude koristilo
+                    /*
                     seconds = Math.floor((new Date() - o.timestamp) / 1000);
                     interval = Math.floor(seconds / 60);
 
@@ -61,6 +76,13 @@ Template.gameChat.helpers({
                     } else {
                         timestamp = interval + ' ' + intervalType + ' ago';
                     }
+                    */
+
+                    var h = timeTwoDigits(o.timestamp.getHours());
+                    var m = timeTwoDigits(o.timestamp.getMinutes());
+                    var s = timeTwoDigits(o.timestamp.getSeconds());
+
+                    timestamp = h + ':' + m + ':' + s;
 
                     if (o.authorId === Meteor.userId()) {
                         userClass = 'userLogged';
@@ -84,3 +106,11 @@ Template.gameChat.helpers({
         }
     }
 });
+
+function timeTwoDigits (timeUnit) {
+    if (timeUnit < 10) {
+        return ('0' + timeUnit.toString());
+    } else {
+        return timeUnit.toString();
+    }
+}
