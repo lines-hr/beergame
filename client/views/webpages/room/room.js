@@ -1,4 +1,4 @@
-const NUMBER_OF_PLAYERS = 1;
+const NUMBER_OF_PLAYERS = 4;
 
 var gameId;
 

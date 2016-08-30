@@ -16,15 +16,11 @@ Template.gameChat.events({
         t.find('#newMessage').value = '';
 
         if (message) {
-            user = Meteor.users.findOne({ _id: Meteor.userId() });
+            Meteor.call('Game.gameChat.events.sendMessage', gameId, message);
 
-            if (user) {
-                Meteor.call('Game.gameChat.events.sendMessage', gameId, user._id, user.username, message);
-
-                $('#chatbox').stop().animate({
-                    scrollTop: $('#chatbox')[0].scrollHeight
-                }, 800);
-            }
+            $('#chatbox').stop().animate({
+                scrollTop: $('#chatbox')[0].scrollHeight
+            }, 800);
         }
     }
 });
@@ -46,36 +42,42 @@ Template.gameChat.helpers({
             var userClass;
 
             game.messages.forEach(function (o) {
-                seconds = Math.floor((new Date() - o.timestamp) / 1000);
-                interval = Math.floor(seconds / 60);
 
-                if (interval >= 1) {
-                    intervalType = "min";
-                } else {
-                    interval = seconds;
-                    intervalType = "sec";
+                var user = Meteor.users.findOne({_id: o.authorId});
+                if (user && user.profile.emailHash) {
+
+                    seconds = Math.floor((new Date() - o.timestamp) / 1000);
+                    interval = Math.floor(seconds / 60);
+
+                    if (interval >= 1) {
+                        intervalType = "min";
+                    } else {
+                        interval = seconds;
+                        intervalType = "sec";
+                    }
+
+                    if (interval === 0) {
+                        timestamp = 'Just now';
+                    } else {
+                        timestamp = interval + ' ' + intervalType + ' ago';
+                    }
+
+                    if (o.authorId === Meteor.userId()) {
+                        userClass = 'userLogged';
+                    } else {
+                        userClass = 'user';
+                    }
+
+                    messages.push({
+                        timestamp: timestamp,
+                        authorUsername: o.authorUsername,
+                        emailHash: user.profile.emailHash,
+                        content: _.unescape(o.content),
+                        userClass: userClass
+                    });
+
+                    condition = false;
                 }
-
-                if (interval === 0) {
-                    timestamp = 'Just now';
-                } else {
-                    timestamp = interval + ' ' + intervalType + ' ago';
-                }
-
-                if (o.authorId === Meteor.userId()) {
-                    userClass = 'userLogged';
-                } else {
-                    userClass = 'user';
-                }
-
-                messages.push({
-                    timestamp: timestamp,
-                    authorUsername: o.authorUsername,
-                    content: _.unescape(o.content),
-                    userClass: userClass
-                });
-
-                condition = false;
             });
 
             return messages;

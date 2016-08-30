@@ -15,7 +15,7 @@
                         <tr>
                             <td><i class="glyphicon glyphicon-paste" aria-hidden="true"></i></td>
                             <td>Your Order</td>
-                            <td class="text-center"><input type="number" class="form-control" id="order"></td>
+                            <td class="text-center"><input type="number" class="form-control" disabled="{{#if playerOrdered}}disabled{{/if}}" id="order"></td>
                         </tr>
                     </tfoot>
 
@@ -26,13 +26,13 @@
                             <td class="text-center">{{roundData.data.incomingDelivery}}</td>
                         </tr>
 
-                        <tr>
+                        <tr class="hidden">
                             <td><i class="fa fa-clock-o" aria-hidden="true"></i></td>
                             <td>Pending Incoming Delivery</td>
                             <td class="text-center">{{roundData.data.pendingDelivery}}</td>
                         </tr>
 
-                        <tr class="game-data-warning">
+                        <tr>
                             <td><i class="fa fa-check" aria-hidden="true"></i></td>
                             <td>Available</td>
                             <td class="text-center">{{roundData.data.stockAvailable}}</td>
@@ -67,11 +67,12 @@
                             <td><strong>Total Cost</strong></td>
                             <td class="text-center"><strong>{{roundData.data.costSum}}</strong></td>
                         </tr>
+
                     </tbody>
                 </table>
 
                 <div class="col-sm-6 col-sm-offset-3">
-                    <button class="btn btn-primary btn-block" type="button">
+                    <button id="orderButton" class="btn btn-primary btn-block" disabled="{{#if playerOrdered}}disabled{{/if}}" type="button">
                         <span class="fa fa-paper-plane"></span> Order
                     </button>
                 </div>
@@ -79,7 +80,7 @@
 
             <div class="col-sm-6">
                 <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a href="#graphTab" aria-controls="graphTab" role="tab" data-toggle="tab">Graph</a></li>
+                    <li role="presentation" class="active"><a href="#graphTab" aria-controls="graphTab" role="tab" data-toggle="tab">Charts</a></li>
 
                     {{#if allowedMessaging}}
                         <li role="presentation"><a href="#chatTab" aria-controls="chatTab" role="tab" data-toggle="tab">Chat</a></li>

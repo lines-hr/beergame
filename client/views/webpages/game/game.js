@@ -15,7 +15,7 @@ Template.game.onCreated(function () {
         this.subscribe('GameRoom', this.getGameId(), function () {
             self.autorun(function (c) {
                 var game = Game.find({"_id": gameId, status: 'inProgress'}).count();
-                if (game === 0){
+                if (game === 0) {
                     c.stop();
                     FlowRouter.go("/lobby");
                 }
@@ -30,7 +30,7 @@ Template.game.onCreated(function () {
 });
 
 Template.registerHelper('allowedMessaging', function () {
-    var game = Game.findOne({ _id: gameId });
+    var game = Game.findOne({_id: gameId});
 
     if (game) {
         if (game.gameSetup.allowMessaging === true) {
@@ -41,18 +41,69 @@ Template.registerHelper('allowedMessaging', function () {
     }
 });
 
+Template.game.events({
+
+    "click #orderButton" () {
+        var order = parseInt($("#order").val());
+        if (!_.isNaN(order)) {
+            Meteor.call("GameRound.setOrder", Template.instance().getGameId(), order);
+        }
+    }
+
+});
+
 Template.game.helpers({
     clock: function () {
         return Session.get('time');
     },
 
+    playerOrdered: function () {
+
+        if (Meteor.userId()) {
+            var game = Game.findOne({_id: gameId});
+            if (game) {
+                var player = _.find(game.players, function (p) {
+                    return Meteor.userId() === p.playerId;
+                });
+                if (player) {
+
+                    var gameRound = GameRound.findOne({gameId: game._id, gameRound: game.currentRound});
+
+                    switch (player.position) {
+                        case "Retailer" :
+                            return typeof gameRound.dataRetailer.myOrder !== "undefined";
+                            break;
+                        case "Wholesaler" :
+                            return typeof gameRound.dataWholesaler.myOrder !== "undefined";
+                            break;
+                        case "Distributor" :
+                            return typeof gameRound.dataDistributor.myOrder !== "undefined";
+                            break;
+                        case "Factory" :
+                            return typeof gameRound.dataFactory.myOrder !== "undefined";
+                            break;
+                    }
+
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    },
+
     roundData: function () {
         var game = Game.findOne({_id: gameId});
-        if(game){
-            var player =_.find(game.players, function(p){return p.playerId === Meteor.userId()});
-            if(player){
+        if (game) {
+            var player = _.find(game.players, function (p) {
+                return p.playerId === Meteor.userId()
+            });
+            if (player) {
                 var gameRound = GameRound.findOne({"gameId": gameId, "gameRound": game.currentRound});
-                if(gameRound){
+                if (gameRound) {
 
                     gameRound.position = player.position;
                     gameRound.username = Meteor.user().username;
