@@ -6,8 +6,8 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th class="text-center">Round <span class="badge">25</span></th>
-                            <th colspan="2" class="text-center">I'm A Wholesailer</th>
+                            <th class="text-center">Round <span class="badge">{{roundData.gameRound}}</span></th>
+                            <th colspan="2" class="text-center">User <span class="me">{{roundData.username}}</span> playing as  <i class="fa fa-home" aria-hidden="true"></i> {{roundData.position}}</th>
                         </tr>
                     </thead>
 
@@ -23,49 +23,49 @@
                         <tr>
                             <td><i class="glyphicon glyphicon-log-in" aria-hidden="true"></i></td>
                             <td>Incoming Delivery</td>
-                            <td class="text-center">21</td>
+                            <td class="text-center">{{roundData.data.incomingDelivery}}</td>
                         </tr>
 
                         <tr>
                             <td><i class="fa fa-clock-o" aria-hidden="true"></i></td>
                             <td>Pending Incoming Delivery</td>
-                            <td class="text-center">2</td>
+                            <td class="text-center">{{roundData.data.pendingDelivery}}</td>
                         </tr>
 
                         <tr class="game-data-warning">
                             <td><i class="fa fa-check" aria-hidden="true"></i></td>
                             <td>Available</td>
-                            <td class="text-center">0</td>
+                            <td class="text-center">{{roundData.data.stockAvailable}}</td>
                         </tr>
 
                         <tr>
                             <td><i class="glyphicon glyphicon-copy" aria-hidden="true"></i></td>
                             <td>Incoming Order</td>
-                            <td class="text-center">3</td>
+                            <td class="text-center">{{roundData.data.incomingOrder}}</td>
                         </tr>
 
                         <tr>
                             <td><i class="glyphicon glyphicon-log-out" aria-hidden="true"></i></td>
                             <td>Your Delivery</td>
-                            <td class="text-center">3</td>
+                            <td class="text-center">{{roundData.data.outgoingDelivery}}</td>
                         </tr>
 
                         <tr>
                             <td><i class="fa fa-repeat" aria-hidden="true"></i></td>
                             <td>Backorder</td>
-                            <td class="text-center">2</td>
+                            <td class="text-center">{{roundData.data.backorder}}</td>
                         </tr>
 
                         <tr>
                             <td><i class="fa fa-cubes" aria-hidden="true"></i></td>
                             <td>Inventory</td>
-                            <td class="text-center">23</td>
+                            <td class="text-center">{{roundData.data.inventory}}</td>
                         </tr>
 
                         <tr class="game-data-cost">
                             <td><i class="fa fa-usd" aria-hidden="true"></i></td>
                             <td><strong>Total Cost</strong></td>
-                            <td class="text-center"><strong>2</strong></td>
+                            <td class="text-center"><strong>{{roundData.data.costSum}}</strong></td>
                         </tr>
                     </tbody>
                 </table>

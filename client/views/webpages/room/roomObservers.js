@@ -14,12 +14,12 @@ Template.roomObservers.helpers({
         }
     },
 
-    activeWholesailer: function() {
+    activeWholesaler: function() {
         var game = Game.findOne({_id: gameId});
 
         if (game){
             var needle = _.find(game.players, function(p){
-                return p.position === 'Wholesailer';
+                return p.position === 'Wholesaler';
             });
 
             return (needle) ? false : true;
