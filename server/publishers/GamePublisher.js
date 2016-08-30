@@ -12,12 +12,16 @@ Meteor.publish('GameRoom', function (gameId) {
 });
 
 Meteor.publish('GameAdmin', function (gameId) {
-    var game = Game.find({_id: gameId});
-    if (game.fetch()[0].gameAdmin === this.userId){
-        return game;
-    }else{
-        return [];
+    var gameCursor = Game.find({_id: gameId});
+    if(gameCursor){
+        var game = gameCursor.fetch()[0];
+        if (game && game.gameAdmin === this.userId){
+            return gameCursor;
+        }else{
+            return [];
+        }
     }
+
 });
 
 Meteor.publish('GameLobby', function () {

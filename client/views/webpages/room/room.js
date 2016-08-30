@@ -202,7 +202,7 @@ Template.room.helpers({
                         case "Retailer":
                             iconClass = "fa fa-home";
                             break;
-                        case "Wholesailer":
+                        case "Wholesaler":
                             iconClass = "fa fa-building";
                             break;
                         case "Distributor":
