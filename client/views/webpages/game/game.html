@@ -2,98 +2,43 @@
 
     <div class="container">
         <div class="row">
+
+            {{#if isGameAdmin}}
+                <button id="cancelGame" class="btn btn-warning btn-block room-buttons"><i class="fa fa-times" aria-hidden="true"></i> Cancel Game</button>
+                <br>
+            {{else}}
+                {{#if isObserver}}
+                    <button id="exitRoom" class="btn btn-warning btn-block room-buttons"><i class="glyphicon glyphicon-log-out" aria-hidden="true"></i> Leave Game</button>
+                    <br>
+                {{/if}}
+            {{/if}}
+
+
             <div class="gameTable col-sm-6">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th class="text-center">Round <span class="badge">{{roundData.gameRound}}</span></th>
-                            <th colspan="2" class="text-center">User <span class="me">{{roundData.username}}</span> playing as  <i class="fa fa-home" aria-hidden="true"></i> {{roundData.position}}</th>
-                        </tr>
-                    </thead>
-
-                    <tfoot>
-                        <tr>
-                            <td><i class="glyphicon glyphicon-paste" aria-hidden="true"></i></td>
-                            <td>Your Order</td>
-                            <td class="text-center"><input type="number" class="form-control" disabled="{{#if playerOrdered}}disabled{{/if}}" id="order"></td>
-                        </tr>
-                    </tfoot>
-
-                    <tbody>
-                        <tr>
-                            <td><i class="glyphicon glyphicon-log-in" aria-hidden="true"></i></td>
-                            <td>Delivered</td>
-                            <td class="text-center">{{roundData.data.incomingDelivery}}</td>
-                        </tr>
-
-                        <tr class="hidden">
-                            <td><i class="fa fa-clock-o" aria-hidden="true"></i></td>
-                            <td>Pending Incoming Delivery</td>
-                            <td class="text-center">{{roundData.data.pendingDelivery}}</td>
-                        </tr>
-
-                        <tr>
-                            <td><i class="fa fa-check" aria-hidden="true"></i></td>
-                            <td>Available</td>
-                            <td class="text-center">{{roundData.data.stockAvailable}}</td>
-                        </tr>
-
-                        <tr>
-                            <td><i class="glyphicon glyphicon-copy" aria-hidden="true"></i></td>
-                            <td>Incoming Order</td>
-                            <td class="text-center">{{roundData.data.incomingOrder}}</td>
-                        </tr>
-
-                        <tr>
-                            <td><i class="glyphicon glyphicon-log-out" aria-hidden="true"></i></td>
-                            <td>Your Delivery</td>
-                            <td class="text-center">{{roundData.data.outgoingDelivery}}</td>
-                        </tr>
-
-                        <tr>
-                            <td><i class="fa fa-repeat" aria-hidden="true"></i></td>
-                            <td>Backorder</td>
-                            <td class="text-center">{{roundData.data.backorder}}</td>
-                        </tr>
-
-                        <tr>
-                            <td><i class="fa fa-cubes" aria-hidden="true"></i></td>
-                            <td>Inventory</td>
-                            <td class="text-center">{{roundData.data.inventory}}</td>
-                        </tr>
-
-                        <tr class="game-data-cost">
-                            <td><i class="fa fa-usd" aria-hidden="true"></i></td>
-                            <td><strong>Total Cost</strong></td>
-                            <td class="text-center"><strong>{{roundData.data.costSum}}</strong></td>
-                        </tr>
-
-                    </tbody>
-                </table>
-
-                <div class="col-sm-6 col-sm-offset-3">
-                    <button id="orderButton" class="btn btn-primary btn-block" disabled="{{#if playerOrdered}}disabled{{/if}}" type="button">
-                        <span class="fa fa-paper-plane"></span> Order
-                    </button>
-                </div>
+                {{#if isPlayer}}
+                    {{> playerRound}}
+                {{else}}
+                    {{> observerRound}}
+                {{/if}}
             </div>
 
             <div class="col-sm-6">
                 <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a href="#graphTab" aria-controls="graphTab" role="tab" data-toggle="tab">Charts</a></li>
-
                     {{#if allowedMessaging}}
-                        <li role="presentation"><a href="#chatTab" aria-controls="chatTab" role="tab" data-toggle="tab">Chat</a></li>
+                        <li role="presentation" class="active"><a href="#chatTab" aria-controls="chatTab" role="tab" data-toggle="tab">Chat</a></li>
                     {{/if}}
+                    <li role="presentation" class="{{#unless allowedMessaging}}active{{/unless}}"><a href="#graphTab" aria-controls="graphTab" role="tab" data-toggle="tab">Charts</a></li>
                 </ul>
 
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane fade in active" id="graphTab">
-                        Grafovi idu vamo
+                    <div role="tabpanel" class="tab-pane fade in {{#unless allowedMessaging}}active{{/unless}}" id="graphTab">
+                        <br>
+                        <p>To be implemented.</p>
+                        <br>
                     </div>
 
                     {{#if allowedMessaging}}
-                        <div role="tabpanel" class="tab-pane fade" id="chatTab">
+                        <div role="tabpanel" class="tab-pane fade in active" id="chatTab">
                             <div class="col-xs-12">
                                 <h4 class="text-center">{{clock}}</h4>
                             </div>

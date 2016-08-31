@@ -13,12 +13,40 @@ Template.game.onCreated(function () {
 
     this.autorun(() => {
         this.subscribe('GameRoom', this.getGameId(), function () {
+
+            var cursorGame = Game.find({"_id": gameId}, {fields: {currentRound: 1}});
+            var observeHandle;
+            if (cursorGame) {
+                observeHandle = cursorGame.observeChanges({
+                    changed: function (id, fields) {
+                        if (!_.isNaN(fields.currentRound)){
+                            $("#order").val("");
+                            toastr["info"]("Round " + fields.currentRound + " started");
+                        }
+                    }
+                });
+            }
+
             self.autorun(function (c) {
-                var game = Game.find({"_id": gameId, status: 'inProgress'}).count();
-                if (game === 0) {
+                var game = Game.findOne({"_id": gameId});
+                if (game) {
+                    if (game.status === "cancelled") {
+                        c.stop();
+                        observeHandle.stop();
+                        FlowRouter.go("/lobby");
+                    }else{
+                        if (game.status === "finished") {
+                            c.stop();
+                            observeHandle.stop();
+                            FlowRouter.go("/score/" + game._id);
+                        }
+                    }
+                } else {
                     c.stop();
+                    observeHandle.stop();
                     FlowRouter.go("/lobby");
                 }
+
             });
         });
 
@@ -48,7 +76,26 @@ Template.game.events({
         if (!_.isNaN(order)) {
             Meteor.call("GameRound.setOrder", Template.instance().getGameId(), order);
         }
-    }
+    },
+
+    'keypress #order': function (e) {
+        if (e.which === 13) {
+            var order = parseInt($("#order").val());
+            if (!_.isNaN(order)) {
+                Meteor.call("GameRound.setOrder", Template.instance().getGameId(), order);
+            }
+        }
+    },
+
+    'click #cancelGame': function () {
+        Meteor.call('Game.room.events.cancelGame' ,gameId);
+        FlowRouter.go('/lobby');
+    },
+
+    'click #exitRoom': function () {
+        Meteor.call('Game.room.events.exitRoom', gameId);
+        FlowRouter.go('/lobby');
+    },
 
 });
 
@@ -57,38 +104,14 @@ Template.game.helpers({
         return Session.get('time');
     },
 
-    playerOrdered: function () {
-
+    isPlayer: function () {
         if (Meteor.userId()) {
             var game = Game.findOne({_id: gameId});
             if (game) {
                 var player = _.find(game.players, function (p) {
                     return Meteor.userId() === p.playerId;
                 });
-                if (player) {
-
-                    var gameRound = GameRound.findOne({gameId: game._id, gameRound: game.currentRound});
-
-                    if (gameRound) {
-                        switch (player.position) {
-                            case "Retailer" :
-                                return typeof gameRound.dataRetailer.myOrder !== "undefined";
-                                break;
-                            case "Wholesaler" :
-                                return typeof gameRound.dataWholesaler.myOrder !== "undefined";
-                                break;
-                            case "Distributor" :
-                                return typeof gameRound.dataDistributor.myOrder !== "undefined";
-                                break;
-                            case "Factory" :
-                                return typeof gameRound.dataFactory.myOrder !== "undefined";
-                                break;
-                        }
-                    }
-
-                } else {
-                    return false;
-                }
+                return player;
             } else {
                 return false;
             }
@@ -97,26 +120,34 @@ Template.game.helpers({
         }
     },
 
-    roundData: function () {
-        var game = Game.findOne({_id: gameId});
-        if (game) {
-            var player = _.find(game.players, function (p) {
-                return p.playerId === Meteor.userId()
-            });
-            if (player) {
-                var gameRound = GameRound.findOne({"gameId": gameId, "gameRound": game.currentRound});
-                if (gameRound) {
-
-                    gameRound.position = player.position;
-                    gameRound.username = Meteor.user().username;
-
-                    var dataProperty = _.intersection(_.keys(gameRound), ["dataRetailer", "dataWholesaler", "dataDistributor", "dataFactory"]);
-                    gameRound.data = gameRound[dataProperty];
-                    delete gameRound[dataProperty];
-
-                    return gameRound;
-                }
+    isObserver: function () {
+        if (Meteor.userId()) {
+            var game = Game.findOne({_id: gameId});
+            if (game) {
+                var observer = _.find(game.observers, function (o) {
+                    return Meteor.userId() === o.observerId;
+                });
+                return observer;
+            } else {
+                return false;
             }
+        } else {
+            return false;
+        }
+    },
+
+    isGameAdmin: function () {
+        if (Meteor.userId()) {
+            var game = Game.findOne({_id: gameId});
+            if (game) {
+                return game.gameAdmin === Meteor.userId();
+            } else {
+                return false;
+            }
+        } else {
+            return false;
         }
     }
+
+
 });

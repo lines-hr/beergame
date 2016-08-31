@@ -1,0 +1,43 @@
+<template name="observerRound">
+
+    <div id="carouselRound" class="carousel slide" data-ride="carousel" data-interval="">
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            <div class="item active">
+                {{> roundTable (roundData.dataRetailer)}}
+            </div>
+            <div class="item">
+                {{> roundTable (roundData.dataWholesaler)}}
+            </div>
+            <div class="item">
+                {{> roundTable (roundData.dataDistributor)}}
+            </div>
+            <div class="item">
+                {{> roundTable (roundData.dataFactory)}}
+            </div>
+        </div>
+    </div>
+
+    <div class="hidden-xs hidden-sm text-center">
+        <a href="#" class="btn btn-default" data-target="#carouselRound" data-slide-to="0"><i class="fa fa-home" aria-hidden="true"></i> Retailer</a>
+        <a href="#" class="btn btn-default" data-target="#carouselRound" data-slide-to="1"><i class="fa fa-building" aria-hidden="true"></i> Wholesaler</a>
+        <a href="#" class="btn btn-default" data-target="#carouselRound" data-slide-to="2"><i class="fa fa-truck" aria-hidden="true"></i> Distributor</a>
+        <a href="#" class="btn btn-default" data-target="#carouselRound" data-slide-to="3"><i class="fa fa-industry" aria-hidden="true"></i> Factory</a>
+    </div>
+
+    <div class="visible-xs visible-sm">
+
+        <!-- Controls -->
+        <a href="#carouselRound" class="pull-left btn btn-default" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Previous
+        </a>
+        <a href="#carouselRound" class="pull-right btn btn-default" role="button" data-slide="next">
+            Next <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        </a>
+
+    </div>
+
+    <br>
+
+
+</template>

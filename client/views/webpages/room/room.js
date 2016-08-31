@@ -114,7 +114,7 @@ Template.room.onCreated(function () {
 
 Template.room.events({
     'click #cancelGame': function () {
-        Meteor.call('Game.room.events.cancelGame');
+        Meteor.call('Game.room.events.cancelGame', gameId);
         FlowRouter.go('/lobby');
     },
 

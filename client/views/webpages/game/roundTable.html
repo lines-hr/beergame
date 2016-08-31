@@ -1,0 +1,75 @@
+<template name="roundTable">
+    <table class="table">
+        <thead>
+        <tr>
+            <th class="text-center">Round <span class="badge">{{gameRound}}</span></th>
+            <th colspan="2" class="text-center">User <span class="me">{{username}}</span> playing as {{{playingAs}}}</th>
+        </tr>
+        </thead>
+
+
+            <tfoot>
+            <tr>
+                <td><i class="glyphicon glyphicon-paste" aria-hidden="true"></i></td>
+                <td>Your Order</td>
+            {{#if isPlayer}}
+                <td class="text-center"><input type="number" class="form-control" disabled="{{#if playerOrdered}}disabled{{/if}}" id="order"></td>
+            {{else}}
+                <td class="text-center">{{myOrder}}</td>
+            {{/if}}
+            </tr>
+            </tfoot>
+
+
+        <tbody>
+        <tr>
+            <td><i class="glyphicon glyphicon-log-in" aria-hidden="true"></i></td>
+            <td>Delivered to me</td>
+            <td class="text-center">{{incomingDelivery}}</td>
+        </tr>
+
+        <tr class="hidden">
+            <td><i class="fa fa-clock-o" aria-hidden="true"></i></td>
+            <td>Pending Incoming Delivery</td>
+            <td class="text-center">{{pendingDelivery}}</td>
+        </tr>
+
+        <tr>
+            <td><i class="fa fa-check" aria-hidden="true"></i></td>
+            <td>Available</td>
+            <td class="text-center">{{stockAvailable}}</td>
+        </tr>
+
+        <tr>
+            <td><i class="glyphicon glyphicon-copy" aria-hidden="true"></i></td>
+            <td>Incoming Order</td>
+            <td class="text-center">{{incomingOrder}}</td>
+        </tr>
+
+        <tr>
+            <td><i class="glyphicon glyphicon-log-out" aria-hidden="true"></i></td>
+            <td>Your Delivery</td>
+            <td class="text-center">{{outgoingDelivery}}</td>
+        </tr>
+
+        <tr>
+            <td><i class="fa fa-repeat" aria-hidden="true"></i></td>
+            <td>Backorder</td>
+            <td class="text-center">{{backorder}}</td>
+        </tr>
+
+        <tr>
+            <td><i class="fa fa-cubes" aria-hidden="true"></i></td>
+            <td>Inventory</td>
+            <td class="text-center">{{inventory}}</td>
+        </tr>
+
+        <tr class="game-data-cost">
+            <td><i class="fa fa-usd" aria-hidden="true"></i></td>
+            <td><strong>Total Cost</strong></td>
+            <td class="text-center"><strong>{{costSum}}</strong></td>
+        </tr>
+
+        </tbody>
+    </table>
+</template>
