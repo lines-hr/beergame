@@ -275,6 +275,7 @@
         <item url="file://$USER_HOME$/.meteor/packages/aldeed_autoform/5.8.1/web.browser/components/afObjectField/afObjectField.js" />
         <item url="file://$USER_HOME$/.meteor/packages/aldeed_autoform/5.8.1/web.browser/components/afQuickFields/afQuickFields.js" />
         <item url="file://$USER_HOME$/.meteor/packages/ddp-common/1.2.6/web.browser/heartbeat.js" />
+        <item url="file://$USER_HOME$/.meteor/packages/jparker_crypto-md5/0.1.1/web.browser/packages/jparker:crypto-md5.js" />
         <item url="file://$USER_HOME$/.meteor/packages/aldeed_autoform/5.8.1/web.browser/components/afEachArrayItem/afEachArrayItem.js" />
         <item url="file://$USER_HOME$/.meteor/packages/html-tools/1.0.10/web.browser/utils.js" />
         <item url="file://$USER_HOME$/.meteor/packages/ddp-common/1.2.6/web.browser/utils.js" />
@@ -321,6 +322,7 @@
         <item url="file://$USER_HOME$/.meteor/packages/aldeed_autoform/5.8.1/web.browser/inputTypes/submit/submit.js" />
         <item url="file://$USER_HOME$/.meteor/packages/es5-shim/4.6.13/web.browser/export_globals.js" />
         <item url="file://$USER_HOME$/.meteor/packages/aldeed_autoform/5.8.1/web.browser/inputTypes/datetime/datetime.js" />
+        <item url="file://$USER_HOME$/.meteor/packages/jparker_crypto-core/0.1.0/web.browser/packages/jparker:crypto-core.js" />
         <item url="file://$USER_HOME$/.meteor/packages/aldeed_autoform/5.8.1/web.browser/inputTypes/password/password.js" />
         <item url="file://$USER_HOME$/.meteor/packages/ejson/1.0.12/web.browser/ejson.js" />
         <item url="file://$USER_HOME$/.meteor/packages/aldeed_autoform/5.8.1/web.browser/inputTypes/textarea/textarea.js" />
@@ -631,6 +633,7 @@
       <root url="file://$USER_HOME$/.meteor/packages/aldeed_autoform/5.8.1/web.browser/components/afObjectField/afObjectField.js" />
       <root url="file://$USER_HOME$/.meteor/packages/aldeed_autoform/5.8.1/web.browser/components/afQuickFields/afQuickFields.js" />
       <root url="file://$USER_HOME$/.meteor/packages/ddp-common/1.2.6/web.browser/heartbeat.js" />
+      <root url="file://$USER_HOME$/.meteor/packages/jparker_crypto-md5/0.1.1/web.browser/packages/jparker:crypto-md5.js" />
       <root url="file://$USER_HOME$/.meteor/packages/aldeed_autoform/5.8.1/web.browser/components/afEachArrayItem/afEachArrayItem.js" />
       <root url="file://$USER_HOME$/.meteor/packages/html-tools/1.0.10/web.browser/utils.js" />
       <root url="file://$USER_HOME$/.meteor/packages/ddp-common/1.2.6/web.browser/utils.js" />
@@ -677,6 +680,7 @@
       <root url="file://$USER_HOME$/.meteor/packages/aldeed_autoform/5.8.1/web.browser/inputTypes/submit/submit.js" />
       <root url="file://$USER_HOME$/.meteor/packages/es5-shim/4.6.13/web.browser/export_globals.js" />
       <root url="file://$USER_HOME$/.meteor/packages/aldeed_autoform/5.8.1/web.browser/inputTypes/datetime/datetime.js" />
+      <root url="file://$USER_HOME$/.meteor/packages/jparker_crypto-core/0.1.0/web.browser/packages/jparker:crypto-core.js" />
       <root url="file://$USER_HOME$/.meteor/packages/aldeed_autoform/5.8.1/web.browser/inputTypes/password/password.js" />
       <root url="file://$USER_HOME$/.meteor/packages/ejson/1.0.12/web.browser/ejson.js" />
       <root url="file://$USER_HOME$/.meteor/packages/aldeed_autoform/5.8.1/web.browser/inputTypes/textarea/textarea.js" />

@@ -133,9 +133,13 @@ BeerGame = {
                     }
                     var gameRound = this.getRound(game._id, game.currentRound);
 
-                    if (this.allPlayed(gameRound) && game.currentRound < game.numRounds) {
-                        this.nextRoundSetup(game, gameRound);
-                        this.increaseRound(game._id);
+                    if (this.allPlayed(gameRound)) {
+                        if (game.currentRound < game.numRounds) {
+                            this.nextRoundSetup(game, gameRound);
+                            this.increaseRound(game._id);
+                        } else {
+                            Game.update({_id: game._id}, {$set: {status: "finished"}});
+                        }
                     }
 
                 } else {
