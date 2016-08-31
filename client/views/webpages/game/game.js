@@ -13,20 +13,37 @@ Template.game.onCreated(function () {
 
     this.autorun(() => {
         this.subscribe('GameRoom', this.getGameId(), function () {
+
+            var cursorGame = Game.find({"_id": gameId}, {fields: {currentRound: 1}});
+            var observeHandle;
+            if (cursorGame) {
+                observeHandle = cursorGame.observeChanges({
+                    changed: function (id, fields) {
+                        if (!_.isNaN(fields.currentRound)){
+                            $("#order").val("");
+                            toastr["info"]("Round " + fields.currentRound + " started");
+                        }
+                    }
+                });
+            }
+
             self.autorun(function (c) {
                 var game = Game.findOne({"_id": gameId});
                 if (game) {
                     if (game.status === "cancelled") {
                         c.stop();
+                        observeHandle.stop();
                         FlowRouter.go("/lobby");
                     }else{
                         if (game.status === "finished") {
                             c.stop();
+                            observeHandle.stop();
                             FlowRouter.go("/score/" + game._id);
                         }
                     }
                 } else {
                     c.stop();
+                    observeHandle.stop();
                     FlowRouter.go("/lobby");
                 }
 
@@ -58,6 +75,15 @@ Template.game.events({
         var order = parseInt($("#order").val());
         if (!_.isNaN(order)) {
             Meteor.call("GameRound.setOrder", Template.instance().getGameId(), order);
+        }
+    },
+
+    'keypress #order': function (e) {
+        if (e.which === 13) {
+            var order = parseInt($("#order").val());
+            if (!_.isNaN(order)) {
+                Meteor.call("GameRound.setOrder", Template.instance().getGameId(), order);
+            }
         }
     },
 
