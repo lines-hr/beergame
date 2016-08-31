@@ -69,3 +69,7 @@ GameSetup.allow({
         return userId;
     }
 });
+
+Meteor.publish('GameRoundScore', function (gameId) {
+    return GameRound.find({ gameId: gameId });
+});

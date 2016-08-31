@@ -1,7 +1,0 @@
-// ispisati username u kreiranoj igri (lobby, room)
-// dodati pozicije igračima
-// vratiti start na 4 (zasad je 1 zbog testiranja)
-// komentare funkcija prepraviti ili napisati
-// funkcije napisati nekim redoslijedom i isti redoslijed staviti u metode (#ocd)
-// samu igru napraviti
-// testirati

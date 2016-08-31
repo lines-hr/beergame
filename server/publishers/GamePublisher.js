@@ -43,6 +43,19 @@ Meteor.publish('GameLobby', function () {
     });
 });
 
+Meteor.publish('GameScore', function (gameId) {
+    return Game.find(
+        { _id: gameId, status: 'finished' },
+        {
+            fields: {
+                players: 1,
+                status: 1,
+                numRounds: 1,
+                __initDemand: 1
+        }
+    });
+});
+
 Game.allow({
     insert: function (userId) {
         var condition = Meteor.apply('Game.helpers.enableUserActions', [], {returnStubValue: true});
