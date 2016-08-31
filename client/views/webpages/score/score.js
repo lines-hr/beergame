@@ -12,7 +12,7 @@ Template.score.onCreated(function () {
         this.subscribe('GameScore', gameId);
         this.subscribe('User');
 
-        this.subscribe('GameRoundScore', function () {
+        this.subscribe('GameRoundScore', gameId, function () {
             if (self.getGameId()) {
                 // Graph 1
                 // part 1
