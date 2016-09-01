@@ -73,7 +73,7 @@ Template.game.events({
 
     "click #orderButton" () {
         var order = parseInt($("#order").val());
-        if (!_.isNaN(order)) {
+        if (!_.isNaN(order) && order >= 0) {
             Meteor.call("GameRound.setOrder", Template.instance().getGameId(), order);
         }
     },
@@ -81,7 +81,7 @@ Template.game.events({
     'keypress #order': function (e) {
         if (e.which === 13) {
             var order = parseInt($("#order").val());
-            if (!_.isNaN(order)) {
+            if (!_.isNaN(order) && order >= 0) {
                 Meteor.call("GameRound.setOrder", Template.instance().getGameId(), order);
             }
         }
