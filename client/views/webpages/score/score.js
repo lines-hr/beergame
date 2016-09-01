@@ -11,7 +11,6 @@ Template.score.onCreated(function () {
     this.autorun(() => {
         this.subscribe('GameScore', gameId);
         this.subscribe('User');
-
         this.subscribe('GameRoundScore', gameId, function () {
             if (self.getGameId()) {
                 // Graph 1
@@ -250,7 +249,7 @@ Template.score.helpers({
 
                         if (user) {
                             switch (p.position) {
-                                case 'Retailer' :
+                                case 'Retailer':
                                     scores.push({
                                         username: user.username,
                                         avatar: user.profile.emailHash,
@@ -258,7 +257,8 @@ Template.score.helpers({
                                         totalCost: gameRound.dataRetailer.costSum
                                     });
                                     break;
-                                case 'Wholesaler' :
+
+                                case 'Wholesaler':
                                     scores.push({
                                         username: user.username,
                                         avatar: user.profile.emailHash,
@@ -266,7 +266,8 @@ Template.score.helpers({
                                         totalCost: gameRound.dataWholesaler.costSum
                                     });
                                     break;
-                                case 'Distributor' :
+
+                                case 'Distributor':
                                     scores.push({
                                         username: user.username,
                                         avatar: user.profile.emailHash,
@@ -274,7 +275,8 @@ Template.score.helpers({
                                         totalCost: gameRound.dataDistributor.costSum
                                     });
                                     break;
-                                case 'Factory' :
+
+                                case 'Factory':
                                     scores.push({
                                         username: user.username,
                                         avatar: user.profile.emailHash,

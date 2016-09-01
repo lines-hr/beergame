@@ -4,7 +4,7 @@ Template.gameSettingsSetups.events({
 
         var gameId = Meteor.apply('Game.loadSetup', [this._id], { returnStubValue: true });
 
-        $('#newGameModal').on('hidden.bs.modal', function() {
+        $('#newGameModal').on('hidden.bs.modal', function () {
             FlowRouter.go('/room/' + gameId);
         }).modal('hide');
     }

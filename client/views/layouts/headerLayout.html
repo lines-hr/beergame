@@ -10,18 +10,27 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
+
                     <a class="navbar-brand" href="/">Beergame</a>
                 </div>
+
                 <div class="navbar-collapse collapse" id="navbar">
                     <ul class="nav navbar-nav">
                         <li class="{{ activeIfTemplateIs 'index' }}"><a href="/">Home</a></li>
-                        {{#if currentUser}}<li class="{{ activeIfTemplateIs 'lobby' }}"><a href="/lobby">Lobby</a></li>
-                        <li class="{{ activeIfTemplateIs 'room' }}"><a href="/room">Room</a></li>
-                        {{#if gameInProgress}}<li class="{{ activeIfTemplateIs 'game' }}"><a href="/game">Game</a></li>{{/if}}{{/if}}
+
+                        {{#if currentUser }}
+                            <li class="{{ activeIfTemplateIs 'lobby' }}"><a href="/lobby">Lobby</a></li>
+
+                            <li class="{{ activeIfTemplateIs 'room' }}"><a href="/room">Room</a></li>
+
+                            {{#if gameInProgress }}
+                                <li class="{{ activeIfTemplateIs 'game' }}"><a href="/game">Game</a></li>
+                            {{/if}}
+                        {{/if}}
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
-                        {{> loginButtons}}
+                        {{> loginButtons }}
                     </ul>
                 </div>
             </div>

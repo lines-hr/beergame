@@ -1,67 +1,79 @@
 <template name="roomListSettings">
+
     <table class="table">
         <thead>
-        <tr>
-            <th colspan="2"><h3 class="text-center">Game Settings</h3></th>
-        </tr>
+            <tr>
+                <th colspan="2"><h3 class="text-center">Game Settings</h3></th>
+            </tr>
         </thead>
 
         <tbody>
+            <tr>
+                <td>Game administrator</td>
 
-        <tr>
-            <td>Game administrator</td>
-            <td>{{ adminUsername }}</td>
-        </tr>
+                <td>{{ adminUsername }}</td>
+            </tr>
 
-        <tr class="warning">
-            <td>Game Length</td>
-            <td>{{ numRounds }}</td>
-        </tr>
+            <tr class="warning">
+                <td>Game Length</td>
 
-        <tr>
-            <td>Initial Stock</td>
-            <td>{{ gameSetup.initStock }}</td>
-        </tr>
+                <td>{{ numRounds }}</td>
+            </tr>
 
-        <tr>
-            <td>Initial Incoming Delivery</td>
-            <td>{{ gameSetup.initIncomingDelivery }}</td>
-        </tr>
+            <tr>
+                <td>Initial Stock</td>
 
-        <tr>
-            <td>Initial Incoming Order</td>
-            <td>{{ gameSetup.initIncomingOrder }}</td>
-        </tr>
+                <td>{{ gameSetup.initStock }}</td>
+            </tr>
 
-        <tr>
-            <td>Initial Backorder</td>
-            <td>{{ gameSetup.initBackorder }}</td>
-        </tr>
+            <tr>
+                <td>Initial Incoming Delivery</td>
 
-        <tr class="warning">
-            <td>Inventory cost of beer/round</td>
-            <td>{{ gameSetup.initInventoryCost }}</td>
-        </tr>
+                <td>{{ gameSetup.initIncomingDelivery }}</td>
+            </tr>
 
-        <tr class="warning">
-            <td>Backorder cost of order/round</td>
-            <td>{{ gameSetup.initBackorderCost }}</td>
-        </tr>
+            <tr>
+                <td>Initial Incoming Order</td>
 
-        <tr>
-            <td>Visible Shippings</td>
-            <td>{{ shippings }}</td>
-        </tr>
+                <td>{{ gameSetup.initIncomingOrder }}</td>
+            </tr>
 
-        <tr>
-            <td>Visible Demands</td>
-            <td>{{ demands }}</td>
-        </tr>
+            <tr>
+                <td>Initial Backorder</td>
 
-        <tr>
-            <td>Allow Messaging</td>
-            <td>{{ messaging }}</td>
-        </tr>
+                <td>{{ gameSetup.initBackorder }}</td>
+            </tr>
+
+            <tr class="warning">
+                <td>Inventory cost of beer/round</td>
+
+                <td>{{ gameSetup.initInventoryCost }}</td>
+            </tr>
+
+            <tr class="warning">
+                <td>Backorder cost of order/round</td>
+
+                <td>{{ gameSetup.initBackorderCost }}</td>
+            </tr>
+
+            <tr>
+                <td>Visible Shippings</td>
+
+                <td>{{ shippings }}</td>
+            </tr>
+
+            <tr>
+                <td>Visible Demands</td>
+
+                <td>{{ demands }}</td>
+            </tr>
+
+            <tr>
+                <td>Allow Messaging</td>
+
+                <td>{{ messaging }}</td>
+            </tr>
         </tbody>
     </table>
+
 </template>

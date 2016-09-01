@@ -13,11 +13,13 @@ Meteor.publish('GameRoom', function (gameId) {
 
 Meteor.publish('GameAdmin', function (gameId) {
     var gameCursor = Game.find({_id: gameId});
+
     if(gameCursor){
         var game = gameCursor.fetch()[0];
+
         if (game && game.gameAdmin === this.userId){
             return gameCursor;
-        }else{
+        } else {
             return [];
         }
     }
@@ -59,11 +61,13 @@ Meteor.publish('GameScore', function (gameId) {
 Game.allow({
     insert: function (userId) {
         var condition = Meteor.apply('Game.helpers.enableUserActions', [], {returnStubValue: true});
+
         return !!userId && condition;
     },
 
     update: function (userId, doc) {
         var condition = Meteor.apply('Game.helpers.enableUserActions', [], {returnStubValue: true});
+
         return (userId === doc.gameAdmin) && condition;
     }
 });

@@ -1,4 +1,5 @@
-Meteor.startup(function () {});
+Meteor.startup(function () {
+});
 
 /* Added option for username input during registration (obligated) or login */
 Accounts.ui.config({

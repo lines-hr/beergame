@@ -1,7 +1,6 @@
 <template name="editSettings">
 
     <div class="container">
-
         <div class="row">
             <div class="jumbotron">
                 <h1>Edit Settings</h1>
@@ -9,20 +8,20 @@
         </div>
 
         <div class="col-md-12">
-            {{#autoForm collection="GameSetup" id="updateSettingsForm" doc=updatedDoc type="update"}}
+            {{#autoForm collection="GameSetup" id="updateSettingsForm" doc=updatedDoc type="update" }}
+                <div class="row">
+                    <div class="col-xs-12 col-sm-2"><button type="submit" class="btn btn-primary">Save Settings</button></div>
 
-            <div class="row">
-                <div class="col-xs-12 col-sm-2"><button type="submit" class="btn btn-primary">Save Settings</button></div>
-                <div class="col-xs-12 col-sm-2"><button class="cancelSettings btn btn-warning">Cancel</button></div>
-            </div>
+                    <div class="col-xs-12 col-sm-2"><button class="cancelSettings btn btn-warning">Cancel</button></div>
+                </div>
 
-            {{> afTemplate }}
+                {{> afTemplate }}
 
-            <div class="row">
-                <div class="col-xs-12 col-sm-2"><button type="submit" class="btn btn-primary">Save Settings</button></div>
-                <div class="col-xs-12 col-sm-2"><button class="cancelSettings btn btn-warning">Cancel</button></div>
-            </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-2"><button type="submit" class="btn btn-primary">Save Settings</button></div>
 
+                    <div class="col-xs-12 col-sm-2"><button class="cancelSettings btn btn-warning">Cancel</button></div>
+                </div>
             {{/autoForm}}
         </div>
     </div>

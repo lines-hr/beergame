@@ -1,14 +1,16 @@
-Meteor.publish("User", function () {
-    return Meteor.users.find({},{fields: {
-        "_id": 1,
-        "username": 1,
-        "profile": 1
+Meteor.publish('User', function () {
+    return Meteor.users.find({}, { fields: {
+        '_id': 1,
+        'username': 1,
+        'profile': 1
     }});
 })
 
 Meteor.publish('RoomUser', function (gameId) {
     var game = Game.findOne({_id: gameId, status: 'inLobby'});
+
     if (!game) return false;
+
     var userIds = [];
 
     if (typeof game.gameAdmin !== 'undefined') {

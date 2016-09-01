@@ -2,13 +2,13 @@ BeerGame = {
 
     startGame (gameId) {
         var game = Game.findOne({_id: gameId});
+
         if (game && Meteor.userId() == game.gameAdmin) {
             this.setInitialRound(game);
         }
     },
 
     setInitialRound(game){
-
         const customerDemand = _.find(game.__initDemand, function (d) {
             return d.roundNumber == 1
         }).demand;
@@ -86,51 +86,54 @@ BeerGame = {
             dataRetailer: retailerData,
             dataWholesaler: othersData,
             dataDistributor: othersData,
-            dataFactory: factoryData,
+            dataFactory: factoryData
         };
 
         if (GameRound.insert(gameRound)) {
             Game.update({_id: game._id}, {$set: {currentRound: 1}});
         }
-
-
     },
 
     setOrder (gameId, order){
         if (Meteor.userId()) {
             var game = Game.findOne({_id: gameId});
+
             if (game) {
                 var player = _.find(game.players, function (p) {
                     return Meteor.userId() === p.playerId;
                 });
-                if (player) {
 
+                if (player) {
                     switch (player.position) {
-                        case "Retailer" :
+                        case 'Retailer':
                             GameRound.update({
                                 gameId: game._id,
                                 gameRound: game.currentRound
-                            }, {$set: {"dataRetailer.myOrder": order}});
+                            }, {$set: {'dataRetailer.myOrder': order}});
                             break;
-                        case "Wholesaler" :
+
+                        case 'Wholesaler':
                             GameRound.update({
                                 gameId: game._id,
                                 gameRound: game.currentRound
-                            }, {$set: {"dataWholesaler.myOrder": order}});
+                            }, {$set: {'dataWholesaler.myOrder': order}});
                             break;
-                        case "Distributor" :
+
+                        case 'Distributor':
                             GameRound.update({
                                 gameId: game._id,
                                 gameRound: game.currentRound
-                            }, {$set: {"dataDistributor.myOrder": order}});
+                            }, {$set: {'dataDistributor.myOrder': order}});
                             break;
-                        case "Factory" :
+
+                        case 'Factory':
                             GameRound.update({
                                 gameId: game._id,
                                 gameRound: game.currentRound
-                            }, {$set: {"dataFactory.myOrder": order}});
+                            }, {$set: {'dataFactory.myOrder': order}});
                             break;
                     }
+
                     var gameRound = this.getRound(game._id, game.currentRound);
 
                     if (this.allPlayed(gameRound)) {
@@ -138,36 +141,35 @@ BeerGame = {
                             this.nextRoundSetup(game, gameRound);
                             this.increaseRound(game._id);
                         } else {
-                            Game.update({_id: game._id}, {$set: {status: "finished"}});
+                            Game.update({_id: game._id}, {$set: {status: 'finished'}});
                         }
                     }
-
                 } else {
-                    console.log("User" + Meteor.userId() + "trying to hax us!");
+                    console.log('User' + Meteor.userId() + 'trying to hax us!');
                 }
             }
         } else {
-            console.log("Unknown user trying to hax us!");
+            console.log('Unknown user trying to hax us!');
         }
     },
 
     getRound (gameId, roundNumber) {
-        var gameRound = GameRound.findOne({gameId: gameId, gameRound: roundNumber});
+        var gameRound = GameRound.findOne({ gameId: gameId, gameRound: roundNumber });
+
         if (gameRound) return gameRound;
     },
 
     nextRoundSetup (game, currentRound){
-
         const customerDemand = _.find(game.__initDemand, function (d) {
             return d.roundNumber == currentRound.gameRound + 1
         }).demand;
 
         var factoryUpper;
+
         if (currentRound.gameRound > 1)
             factoryUpper = this.getRound(game._id, currentRound.gameRound - 1).dataFactory.myOrder;
         else
             factoryUpper = 0;
-
 
         const paramRetailer = {
             lastInventory: currentRound.dataRetailer.inventory,
@@ -244,23 +246,22 @@ BeerGame = {
         };
 
         return GameRound.insert(nextGameRound);
-
     },
 
     allPlayed (gameRound){
-        var r = typeof gameRound.dataRetailer.myOrder !== "undefined";
-        var w = typeof gameRound.dataWholesaler.myOrder !== "undefined";
-        var d = typeof gameRound.dataDistributor.myOrder !== "undefined";
-        var f = typeof gameRound.dataFactory.myOrder !== "undefined";
+        var r = typeof gameRound.dataRetailer.myOrder !== 'undefined';
+        var w = typeof gameRound.dataWholesaler.myOrder !== 'undefined';
+        var d = typeof gameRound.dataDistributor.myOrder !== 'undefined';
+        var f = typeof gameRound.dataFactory.myOrder !== 'undefined';
+
         return r && w && d && f;
     },
 
     increaseRound (gameId) {
-        return Game.update({_id: gameId}, {$inc: {"currentRound": 1}});
+        return Game.update({_id: gameId}, {$inc: {'currentRound': 1}});
     },
 
     calculate: {
-
         stockAvailable (lastInventory, incomingDelivery) {
             return lastInventory + incomingDelivery;
         },
@@ -317,7 +318,6 @@ BeerGame = {
              params.lastSumIncomingDelivery,
              params.lastIncomingDelivery
              params.upperBackorderAndDelivery
-
              */
 
             var stockAvailable = this.stockAvailable(params.lastInventory, params.incomingDelivery);
@@ -347,11 +347,6 @@ BeerGame = {
             };
 
             return roundCalculations;
-
         }
-
-
-    },
-
-
+    }
 };

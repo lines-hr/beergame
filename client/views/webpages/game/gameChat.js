@@ -39,45 +39,17 @@ Template.registerHelper('equals', function (a, b) {
 
 Template.gameChat.helpers({
     listMessages: function () {
-        game = Game.findOne({_id: gameId});
+        game = Game.findOne({ _id: gameId });
 
         if (game) {
             var messages = new Array();
             var timestamp;
-
-            // TODO ostaviti ako se bude koristilo
-            /*
-            var intervalType;
-            var interval;
-            var seconds;
-            */
-
             var userClass;
 
             game.messages.forEach(function (o) {
-
                 var user = Meteor.users.findOne({_id: o.authorId});
+
                 if (user && user.profile.emailHash) {
-
-                    // TODO ostaviti ako se bude koristilo
-                    /*
-                    seconds = Math.floor((new Date() - o.timestamp) / 1000);
-                    interval = Math.floor(seconds / 60);
-
-                    if (interval >= 1) {
-                        intervalType = "min";
-                    } else {
-                        interval = seconds;
-                        intervalType = "sec";
-                    }
-
-                    if (interval === 0) {
-                        timestamp = 'Just now';
-                    } else {
-                        timestamp = interval + ' ' + intervalType + ' ago';
-                    }
-                    */
-
                     var h = timeTwoDigits(o.timestamp.getHours());
                     var m = timeTwoDigits(o.timestamp.getMinutes());
                     var s = timeTwoDigits(o.timestamp.getSeconds());

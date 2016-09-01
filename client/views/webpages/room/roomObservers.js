@@ -1,7 +1,6 @@
-
 Template.roomObservers.helpers({
     activeRetailer: function() {
-        var game = Game.findOne({_id: gameId});
+        var game = Game.findOne({ _id: gameId });
 
         if (game){
             var needle = _.find(game.players, function(p){
@@ -15,7 +14,7 @@ Template.roomObservers.helpers({
     },
 
     activeWholesaler: function() {
-        var game = Game.findOne({_id: gameId});
+        var game = Game.findOne({ _id: gameId });
 
         if (game){
             var needle = _.find(game.players, function(p){
@@ -29,7 +28,7 @@ Template.roomObservers.helpers({
     },
 
     activeDistributor: function() {
-        var game = Game.findOne({_id: gameId});
+        var game = Game.findOne({ _id: gameId });
 
         if (game){
             var needle = _.find(game.players, function(p){
@@ -43,7 +42,7 @@ Template.roomObservers.helpers({
     },
 
     activeFactory: function() {
-        var game = Game.findOne({_id: gameId});
+        var game = Game.findOne({ _id: gameId });
 
         if (game){
             var needle = _.find(game.players, function(p){
@@ -55,6 +54,7 @@ Template.roomObservers.helpers({
             return true;
         }
     },
+
     me: function (userId) {
         return Meteor.userId() === userId;
     }

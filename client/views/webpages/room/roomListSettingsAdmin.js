@@ -9,10 +9,10 @@ Template.roomListSettingsAdmin.onCreated(function () {
 
     this.autorun(() => {
         this.subscribe('GameAdmin', this.getGameId(), function () {
-
             var chartData = new Array({x: 0, y: 0});
+
             if (self.getGameId()) {
-                Game.findOne({_id: self.getGameId()}).__initDemand.forEach(function (d) {
+                Game.findOne({ _id: self.getGameId() }).__initDemand.forEach(function (d) {
                     chartData.push({x: d.roundNumber, y: d.demand});
                 });
 
@@ -41,8 +41,7 @@ Template.roomListSettingsAdmin.onCreated(function () {
                                     labelString: 'Game Rounds'
                                 },
                                 ticks: {
-                                    min: 0,
-                                    //stepSize: 1
+                                    min: 0
                                 }
                             }],
                             yAxes: [{
@@ -63,15 +62,14 @@ Template.roomListSettingsAdmin.onCreated(function () {
         });
         this.subscribe('User');
     });
-
 });
 
 Template.roomListSettingsAdmin.helpers({
     adminGame: function () {
-        var game = Game.findOne({_id: Template.instance().getGameId(), status: 'inLobby'});
+        var game = Game.findOne({ _id: Template.instance().getGameId(), status: 'inLobby' });
 
         if (game && game.gameSetup) {
-            var admin = Meteor.users.findOne({_id: game.gameAdmin});
+            var admin = Meteor.users.findOne({ _id: game.gameAdmin });
 
             if (admin) {
                 game.adminUsername = admin.username;
@@ -83,5 +81,5 @@ Template.roomListSettingsAdmin.helpers({
                 return game;
             }
         }
-    },
+    }
 });

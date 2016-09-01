@@ -1,9 +1,9 @@
 <template name="playerRound">
 
-    {{> roundTable (roundData.data)}}
+    {{> roundTable (roundData.data) }}
 
     <div class="col-sm-6 col-sm-offset-3">
-        <button id="orderButton" class="btn btn-primary btn-block" disabled="{{#if roundData.data.playerOrdered}}disabled{{/if}}" type="button">
+        <button id="orderButton" class="btn btn-primary btn-block" disabled="{{#if roundData.data.playerOrdered }}disabled{{/if}}" type="button">
             <span class="fa fa-paper-plane"></span> Order
         </button>
     </div>

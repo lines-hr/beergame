@@ -2,45 +2,48 @@
 
     <div class="container">
         <div class="row">
-
-            {{#if isGameAdmin}}
+            {{#if isGameAdmin }}
                 <button id="cancelGame" class="btn btn-warning btn-block room-buttons"><i class="fa fa-times" aria-hidden="true"></i> Cancel Game</button>
+
                 <br>
             {{else}}
-                {{#if isObserver}}
+                {{#if isObserver }}
                     <button id="exitRoom" class="btn btn-warning btn-block room-buttons"><i class="glyphicon glyphicon-log-out" aria-hidden="true"></i> Leave Game</button>
+
                     <br>
                 {{/if}}
             {{/if}}
 
 
             <div class="gameTable col-sm-6">
-                {{#if isPlayer}}
-                    {{> playerRound}}
+                {{#if isPlayer }}
+                    {{> playerRound }}
                 {{else}}
-                    {{> observerRound}}
+                    {{> observerRound }}
                 {{/if}}
             </div>
 
             <div class="col-sm-6">
                 <ul class="nav nav-tabs" role="tablist">
-                    {{#if allowedMessaging}}
+                    {{#if allowedMessaging }}
                         <li role="presentation" class="active"><a href="#chatTab" aria-controls="chatTab" role="tab" data-toggle="tab">Chat</a></li>
                     {{/if}}
-                    <li role="presentation" class="{{#unless allowedMessaging}}active{{/unless}}"><a href="#graphTab" aria-controls="graphTab" role="tab" data-toggle="tab">Charts</a></li>
+                    <li role="presentation" class="{{#unless allowedMessaging }}active{{/unless}}"><a href="#graphTab" aria-controls="graphTab" role="tab" data-toggle="tab">Charts</a></li>
                 </ul>
 
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane fade in {{#unless allowedMessaging}}active{{/unless}}" id="graphTab">
+                    <div role="tabpanel" class="tab-pane fade in {{#unless allowedMessaging }}active{{/unless}}" id="graphTab">
                         <br>
+
                         <p>To be implemented.</p>
+
                         <br>
                     </div>
 
-                    {{#if allowedMessaging}}
+                    {{#if allowedMessaging }}
                         <div role="tabpanel" class="tab-pane fade in active" id="chatTab">
                             <div class="col-xs-12">
-                                <h4 class="text-center">{{clock}}</h4>
+                                <h4 class="text-center">{{ clock }}</h4>
                             </div>
 
                             <div class="col-xs-12">

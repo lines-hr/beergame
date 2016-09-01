@@ -3,69 +3,70 @@ Meteor.publish('GameRound', function (gameId) {
     var userId = this.userId;
 
     if(game && userId){
-        //ili gameAdmin ili player ili observer
-
         if(_.find(game.observers, function(o){return o.observerId === userId})){
             return GameRound.find({gameId: gameId});
         }
 
         var player = _.find(game.players, function(p){return p.playerId === userId});
+        
         if (player){
             switch ( player.position ) {
-                case "Retailer" :
+                case 'Retailer':
                     return GameRound.find({gameId: gameId}, {fields: {
-                        "_id": 1,
-                        "gameId": 1,
-                        "gameRound": 1,
-                        "dataRetailer": 1
+                        '_id': 1,
+                        'gameId': 1,
+                        'gameRound': 1,
+                        'dataRetailer': 1
                     }});
                     break;
-                case "Wholesaler" :
+
+                case 'Wholesaler':
                     return GameRound.find({gameId: gameId}, {fields: {
-                        "_id": 1,
-                        "gameId": 1,
-                        "gameRound": 1,
-                        "dataWholesaler": 1
+                        '_id': 1,
+                        'gameId': 1,
+                        'gameRound': 1,
+                        'dataWholesaler': 1
                     }});
                     break;
-                case "Distributor" :
+
+                case 'Distributor':
                     return GameRound.find({gameId: gameId}, {fields: {
-                        "_id": 1,
-                        "gameId": 1,
-                        "gameRound": 1,
-                        "dataDistributor": 1
+                        '_id': 1,
+                        'gameId': 1,
+                        'gameRound': 1,
+                        'dataDistributor': 1
                     }});
                     break;
-                case "Factory" :
+
+                case 'Factory':
                     return GameRound.find({gameId: gameId}, {fields: {
-                        "_id": 1,
-                        "gameId": 1,
-                        "gameRound": 1,
-                        "dataFactory": 1
+                        '_id': 1,
+                        'gameId': 1,
+                        'gameRound': 1,
+                        'dataFactory': 1
                     }});
                     break;
             }
         }
 
-
         if (game.gameAdmin === userId){
             return GameRound.find({gameId: gameId});
         }
-
     }
+
     return [];
 });
 
 GameSetup.allow({
-    insert: function (userId, doc) {
+    insert: function (userId) {
         return userId;
     },
 
-    remove: function(userId, doc) {
+    remove: function(userId) {
         return userId;
     },
 
-    update: function(userId, doc) {
+    update: function(userId) {
         return userId;
     }
 });
