@@ -1,3 +1,9 @@
+/*
+
+    BeerGame Logic
+
+ */
+
 BeerGame = {
 
     startGame (gameId) {
@@ -80,6 +86,22 @@ BeerGame = {
         var retailerData = this.calculate.round(paramChainRetailer);
         var factoryData = this.calculate.round(paramChainFactory);
 
+        if (game.gameSetup.visibleDemands){
+            const customerDemand = _.find(game.__initDemand, function (d) {
+                return d.roundNumber == 2
+            }).demand;
+            retailerData.nextIncomingOrder = (customerDemand) ? customerDemand : 0;
+        }
+
+        if (game.gameSetup.visibleShippings){
+            retailerData.nextIncomingDelivery = othersData.outgoingDelivery;
+            othersData.nextIncomingDelivery = othersData.outgoingDelivery;
+            factoryData.nextIncomingDelivery = 0;
+        }
+
+        retailerData.pendingDelivery = game.gameSetup.initIncomingOrder + game.gameSetup.initBackorder;
+        othersData.pendingDelivery = game.gameSetup.initIncomingOrder + game.gameSetup.initBackorder;
+
         const gameRound = {
             gameId: game._id,
             gameRound: 1,
@@ -104,26 +126,50 @@ BeerGame = {
                 });
 
                 if (player) {
+
+                    var visibleDemands = game.gameSetup.visibleDemands;
+
                     switch (player.position) {
                         case 'Retailer':
-                            GameRound.update({
-                                gameId: game._id,
-                                gameRound: game.currentRound
-                            }, {$set: {'dataRetailer.myOrder': order}});
+                            if (visibleDemands) {
+                                GameRound.update({
+                                    gameId: game._id,
+                                    gameRound: game.currentRound
+                                }, {$set: {'dataRetailer.myOrder': order, 'dataWholesaler.nextIncomingOrder': order}});
+                            } else {
+                                GameRound.update({
+                                    gameId: game._id,
+                                    gameRound: game.currentRound
+                                }, {$set: {'dataRetailer.myOrder': order}});
+                            }
                             break;
 
                         case 'Wholesaler':
-                            GameRound.update({
-                                gameId: game._id,
-                                gameRound: game.currentRound
-                            }, {$set: {'dataWholesaler.myOrder': order}});
+                            if (visibleDemands) {
+                                GameRound.update({
+                                    gameId: game._id,
+                                    gameRound: game.currentRound
+                                }, {$set: {'dataWholesaler.myOrder': order, 'dataDistributor.nextIncomingOrder': order}});
+                            } else {
+                                GameRound.update({
+                                    gameId: game._id,
+                                    gameRound: game.currentRound
+                                }, {$set: {'dataWholesaler.myOrder': order}});
+                            }
                             break;
 
                         case 'Distributor':
-                            GameRound.update({
-                                gameId: game._id,
-                                gameRound: game.currentRound
-                            }, {$set: {'dataDistributor.myOrder': order}});
+                            if (visibleDemands) {
+                                GameRound.update({
+                                    gameId: game._id,
+                                    gameRound: game.currentRound
+                                }, {$set: {'dataDistributor.myOrder': order, 'dataFactory.nextIncomingOrder': order}});
+                            } else {
+                                GameRound.update({
+                                    gameId: game._id,
+                                    gameRound: game.currentRound
+                                }, {$set: {'dataDistributor.myOrder': order}});
+                            }
                             break;
 
                         case 'Factory':
@@ -235,6 +281,29 @@ BeerGame = {
         var newWholesalerData = this.calculate.round(paramWholesaler);
         var newDistributorData = this.calculate.round(paramDistributor);
         var newFactoryData = this.calculate.round(paramFactory);
+
+        newRetailerData.pendingDelivery = newWholesalerData.backorder + newWholesalerData.outgoingDelivery;
+        newWholesalerData.pendingDelivery = newDistributorData.backorder + newDistributorData.outgoingDelivery;
+        newDistributorData.pendingDelivery = newFactoryData.backorder + newFactoryData.outgoingDelivery;
+        newFactoryData.pendingDelivery = currentRound.dataFactory.myOrder;
+
+        if (game.gameSetup.visibleDemands){
+            if (currentRound.gameRound < game.numRounds - 1) {
+                const nextCustomerDemand = _.find(game.__initDemand, function (d) {
+                    return d.roundNumber == currentRound.gameRound + 2
+                }).demand;
+                newRetailerData.nextIncomingOrder = nextCustomerDemand;
+            } else {
+                newRetailerData.nextIncomingOrder = 0;
+            }
+        }
+
+        if (game.gameSetup.visibleShippings){
+            newRetailerData.nextIncomingDelivery = newWholesalerData.outgoingDelivery;
+            newWholesalerData.nextIncomingDelivery = newDistributorData.outgoingDelivery;
+            newDistributorData.nextIncomingDelivery = newFactoryData.outgoingDelivery;
+            newFactoryData.nextIncomingDelivery = currentRound.dataFactory.myOrder;
+        }
 
         const nextGameRound = {
             gameId: game._id,

@@ -30,10 +30,10 @@
                 <td class="text-center">{{ incomingDelivery }}</td>
             </tr>
 
-            <tr class="hidden">
+            <tr>
                 <td><i class="fa fa-clock-o" aria-hidden="true"></i></td>
 
-                <td>Pending Incoming Delivery</td>
+                <td>Pending Delivery</td>
 
                 <td class="text-center">{{ pendingDelivery }}</td>
             </tr>
@@ -77,6 +77,26 @@
 
                 <td class="text-center">{{ inventory }}</td>
             </tr>
+
+            {{#if visibleShippings}}
+            <tr>
+                <td><i class="glyphicon glyphicon-log-in" aria-hidden="true"></i></td>
+
+                <td>Next incoming delivery</td>
+
+                <td class="text-center">{{ nextIncomingDelivery }}</td>
+            </tr>
+            {{/if}}
+
+            {{#if visibleDemands}}
+            <tr>
+                <td><i class="glyphicon glyphicon-copy" aria-hidden="true"></i></td>
+
+                <td>Next incoming Order</td>
+
+                <td class="text-center">{{ nextIncomingOrder }}</td>
+            </tr>
+            {{/if}}
 
             <tr class="game-data-cost">
                 <td><i class="fa fa-usd" aria-hidden="true"></i></td>
