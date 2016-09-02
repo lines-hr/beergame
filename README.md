@@ -28,6 +28,7 @@ Start the local server by executing next commands:
 
 ```
 $ cd beergame/src
+$ npm install
 $ meteor
 ```
 
