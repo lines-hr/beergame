@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Meteor run" type="meteor-app-runner" factoryName="Meteor">
+  <configuration default="false" name="Meteor run" type="meteor-app-runner" factoryName="Meteor" workingDirectory="$PROJECT_DIR$/src">
     <option name="exePath" value="/usr/local/bin/meteor" />
     <option name="startBrowserSettings">
       <browser url="http://localhost:3000" />
