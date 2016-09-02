@@ -21,15 +21,15 @@
                         {{#if currentUser }}
                             <li class="{{ activeIfTemplateIs 'lobby' }}"><a href="/lobby">Lobby</a></li>
 
-                            <li class="{{ activeIfTemplateIs 'room' }}"><a href="/room">Room</a></li>
-
                             {{#if gameInProgress }}
                                 <li class="{{ activeIfTemplateIs 'game' }}"><a href="/game">Game</a></li>
                             {{/if}}
                         {{/if}}
+
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
+
                         {{> loginButtons }}
                     </ul>
                 </div>
