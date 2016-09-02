@@ -1,0 +1,67 @@
+<template name="lobby">
+
+    {{ summon }}
+
+    <div class="container">
+        {{#if noGames }}
+            <div class="container">
+                <div class="row">
+                    <div class="jumbotron lobby-empty-jumbotron">
+                        <h2 class="text-center">Lobby is empty</h2>
+
+                        <p class="text-center">Be the first to start the new game!</p>
+
+                        <br>
+
+                        <p class="text-center"><button type="button" class="newGameBtn btn btn-lg btn-block btn-primary room-buttons"><i class="fa fa-gamepad" aria-hidden="true"></i> Create New Game</button></p>
+                    </div>
+                </div>
+            </div>
+        {{else}}
+            <div class="row">
+                <h1 class="text-center">Lobby</h1>
+            </div>
+
+            <br>
+
+            <div class="container">
+                <div class="row">
+                    <button type="button" class="newGameBtn btn btn-lg btn-block btn-success room-buttons"><i class="fa fa-gamepad" aria-hidden="true"></i> Create New Game</button>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <table class="table table-with-buttons">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+
+                                <th class="text-center">Admin</th>
+
+                                <th class="text-center">Rounds</th>
+
+                                <th class="hidden-xs text-center">Players</th>
+
+                                <th class="hidden-xs text-center">Observers</th>
+
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {{#each lobbyGames }}
+                                <tr>
+                                    {{> lobbyGame }}
+                                </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {{/if}}
+
+        {{> gameSettingsNewGame }}
+    </div>
+
+</template>

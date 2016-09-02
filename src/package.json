@@ -1,0 +1,40 @@
+{
+  "name": "beergame",
+  "version": "1.0.0",
+  "description": "Beergame is role-play simulation game that lets players experience typical coordination problems of traditional supply chains",
+  "author": "Lines j.d.o.o. <info@lines.hr>",
+  "contributors": [
+    {
+      "name": "Kristijan Lenković",
+      "email": "klenkovic@lines.hr"
+    },
+    {
+      "name": "Mislav Miočević",
+      "email": "mmiocevic@lines.hr"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lines-hr/beergame"
+  },
+  "keywords": [
+    "beergame",
+    "meteor",
+    "beer",
+    "game",
+    "simulation",
+    "supply chains"
+  ],
+  "bugs": {
+    "url": "https://github.com/lines-hr/beergame/issues"
+  },
+  "private": true,
+  "scripts": {
+    "start": "meteor run"
+  },
+  "dependencies": {
+    "chart.js": "^2.2.1",
+    "meteor-node-stubs": "~0.2.0"
+  },
+  "license": "MIT"
+}

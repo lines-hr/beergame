@@ -1,0 +1,39 @@
+<template name="gameSettingsNewGame">
+
+    <div class="row">
+        <div class="modal fade" id="newGameModal">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">New Game</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <h4 class="modal-title text-center">Choose Setup</h4>
+
+                        <br>
+
+                        <div class="list-group">
+                            {{#each loadSetups}}
+                                {{> gameSettingsSetups}}
+                            {{else}}
+                                <h4 class="text-center">No Settings Found</h4>
+                            {{/each}}
+                        </div>
+
+                        <h4 class="modal-title text-center">Or</h4>
+
+                        <br>
+
+                        <button id="newTemplateBtn" type="button" class="btn btn-success btn-block">Create New Setup</button>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</template>
